@@ -1,0 +1,33 @@
+# ===================== KiCad =====================
+# KiCad 10 的"本地历史"本身就是一个 git 仓库，必须忽略，否则会被当成嵌入仓库
+Hardware/**/.history/
+_restore_backup_*/
+
+# 各种自动备份 / 临时文件
+*.bak
+*.bak-*
+*.kicad_pcb-bak
+*-backups/
+~*.lck
+*.kicad_prl
+fp-info-cache
+
+# ===================== Software =====================
+# CubeMX / 编译中间产物
+Software/**/build/
+Software/**/Debug/
+Software/**/Release/
+Software/**/*.o
+Software/**/*.d
+Software/**/*.elf
+Software/**/*.map
+Software/**/*.lst
+
+# ioc2kicad.py 生成的可再生成的图（需要留档就删掉这两行）
+Software/kicad/*.svg
+Software/kicad/*_preview.png
+
+# ===================== 系统 =====================
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,20 @@
+* text=auto eol=lf
+
+# KiCad 原理图/PCB/符号库都是文本，统一 LF 后 diff 更干净
+*.kicad_sch  text eol=lf
+*.kicad_pcb  text eol=lf
+*.kicad_sym  text eol=lf
+*.kicad_mod  text eol=lf
+*.kicad_pro  text eol=lf
+*.kicad_prl  text eol=lf
+*.kicad_wks  text eol=lf
+*.ioc        text eol=lf
+*.py         text eol=lf
+*.md         text eol=lf
+
+# 二进制
+*.step  binary
+*.stp   binary
+*.png   binary
+*.pdf   binary
+*.zip   binary
