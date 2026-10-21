@@ -177,10 +177,10 @@
 			)
 		)
 		(symbol "STM32G474VCTx_Software_1_1"
-			(pin output line
+			(pin input line
 				(at -27.94 33.02 0)
 				(length 5.08)
-				(name "PE2-GPIO_Output"
+				(name "PE2-GPIO_Input"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -205,10 +205,10 @@
 				(alternate "TIM20_CH1" bidirectional line)
 				(alternate "TIM3_CH1" bidirectional line)
 			)
-			(pin output line
+			(pin input line
 				(at -27.94 30.48 0)
 				(length 5.08)
-				(name "PE3-GPIO_Output"
+				(name "PE3-GPIO_Input"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -232,10 +232,10 @@
 				(alternate "TIM20_CH2" bidirectional line)
 				(alternate "TIM3_CH2" bidirectional line)
 			)
-			(pin output line
+			(pin input line
 				(at -27.94 27.94 0)
 				(length 5.08)
-				(name "PE4-GPIO_Output"
+				(name "PE4-GPIO_Input"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -257,10 +257,10 @@
 				(alternate "TIM20_CH1N" bidirectional line)
 				(alternate "TIM3_CH3" bidirectional line)
 			)
-			(pin output line
+			(pin input line
 				(at -27.94 25.4 0)
 				(length 5.08)
-				(name "PE5-GPIO_Output"
+				(name "PE5-GPIO_Input"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -282,10 +282,10 @@
 				(alternate "TIM20_CH2N" bidirectional line)
 				(alternate "TIM3_CH4" bidirectional line)
 			)
-			(pin output line
+			(pin bidirectional line
 				(at -27.94 22.86 0)
 				(length 5.08)
-				(name "PE6-GPIO_Output"
+				(name "PE6"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1289,10 +1289,10 @@
 				(alternate "SPI4_NSS" bidirectional line)
 				(alternate "TIM1_CH2" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin input line
 				(at -27.94 7.62 0)
 				(length 5.08)
-				(name "PE12"
+				(name "PE12-ADC5_IN16"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1464,10 +1464,10 @@
 					)
 				)
 			)
-			(pin bidirectional line
+			(pin input line
 				(at 45.72 -7.62 180)
 				(length 5.08)
-				(name "PB11"
+				(name "PB11-ADC1_IN14"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1529,10 +1529,10 @@
 				(alternate "TIM5_ETR" bidirectional line)
 				(alternate "USART3_CK" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin input line
 				(at 45.72 -12.7 180)
 				(length 5.08)
-				(name "PB13"
+				(name "PB13-ADC3_IN5"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1595,10 +1595,10 @@
 				(alternate "USART3_DE" bidirectional line)
 				(alternate "USART3_RTS" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin input line
 				(at 45.72 -17.78 180)
 				(length 5.08)
-				(name "PB15"
+				(name "PB15-ADC4_IN5"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -1798,10 +1798,10 @@
 				(alternate "FMC_A18" bidirectional line)
 				(alternate "TIM4_CH2" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin input line
 				(at -27.94 -40.64 0)
 				(length 5.08)
-				(name "PD14"
+				(name "PD14-ADC5_IN11"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2378,10 +2378,10 @@
 				(alternate "FMC_DA2" bidirectional line)
 				(alternate "TIM8_CH4N" bidirectional line)
 			)
-			(pin input line
+			(pin bidirectional line
 				(at -27.94 -7.62 0)
 				(length 5.08)
-				(name "PD1-GPIO_Input"
+				(name "PD1"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2401,10 +2401,10 @@
 				(alternate "TIM8_BKIN2" bidirectional line)
 				(alternate "TIM8_CH4" bidirectional line)
 			)
-			(pin input line
+			(pin bidirectional line
 				(at -27.94 -10.16 0)
 				(length 5.08)
-				(name "PD2-GPIO_Input"
+				(name "PD2"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2425,10 +2425,10 @@
 				(alternate "TIM8_BKIN" bidirectional line)
 				(alternate "UART5_RX" bidirectional line)
 			)
-			(pin input line
+			(pin bidirectional line
 				(at -27.94 -12.7 0)
 				(length 5.08)
-				(name "PD3-GPIO_Input"
+				(name "PD3-S_TIM2_CH1"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2455,7 +2455,7 @@
 			(pin bidirectional line
 				(at -27.94 -15.24 0)
 				(length 5.08)
-				(name "PD4"
+				(name "PD4-S_TIM2_CH2"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2520,10 +2520,10 @@
 				(alternate "TIM2_CH4" bidirectional line)
 				(alternate "USART2_RX" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin output line
 				(at -27.94 -22.86 0)
 				(length 5.08)
-				(name "PD7"
+				(name "PD7-GPIO_Output"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2543,10 +2543,10 @@
 				(alternate "TIM2_CH3" bidirectional line)
 				(alternate "USART2_CK" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin output line
 				(at 45.72 12.7 180)
 				(length 5.08)
-				(name "PB3"
+				(name "PB3-GPIO_Output"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2578,10 +2578,10 @@
 				(alternate "TIM8_CH1N" bidirectional line)
 				(alternate "USART2_TX" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin output line
 				(at 45.72 10.16 180)
 				(length 5.08)
-				(name "PB4"
+				(name "PB4-GPIO_Output"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2610,10 +2610,10 @@
 				(alternate "UCPD1_CC2" bidirectional line)
 				(alternate "USART2_RX" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin output line
 				(at 45.72 7.62 180)
 				(length 5.08)
-				(name "PB5"
+				(name "PB5-GPIO_Output"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2643,10 +2643,10 @@
 				(alternate "UART5_CTS" bidirectional line)
 				(alternate "USART2_CK" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin output line
 				(at 45.72 5.08 180)
 				(length 5.08)
-				(name "PB6"
+				(name "PB6-GPIO_Output"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2674,10 +2674,10 @@
 				(alternate "UCPD1_CC1" bidirectional line)
 				(alternate "USART1_TX" bidirectional line)
 			)
-			(pin bidirectional line
+			(pin output line
 				(at 45.72 2.54 180)
 				(length 5.08)
-				(name "PB7"
+				(name "PB7-GPIO_Output"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2768,10 +2768,10 @@
 				(alternate "TIM8_CH3" bidirectional line)
 				(alternate "USART3_TX" bidirectional line)
 			)
-			(pin output line
+			(pin bidirectional line
 				(at -27.94 38.1 0)
 				(length 5.08)
-				(name "PE0-GPIO_Output"
+				(name "PE0"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -2792,10 +2792,10 @@
 				(alternate "TIM4_ETR" bidirectional line)
 				(alternate "USART1_TX" bidirectional line)
 			)
-			(pin output line
+			(pin bidirectional line
 				(at -27.94 35.56 0)
 				(length 5.08)
-				(name "PE1-GPIO_Output"
+				(name "PE1"
 					(effects
 						(font
 							(size 1.27 1.27)

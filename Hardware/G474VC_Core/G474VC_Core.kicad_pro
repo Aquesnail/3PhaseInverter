@@ -60,7 +60,7 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.5,
+          "min_clearance": 0.127,
           "min_island_area": 10.0,
           "min_thickness": 0.25,
           "pad_connection": 1,
@@ -69,7 +69,13 @@
           "thermal_relief_spoke_width": 0.5
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -144,13 +150,13 @@
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
-        "min_hole_clearance": 0.25,
-        "min_hole_to_hole": 0.25,
-        "min_microvia_diameter": 0.2,
-        "min_microvia_drill": 0.1,
+        "min_hole_clearance": 0.2,
+        "min_hole_to_hole": 0.2,
+        "min_microvia_diameter": 0.5,
+        "min_microvia_drill": 0.3,
         "min_resolved_spokes": 2,
         "min_silk_clearance": 0.0,
-        "min_text_height": 0.8,
+        "min_text_height": 0.75,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
         "min_track_width": 0.127,
@@ -206,7 +212,9 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
+      "track_widths": [
+        0.0
+      ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -233,7 +241,12 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -524,9 +537,22 @@
         "microvia_drill": 0.1,
         "name": "Power",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 1,
+        "priority": 3,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.4,
+        "tuning_profile": "",
+        "via_diameter": 0.5,
+        "via_drill": 0.3
+      },
+      {
+        "clearance": 0.127,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "Power2",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.254,
         "tuning_profile": "",
         "via_diameter": 0.5,
         "via_drill": 0.3
@@ -539,10 +565,25 @@
         "microvia_drill": 0.1,
         "name": "Signal",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
+        "priority": 2,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.127,
         "tuning_profile": "ADC_Pair",
+        "via_diameter": 0.5,
+        "via_drill": 0.3
+      },
+      {
+        "clearance": 0.127,
+        "diff_pair_gap": 0.127,
+        "diff_pair_width": 0.127,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "Signal2",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.254,
+        "tuning_profile": "",
         "via_diameter": 0.5,
         "via_drill": 0.3
       }
@@ -576,6 +617,14 @@
       {
         "netclass": "Power",
         "pattern": "+5V"
+      },
+      {
+        "netclass": "Signal2",
+        "pattern": "*GPIO_OUT*"
+      },
+      {
+        "netclass": "Power2",
+        "pattern": "+3.3V*"
       }
     ]
   },
@@ -720,7 +769,7 @@
         "uuid": "3ec4fab6-e47e-43dc-9048-966accbcf8f8"
       }
     ],
-    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-103,#PWR115,C1-63,C65-73,C83-122,C124-125,CURRENT2,D1-27,J1-23,L1-13,Q1-2,R1-20,RN1-2,SW1-5,U1-5,U9-10,VOLTAGE2-4,Y1",
+    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-107,#PWR115,C1-63,C65-73,C83-127,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
     "variants": []
   },
   "sheets": [
@@ -753,16 +802,36 @@
       "ADC_Out"
     ],
     [
+      "d5935b9a-fe1d-4186-94df-a98a461474c1",
+      "ADC_Out3"
+    ],
+    [
+      "f2f7734b-b08f-4f07-b664-f50c38008c20",
+      "5V filter1"
+    ],
+    [
       "e8a96beb-d026-4b79-8828-82fb09d87a8e",
       "ADC_Out2"
     ],
     [
-      "079d8457-3344-41cb-94a6-2a969c64a30c",
-      "ADC_Out3"
+      "164e3baf-3bb7-4261-8f52-93a0bc2aa948",
+      "ADC_Out23"
     ],
     [
-      "ae305f11-ce03-43bc-ae09-40daecd6aa84",
-      "ADC_Out4"
+      "91b48f9b-7bc2-4d2e-a085-0f1d9ee22e0b",
+      "5V filter1"
+    ],
+    [
+      "b39e3086-f3e3-432e-98c3-1454ed64b16e",
+      "RF_Connector"
+    ],
+    [
+      "a6ac1965-b66c-46a0-8993-b6788a942652",
+      "RF_Connector1"
+    ],
+    [
+      "cf7929cf-4a66-47e0-8053-00ecb34c6cb1",
+      "RF_Connector2"
     ],
     [
       "013b62cd-cf2e-40af-811e-d418ebc1f40e",
@@ -781,12 +850,8 @@
       "5V filter1"
     ],
     [
-      "f2f7734b-b08f-4f07-b664-f50c38008c20",
-      "5V filter1"
-    ],
-    [
-      "f2f7734b-b08f-4f07-b664-f50c38008c20",
-      "5V filter1"
+      "f64eebe5-a688-4d40-b096-70cb9d8d6805",
+      "RF_Connector3"
     ]
   ],
   "text_variables": {},

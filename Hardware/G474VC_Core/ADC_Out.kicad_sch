@@ -766,6 +766,146 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "小电容放在引脚处吸收线束上的共模噪声\n"
 		(exclude_from_sim no)
@@ -818,6 +958,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5b9057b6-5218-4396-a048-d57c7447c3b5")
+	)
+	(junction
+		(at 45.72 105.41)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8de44129-98da-4953-abce-628dae06e037")
 	)
 	(junction
 		(at 91.44 73.66)
@@ -875,7 +1021,7 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 105.41) (xy 96.52 105.41)
+			(xy 31.75 105.41) (xy 35.56 105.41)
 		)
 		(stroke
 			(width 0)
@@ -975,6 +1121,16 @@
 	)
 	(wire
 		(pts
+			(xy 45.72 118.11) (xy 45.72 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4929cb7b-d4c2-4a7d-af3f-84c3b748a59e")
+	)
+	(wire
+		(pts
 			(xy 76.2 73.66) (xy 76.2 76.2)
 		)
 		(stroke
@@ -1012,6 +1168,16 @@
 			(type default)
 		)
 		(uuid "5fd0743c-e6b9-45a0-8c9a-fd60a05ecfeb")
+	)
+	(wire
+		(pts
+			(xy 45.72 105.41) (xy 96.52 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6e68e816-ac14-47ed-9c75-e368dd6f01e7")
 	)
 	(wire
 		(pts
@@ -1082,6 +1248,16 @@
 			(type default)
 		)
 		(uuid "9779285f-4c23-4b0b-b876-1599d828f0a3")
+	)
+	(wire
+		(pts
+			(xy 43.18 105.41) (xy 45.72 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a0317cd9-36d1-48f7-bd93-0bc481ce919b")
 	)
 	(wire
 		(pts
@@ -1274,6 +1450,16 @@
 		(uuid "fde71ffa-cb34-4f70-a586-8589930ec21a")
 	)
 	(label "GND"
+		(at 45.72 118.11 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "0203480a-6c4f-47a7-8920-a4e0fcf0795d")
+	)
+	(label "GND"
 		(at 68.58 66.04 180)
 		(effects
 			(font
@@ -1403,7 +1589,7 @@
 	)
 	(hierarchical_label "VREF"
 		(shape input)
-		(at 58.42 105.41 180)
+		(at 31.75 105.41 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1411,6 +1597,100 @@
 			(justify right)
 		)
 		(uuid "c0c96606-3c70-424e-a373-bb54f9b40731")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 45.72 109.22 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0336cb7a-7494-48a0-8bc1-20f6f08af5c0")
+		(property "Reference" "C1"
+			(at 49.53 107.9499 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100nF"
+			(at 49.53 110.4899 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0603"
+			(at 46.6852 113.03 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 45.72 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 45.72 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3f1837de-ca5d-4557-b607-a13777ffc68d")
+		)
+		(pin "2"
+			(uuid "bf8a723c-a7d3-4bc9-85db-476ca2bcd242")
+		)
+		(instances
+			(project "G474VC_Core"
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
+					(reference "C6")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "C101")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
+					(reference "C1")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e8a96beb-d026-4b79-8828-82fb09d87a8e"
+					(reference "C12")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x10")
@@ -1480,47 +1760,43 @@
 			)
 		)
 		(pin "1"
-			(uuid "f8a02a6c-244b-4d75-9d0f-3cd2ee467017")
+			(uuid "94a6735b-8212-4a6a-a0b1-77e76f19c2df")
 		)
 		(pin "2"
-			(uuid "cc197d1b-6045-465a-aac3-e2698bd0fee1")
+			(uuid "4845adbf-273a-4fce-8179-8cd7dbeb3e8a")
 		)
 		(pin "6"
-			(uuid "89eaa27c-a57b-4dda-83c8-dbab8f801060")
+			(uuid "0b677e7a-853d-4f24-a694-9e1989c4a2f5")
 		)
 		(pin "3"
-			(uuid "5efb348d-fc3c-46bf-8d36-400ec133c3f2")
+			(uuid "da02e3db-7c9e-450f-afc9-a1d006c267a4")
 		)
 		(pin "8"
-			(uuid "a3b336a3-59f7-4526-8e62-0c02bc3a7103")
+			(uuid "c858ba35-9105-43eb-a8fe-1e30c0344b7d")
 		)
 		(pin "5"
-			(uuid "897a064e-0057-457e-b3be-9870b715f7db")
+			(uuid "1978db4a-2370-4a3e-b143-8db48b2735fc")
 		)
 		(pin "10"
-			(uuid "303fe7ff-1e21-4549-b7a9-15deca243395")
+			(uuid "80581cc0-5575-407d-adca-6d1f19c0c8e2")
 		)
 		(pin "9"
-			(uuid "0fe72281-49d9-46b2-b6af-768e98d53702")
+			(uuid "43380a02-bfa9-4d28-8fac-c2039675df66")
 		)
 		(pin "7"
-			(uuid "c3b7ad96-3796-44be-affd-9a7f49b1c476")
+			(uuid "bb983b4c-43e5-4078-8e28-372f40142c57")
 		)
 		(pin "4"
-			(uuid "3439b73d-7cec-433c-bf0d-ec311b102ed8")
+			(uuid "7ce57ac3-8a07-4322-a51c-1d804f54ddf6")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "J25")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "J22")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "J21")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "J12")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -1565,7 +1841,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_NoSilk"
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 			(at 55.88 74.6252 0)
 			(hide yes)
 			(show_name no)
@@ -1599,23 +1875,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "64620fdf-de3e-482e-b3b9-9837e7905778")
+			(uuid "b9cfac3b-8735-4674-a18a-b6ec7c29d06e")
 		)
 		(pin "1"
-			(uuid "cc81fcca-bbd1-40b0-b979-a4647a043f06")
+			(uuid "a744e705-25db-4715-a475-ed9b770389b5")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "C118")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "C119")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "C110")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "C119")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -1660,7 +1932,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_NoSilk"
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 			(at 55.88 59.3852 0)
 			(hide yes)
 			(show_name no)
@@ -1694,23 +1966,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "2c8a6c3f-f7e6-4c7d-95df-97205c089a1c")
+			(uuid "92f24f7b-9018-44a3-ba18-61723cb619de")
 		)
 		(pin "1"
-			(uuid "b28b66a2-a89f-4e29-a985-b8be31a8e74b")
+			(uuid "7f72258c-1731-42a3-b590-e11902914e1e")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "C123")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "C103")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "C99")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "C102")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -1755,7 +2023,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_NoSilk"
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 			(at 76.2 67.0052 0)
 			(hide yes)
 			(show_name no)
@@ -1789,23 +2057,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "735cedef-2578-4951-9b83-6ffde832282d")
+			(uuid "c25fd6b9-db61-4c2a-99b8-97f47a9f5108")
 		)
 		(pin "1"
-			(uuid "fad2d438-f6d7-47f2-89a6-92218ee8eca2")
+			(uuid "52d1ad49-6020-4389-b82d-f1adcfa50467")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "C102")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "C107")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "C4")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "C104")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -1887,29 +2151,25 @@
 			)
 		)
 		(pin "4"
-			(uuid "9cf6474b-45e4-457e-b46a-812ac911299c")
+			(uuid "8f2c8830-71e0-4aec-89d0-db340a0deb28")
 		)
 		(pin "1"
-			(uuid "897b692a-92db-4ecb-a344-86394b13f74a")
+			(uuid "d2a0e267-1c37-47f5-9140-cc1ffa910b51")
 		)
 		(pin "2"
-			(uuid "c8fd8601-0f98-4728-9463-9c7f414125f0")
+			(uuid "59e21f23-f062-429f-ba62-d73cce972ab6")
 		)
 		(pin "3"
-			(uuid "954a362a-4f77-415d-ae9c-fdf9fb48b9f9")
+			(uuid "55346a7a-78d5-4c7e-aa56-74664441d655")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "J9")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "J12")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "J7")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "J9")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -1954,7 +2214,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_NoSilk"
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 			(at 55.88 67.0052 0)
 			(hide yes)
 			(show_name no)
@@ -1988,23 +2248,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "4a25828d-db5e-425b-ba78-d415fef27e24")
+			(uuid "add4c4bb-153d-4176-b061-28da31b1de2c")
 		)
 		(pin "1"
-			(uuid "3a3e0856-6b34-481b-ab21-b136f6dfa16f")
+			(uuid "d5de9370-6782-4358-9d53-dabee83ebc30")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "C100")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "C104")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "C3")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "C103")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -2013,6 +2269,98 @@
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e8a96beb-d026-4b79-8828-82fb09d87a8e"
 					(reference "C90")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 39.37 105.41 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7effe5ec-d0a4-41c5-bb71-8bcf13756be6")
+		(property "Reference" "R1"
+			(at 39.37 99.06 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "50R"
+			(at 39.37 101.6 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistors_SMD.pretty-master:R_0603"
+			(at 39.37 103.632 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 39.37 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 39.37 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "5575c9e9-2e2d-46a8-8fc3-d5204bcac00c")
+		)
+		(pin "2"
+			(uuid "0ece9720-16dc-44b5-9b41-5f8b8cd7f609")
+		)
+		(instances
+			(project "G474VC_Core"
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
+					(reference "R2")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "R15")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
+					(reference "R1")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e8a96beb-d026-4b79-8828-82fb09d87a8e"
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -2049,7 +2397,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_NoSilk"
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 			(at 76.2 74.6252 0)
 			(hide yes)
 			(show_name no)
@@ -2083,23 +2431,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "141a740e-fdc5-4dc8-93ed-9097c2cba8ff")
+			(uuid "6bc36dd0-646a-4c26-bc86-9262126d6317")
 		)
 		(pin "1"
-			(uuid "319ab9d8-acc6-4222-8d9b-9a88e5ea0a6a")
+			(uuid "b56ab454-5405-401f-910a-32b3e327ea01")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "C101")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "C108")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "C5")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "C107")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -2144,7 +2488,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_NoSilk"
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 			(at 76.2 82.2452 0)
 			(hide yes)
 			(show_name no)
@@ -2178,23 +2522,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "46db8308-fe37-43fc-bf77-0eb9a9773479")
+			(uuid "40b50f86-5d42-47f5-83aa-c3d0ade197c9")
 		)
 		(pin "1"
-			(uuid "e3f5ab1a-a8dd-41e2-be81-744ffdbfb72d")
+			(uuid "701e44c4-e6ef-440f-8f0b-051b40283248")
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(reference "C124")
-					(unit 1)
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(reference "C125")
-					(unit 1)
-				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/c0013d1b-628f-48c4-b220-045ea0e95afc"
 					(reference "C121")
+					(unit 1)
+				)
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(reference "C125")
 					(unit 1)
 				)
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e039bc5a-f24b-4606-aec8-3ed37b0120a3"
@@ -2248,7 +2588,7 @@
 		)
 		(pin "+5V" input
 			(at 60.96 97.79 180)
-			(uuid "8c00ed5b-2d20-4781-85e5-84d185c3e916")
+			(uuid "8df7f487-9a1a-485b-8236-41dbc0f0e962")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2258,7 +2598,7 @@
 		)
 		(pin "GND" input
 			(at 60.96 100.33 180)
-			(uuid "68b33723-18b2-4097-b1d5-adae9a9b4db2")
+			(uuid "2fcd1a9c-7d3f-4e93-a546-2304b2fc3953")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2268,7 +2608,7 @@
 		)
 		(pin "OUT" input
 			(at 77.47 100.33 0)
-			(uuid "d61fa0d5-ee2f-43e3-8013-def4ea0fe23a")
+			(uuid "364c077d-8520-4e52-81ac-c31222834b15")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2287,11 +2627,8 @@
 				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/e8a96beb-d026-4b79-8828-82fb09d87a8e"
 					(page "19")
 				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/079d8457-3344-41cb-94a6-2a969c64a30c"
-					(page "20")
-				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/ae305f11-ce03-43bc-ae09-40daecd6aa84"
-					(page "21")
+				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/d5935b9a-fe1d-4186-94df-a98a461474c1"
+					(page "9")
 				)
 			)
 		)

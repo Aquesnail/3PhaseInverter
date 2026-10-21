@@ -1220,7 +1220,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603"
+		(property "Footprint" "Capacitors_SMD.pretty-master:C_0603"
 			(at 157.1752 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -1378,7 +1378,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_NoSilk"
+		(property "Footprint" "Resistors_SMD.pretty-master:R_0402_NoSilk"
 			(at 147.32 94.742 90)
 			(hide yes)
 			(show_name no)

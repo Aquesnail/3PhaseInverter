@@ -1,9 +1,9 @@
-# ===================== KiCad =====================
-# KiCad 10 的"本地历史"本身就是一个 git 仓库，必须忽略，否则会被当成嵌入仓库
+﻿# ===================== KiCad =====================
+# KiCad 10 鐨?鏈湴鍘嗗彶"鏈韩灏辨槸涓€涓?git 浠撳簱锛屽繀椤诲拷鐣ワ紝鍚﹀垯浼氳褰撴垚宓屽叆浠撳簱
 Hardware/**/.history/
 _restore_backup_*/
 
-# 各种自动备份 / 临时文件
+# 鍚勭鑷姩澶囦唤 / 涓存椂鏂囦欢
 *.bak
 *.bak-*
 *.kicad_pcb-bak
@@ -13,7 +13,7 @@ _restore_backup_*/
 fp-info-cache
 
 # ===================== Software =====================
-# CubeMX / 编译中间产物
+# CubeMX / 缂栬瘧涓棿浜х墿
 Software/**/build/
 Software/**/Debug/
 Software/**/Release/
@@ -23,11 +23,15 @@ Software/**/*.elf
 Software/**/*.map
 Software/**/*.lst
 
-# ioc2kicad.py 生成的可再生成的图（需要留档就删掉这两行）
+# ioc2kicad.py 鐢熸垚鐨勫彲鍐嶇敓鎴愮殑鍥撅紙闇€瑕佺暀妗ｅ氨鍒犳帀杩欎袱琛岋級
 Software/kicad/*.svg
 Software/kicad/*_preview.png
 
-# ===================== 系统 =====================
+# ===================== 绯荤粺 =====================
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# 用户手工备份目录（各含一份完整 PCB）
+_backup_before_*/
+*.kicad_pcb.bak*
