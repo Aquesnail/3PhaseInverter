@@ -361,19 +361,19 @@
 		)
 		(instances
 			(project "G474VC_Core"
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/a6ac1965-b66c-46a0-8993-b6788a942652"
+				(path "/8c81ac27-fd57-4322-91b3-f12391f961d8/a6ac1965-b66c-46a0-8993-b6788a942652"
 					(reference "RF3")
 					(unit 1)
 				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/b39e3086-f3e3-432e-98c3-1454ed64b16e"
+				(path "/8c81ac27-fd57-4322-91b3-f12391f961d8/b39e3086-f3e3-432e-98c3-1454ed64b16e"
 					(reference "RF2")
 					(unit 1)
 				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/cf7929cf-4a66-47e0-8053-00ecb34c6cb1"
+				(path "/8c81ac27-fd57-4322-91b3-f12391f961d8/cf7929cf-4a66-47e0-8053-00ecb34c6cb1"
 					(reference "RF4")
 					(unit 1)
 				)
-				(path "/3ec4fab6-e47e-43dc-9048-966accbcf8f8/f64eebe5-a688-4d40-b096-70cb9d8d6805"
+				(path "/8c81ac27-fd57-4322-91b3-f12391f961d8/f64eebe5-a688-4d40-b096-70cb9d8d6805"
 					(reference "RF5")
 					(unit 1)
 				)
