@@ -35,3 +35,4 @@ desktop.ini
 # 用户手工备份目录（各含一份完整 PCB）
 _backup_before_*/
 *.kicad_pcb.bak*
+_bak_before_*/\n
