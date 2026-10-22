@@ -492,7 +492,7 @@
 			)
 			(embedded_fonts no)
 		)
-				(symbol "discrete:TVS_5V_SOD123F"
+		(symbol "discrete:TVS_5V_SOD123F"
 			(pin_numbers
 				(hide yes)
 			)
