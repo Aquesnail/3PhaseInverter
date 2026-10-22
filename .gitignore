@@ -36,3 +36,6 @@ desktop.ini
 _backup_before_*/
 *.kicad_pcb.bak*
 _bak_before_*/\n
+
+Hardware/G474VC_Core/_bak_before_*/
+Hardware/G474VC_Core/_restore_backup_*/
