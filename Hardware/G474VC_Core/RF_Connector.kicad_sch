@@ -98,7 +98,7 @@
 						(type background)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -5.08 0 0)
 					(length 2.54)
 					(name "SIG"
@@ -116,7 +116,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 -10.16 90)
 					(length 2.54)
 					(name "GND"
@@ -134,7 +134,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 2.54 -10.16 90)
 					(length 2.54)
 					(name "GND"
@@ -152,7 +152,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 2.54 10.16 270)
 					(length 2.54)
 					(name "GND"
@@ -170,7 +170,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 10.16 270)
 					(length 2.54)
 					(name "GND"

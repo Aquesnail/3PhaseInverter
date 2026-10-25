@@ -3346,7 +3346,7 @@
 						(type none)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 -5.08 90)
 					(length 2.54)
 					(name "S"
@@ -3364,7 +3364,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 -5.08 90)
 					(length 2.54)
 					(name "S"
@@ -3382,7 +3382,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 -5.08 90)
 					(length 2.54)
 					(name "S"
@@ -3400,7 +3400,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at -6.35 0 0)
 					(length 2.54)
 					(name "G"
@@ -3418,7 +3418,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 5.08 270)
 					(length 2.54)
 					(name "D"
@@ -3436,7 +3436,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 5.08 270)
 					(length 2.54)
 					(name "D"
@@ -3454,7 +3454,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 5.08 270)
 					(length 2.54)
 					(name "D"
@@ -3472,7 +3472,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 5.08 270)
 					(length 2.54)
 					(name "D"
@@ -3490,7 +3490,7 @@
 						)
 					)
 				)
-				(pin unspecified line
+				(pin passive line
 					(at 0 5.08 270)
 					(length 2.54)
 					(name "D"
@@ -5984,16 +5984,6 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 161.29) (xy 55.88 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "84a308e8-82e1-4843-ad36-4587f83a9d88")
-	)
-	(wire
-		(pts
 			(xy 236.22 109.22) (xy 236.22 124.46)
 		)
 		(stroke
@@ -6794,16 +6784,6 @@
 	)
 	(wire
 		(pts
-			(xy 92.71 44.45) (xy 111.76 44.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d9ab6b8a-1325-48c0-9977-28f140e36921")
-	)
-	(wire
-		(pts
 			(xy 41.91 129.54) (xy 41.91 133.35)
 		)
 		(stroke
@@ -7222,6 +7202,26 @@
 		)
 		(uuid "fd74e01c-c69e-4b22-b910-8edf5c3b328b")
 	)
+	(wire
+	(pts
+		(xy 92.71 44.45) (xy 106.68 44.45)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "eeaf13a0-d339-425d-a0b5-af215de24be0")
+)
+	(wire
+	(pts
+		(xy 55.88 161.29) (xy 55.88 165.1)
+	)
+	(stroke
+		(width 0)
+		(type default)
+	)
+	(uuid "bdf90203-5128-4af5-83da-1bb0b6214ee6")
+)
 	(label "VREF"
 		(at 228.6 99.06 180)
 		(effects
@@ -7241,16 +7241,6 @@
 			(justify right bottom)
 		)
 		(uuid "1554055c-2f1c-4837-827b-ea6b344115aa")
-	)
-	(label "VREF"
-		(at 228.5116 144.78 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "18efb777-ba69-44d5-a440-4699f9dc8bc6")
 	)
 	(label "+5V"
 		(at 182.88 63.5 0)
@@ -7392,6 +7382,15 @@
 		)
 		(uuid "f955ab30-f6a8-4302-81b6-83ca70283cab")
 	)
+	(label "VREF"
+	(at 228.6 144.78 0)
+	(effects
+		(font
+			(size 1.27 1.27)
+		)
+	)
+	(uuid "88ddcb30-7adc-4399-ab60-8d70cd5bc3a0")
+)
 	(symbol
 		(lib_id "power:+3.3V")
 		(at 72.39 144.78 270)
