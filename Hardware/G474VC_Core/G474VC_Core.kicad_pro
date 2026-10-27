@@ -60,11 +60,11 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.127,
+          "min_clearance": 0.25,
           "min_island_area": 10.0,
           "min_thickness": 0.25,
-          "pad_connection": 2,
-          "remove_islands": 1,
+          "pad_connection": 1,
+          "remove_islands": 0,
           "thermal_relief_gap": 0.5,
           "thermal_relief_spoke_width": 0.5
         }
@@ -769,7 +769,7 @@
         "uuid": "3ec4fab6-e47e-43dc-9048-966accbcf8f8"
       }
     ],
-    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-107,#PWR115,C1-63,C65-73,C83-127,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
+    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-107,#PWR115,C1-63,C65-73,C83-130,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
     "variants": []
   },
   "sheets": [
@@ -778,16 +778,48 @@
       "G474VC_Core"
     ],
     [
-      "013b62cd-cf2e-40af-811e-d418ebc1f40e",
-      "PWM_Out"
+      "8d64e2c8-bc00-4dbc-b1db-91aca668bafc",
+      "G474_MCU"
+    ],
+    [
+      "b7e1c19d-e532-4223-8708-33970eeff9fa",
+      "CAN"
     ],
     [
       "49b3475f-87b7-4a7b-af7c-6000ffefa55a",
       "DebugerPower"
     ],
     [
-      "b7e1c19d-e532-4223-8708-33970eeff9fa",
-      "CAN"
+      "b1bde844-7f68-44e5-9c21-e79aa77c0279",
+      "MainPower"
+    ],
+    [
+      "e039bc5a-f24b-4606-aec8-3ed37b0120a3",
+      "ADC_Out1"
+    ],
+    [
+      "c0013d1b-628f-48c4-b220-045ea0e95afc",
+      "ADC_Out"
+    ],
+    [
+      "d5935b9a-fe1d-4186-94df-a98a461474c1",
+      "ADC_Out3"
+    ],
+    [
+      "f2f7734b-b08f-4f07-b664-f50c38008c20",
+      "5V filter1"
+    ],
+    [
+      "e8a96beb-d026-4b79-8828-82fb09d87a8e",
+      "ADC_Out2"
+    ],
+    [
+      "164e3baf-3bb7-4261-8f52-93a0bc2aa948",
+      "ADC_Out23"
+    ],
+    [
+      "91b48f9b-7bc2-4d2e-a085-0f1d9ee22e0b",
+      "5V filter1"
     ],
     [
       "b39e3086-f3e3-432e-98c3-1454ed64b16e",
@@ -802,56 +834,24 @@
       "RF_Connector2"
     ],
     [
+      "013b62cd-cf2e-40af-811e-d418ebc1f40e",
+      "PWM_Out"
+    ],
+    [
+      "f2f7734b-b08f-4f07-b664-f50c38008c20",
+      "5V filter1"
+    ],
+    [
+      "f2f7734b-b08f-4f07-b664-f50c38008c20",
+      "5V filter1"
+    ],
+    [
+      "f2f7734b-b08f-4f07-b664-f50c38008c20",
+      "5V filter1"
+    ],
+    [
       "f64eebe5-a688-4d40-b096-70cb9d8d6805",
       "RF_Connector3"
-    ],
-    [
-      "8d64e2c8-bc00-4dbc-b1db-91aca668bafc",
-      "G474_MCU"
-    ],
-    [
-      "b1bde844-7f68-44e5-9c21-e79aa77c0279",
-      "MainPower"
-    ],
-    [
-      "c0013d1b-628f-48c4-b220-045ea0e95afc",
-      "ADC_Out"
-    ],
-    [
-      "f2f7734b-b08f-4f07-b664-f50c38008c20",
-      "5V filter1"
-    ],
-    [
-      "e039bc5a-f24b-4606-aec8-3ed37b0120a3",
-      "ADC_Out1"
-    ],
-    [
-      "f2f7734b-b08f-4f07-b664-f50c38008c20",
-      "5V filter1"
-    ],
-    [
-      "e8a96beb-d026-4b79-8828-82fb09d87a8e",
-      "ADC_Out2"
-    ],
-    [
-      "f2f7734b-b08f-4f07-b664-f50c38008c20",
-      "5V filter1"
-    ],
-    [
-      "d5935b9a-fe1d-4186-94df-a98a461474c1",
-      "ADC_Out3"
-    ],
-    [
-      "f2f7734b-b08f-4f07-b664-f50c38008c20",
-      "5V filter1"
-    ],
-    [
-      "164e3baf-3bb7-4261-8f52-93a0bc2aa948",
-      "ADC_Out23"
-    ],
-    [
-      "91b48f9b-7bc2-4d2e-a085-0f1d9ee22e0b",
-      "5V filter1"
     ]
   ],
   "text_variables": {},

@@ -513,7 +513,7 @@
 						(type none)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at -2.54 -6.35 90)
 					(length 2.54)
 					(name "1"
@@ -531,7 +531,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at 2.54 -6.35 90)
 					(length 2.54)
 					(name "2"
@@ -549,7 +549,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at 0 6.35 270)
 					(length 2.54)
 					(name "3"
@@ -674,7 +674,7 @@
 						(type background)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at -11.43 3.81 0)
 					(length 2.54)
 					(name "TXD"
@@ -692,7 +692,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at -11.43 1.27 0)
 					(length 2.54)
 					(name "GND"
@@ -710,7 +710,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at -11.43 -1.27 0)
 					(length 2.54)
 					(name "VCC"
@@ -728,7 +728,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at -11.43 -3.81 0)
 					(length 2.54)
 					(name "RXD"
@@ -746,7 +746,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at 11.43 -3.81 180)
 					(length 2.54)
 					(name "NC/VIO"
@@ -764,7 +764,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at 11.43 -1.27 180)
 					(length 2.54)
 					(name "CANL"
@@ -782,7 +782,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at 11.43 1.27 180)
 					(length 2.54)
 					(name "CANH"
@@ -800,7 +800,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at 11.43 3.81 180)
 					(length 2.54)
 					(name "STB"
@@ -818,7 +818,7 @@
 						)
 					)
 				)
-				(pin passive line
+				(pin unspecified line
 					(at 0 8.89 270)
 					(length 2.54)
 					(name "Pad"
