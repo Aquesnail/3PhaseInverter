@@ -18,3 +18,9 @@
 *.png   binary
 *.pdf   binary
 *.zip   binary
+
+# Simulink 模型（.slx 实为 zip）/ EasyEDA 专业版工程（SQLite）/ 仿真数据
+*.slx    binary
+*.slxc   binary
+*.mat    binary
+*.eprj2  binary
