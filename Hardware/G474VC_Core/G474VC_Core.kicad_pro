@@ -39,9 +39,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.8,
-          "height": 1.27,
-          "width": 1.27
+          "drill": 0.0,
+          "height": 0.25,
+          "width": 0.6
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -769,7 +769,7 @@
         "uuid": "3ec4fab6-e47e-43dc-9048-966accbcf8f8"
       }
     ],
-    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-108,#PWR115,C1-63,C65-73,C83-131,CN1,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
+    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-108,#PWR115,#SYM1,C1-63,C65-73,C83-131,CN1,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
     "variants": []
   },
   "sheets": [

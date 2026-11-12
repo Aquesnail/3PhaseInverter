@@ -3,4 +3,5 @@
 	(lib (name "lcsc_footprints") (type "KiCad") (uri "${KIPRJMOD}/libs/lcsc/footprints.pretty") (options "") (descr "LCSC Manager imported footprints"))
 	(lib (name "Capacitors_SMD.pretty-master") (type "KiCad") (uri "${KIPRJMOD}/libs/kiacd_libs/Capacitors_SMD.pretty-master") (options "") (descr ""))
 	(lib (name "Resistors_SMD.pretty-master") (type "KiCad") (uri "${KIPRJMOD}/libs/kiacd_libs/Resistors_SMD.pretty-master") (options "") (descr ""))
+	(lib (name "project") (type "KiCad") (uri "${KIPRJMOD}/libs/project") (options "") (descr ""))
 )
