@@ -159,6 +159,7 @@
 		(property "Reference" "C130"
 			(at 0 -1.270001 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d5f0cb44-b6c0-4aa5-a143-328f3eea9334")
 			(effects
 				(font
@@ -620,6 +621,7 @@
 		(property "Reference" "C21"
 			(at 1.53 -1.03 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "077b1a57-0c12-4e11-87a5-52dee97eae92")
 			(effects
 				(font
@@ -1007,6 +1009,7 @@
 		(property "Reference" "C32"
 			(at -1.58 0.98 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "154c4862-88e2-4cdb-8cb0-311597353d36")
 			(effects
 				(font
@@ -2309,6 +2312,7 @@
 		(property "Reference" "C70"
 			(at -1.53 1.03 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "2fefa32e-cc9f-46ba-b179-ddc0f8554361")
 			(effects
 				(font
@@ -2492,6 +2496,7 @@
 		(property "Reference" "C46"
 			(at -2.2 0 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "64707e17-e2dc-481e-8ead-30d3b02e16c3")
 			(effects
 				(font
@@ -2675,6 +2680,7 @@
 		(property "Reference" "R22"
 			(at 1.48 -0.93 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "360781f2-8bca-4feb-a560-8a68d3b7513d")
 			(effects
 				(font
@@ -3372,6 +3378,7 @@
 		(property "Reference" "C92"
 			(at 0 1.65 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "75dcb392-5a41-43f8-8879-31315223d132")
 			(effects
 				(font
@@ -4279,6 +4286,7 @@
 		(property "Reference" "C38"
 			(at -1.94 -1.34 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f3b6359e-e85c-4296-9548-05bad32e0862")
 			(effects
 				(font
@@ -4460,8 +4468,9 @@
 		(descr "Resistor SMD 0402, reflow soldering, Vishay (see dcrcw.pdf)")
 		(tags "resistor 0402")
 		(property "Reference" "R16"
-			(at 1.003 1.003 45)
+			(at 3.065128 0.024569 45)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d809bad3-32f3-479d-8d6d-65b60b75a0e3")
 			(effects
 				(font
@@ -4645,6 +4654,7 @@
 		(property "Reference" "C27"
 			(at 1.53 1.03 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "cfad3cef-65b8-4efa-94e6-83c9dbf92c25")
 			(effects
 				(font
@@ -5429,6 +5439,7 @@
 		(property "Reference" "C23"
 			(at 2.15 0 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8b6ccc9d-83de-43ff-9de5-b4218ffb391e")
 			(effects
 				(font
@@ -5612,6 +5623,7 @@
 		(property "Reference" "C45"
 			(at 1.53 -1.03 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "570542db-ddc1-4ce3-ac32-7d41deb05b99")
 			(effects
 				(font
@@ -5795,6 +5807,7 @@
 		(property "Reference" "R11"
 			(at 1.38 -1.03 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a8176177-1cdb-4d85-920c-9420b5d66124")
 			(effects
 				(font
@@ -5976,8 +5989,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C80"
-			(at 0 1.65 270)
+			(at 0.25 1.85 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "9d980017-9143-4118-895f-45f05f3690dd")
 			(effects
 				(font
@@ -6851,8 +6865,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C74"
-			(at 1.89 1.39 180)
+			(at 10.2 -0.1 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f175ae57-b16c-449e-a65d-9cf863f8a55b")
 			(effects
 				(font
@@ -7830,6 +7845,7 @@
 		(property "Reference" "C53"
 			(at -1.375 -1.025 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "3147ffdb-f224-48e6-90a6-2911f462f335")
 			(effects
 				(font
@@ -8013,6 +8029,7 @@
 		(property "Reference" "C50"
 			(at 1.58 0.98 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c9c62624-aed6-4fb3-b2df-655da6aa00fe")
 			(effects
 				(font
@@ -8525,6 +8542,7 @@
 		(property "Reference" "R23"
 			(at 2.624999 2.275 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "19e2bf38-001b-491f-8af6-d9256812b9a1")
 			(effects
 				(font
@@ -8708,6 +8726,7 @@
 		(property "Reference" "C69"
 			(at -1.7 0 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "097ba95a-98e5-42f2-9d94-2cd9c74045e1")
 			(effects
 				(font
@@ -8891,6 +8910,7 @@
 		(property "Reference" "C42"
 			(at -1.58 -0.98 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "3b2d82f0-c258-48e4-a806-33e0c38b4d2a")
 			(effects
 				(font
@@ -9278,6 +9298,7 @@
 		(property "Reference" "C26"
 			(at -1.53 1.03 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "79709a2f-ed1e-4917-a3a8-c603ff91d7b5")
 			(effects
 				(font
@@ -10176,6 +10197,7 @@
 		(property "Reference" "C29"
 			(at 0 1.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "704dc4c2-2920-48c1-a9d5-2e33e11ec2e2")
 			(effects
 				(font
@@ -10359,6 +10381,7 @@
 		(property "Reference" "C71"
 			(at 0 1.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ac136d3e-25ad-40c4-a74f-a0df47723c8a")
 			(effects
 				(font
@@ -10542,6 +10565,7 @@
 		(property "Reference" "R6"
 			(at 0 1.2 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "94c5ff08-4259-4281-b9d4-2f510ba222d8")
 			(effects
 				(font
@@ -10725,6 +10749,7 @@
 		(property "Reference" "C66"
 			(at 0 -1.65 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8d2d9b96-c33d-41fb-9cfc-c8e5a76f1795")
 			(effects
 				(font
@@ -10908,6 +10933,7 @@
 		(property "Reference" "C65"
 			(at 1.53 1.03 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "dbffa0f1-8cdd-4bbe-987c-7bfeab8d1b20")
 			(effects
 				(font
@@ -11091,6 +11117,7 @@
 		(property "Reference" "C59"
 			(at -1.795 1.795 135)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6f037be9-7781-450b-a4df-b76a76c7c20a")
 			(effects
 				(font
@@ -11702,6 +11729,7 @@
 		(property "Reference" "C37"
 			(at 1.89 1.39 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8cc65085-c118-4240-aac1-e51612fcb373")
 			(effects
 				(font
@@ -12089,6 +12117,7 @@
 		(property "Reference" "C52"
 			(at -1.58 0.98 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "0ce2ea2a-2267-40f4-8e49-40a5879e7a22")
 			(effects
 				(font
@@ -12272,6 +12301,7 @@
 		(property "Reference" "R18"
 			(at 0 -1.075 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "69c5cdf2-d17e-401a-83e5-71aeef45db50")
 			(effects
 				(font
@@ -12783,6 +12813,7 @@
 		(property "Reference" "C24"
 			(at -1.58 -0.98 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "779a521d-801e-41df-a1c2-da041751104f")
 			(effects
 				(font
@@ -12964,8 +12995,9 @@
 		(descr "Resistor SMD 0402, reflow soldering, Vishay (see dcrcw.pdf)")
 		(tags "resistor 0402")
 		(property "Reference" "R26"
-			(at -1.65 0 0)
+			(at 2 -1.25 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "44664b89-d7e1-43a0-bf9f-5bd58b44a699")
 			(effects
 				(font
@@ -14063,6 +14095,7 @@
 		(property "Reference" "R17"
 			(at -1.425 -1.075 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "51146a14-d45f-453f-89ae-daf0effec834")
 			(effects
 				(font
@@ -14244,8 +14277,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C60"
-			(at -1.124 1.124 315)
+			(at -1.477553 0.770447 315)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "02b0d57e-ec57-4d44-9724-051c5a31be89")
 			(effects
 				(font
@@ -15100,6 +15134,7 @@
 		(property "Reference" "R7"
 			(at 0 1.2 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "57da6036-6f1a-49a2-b03f-69f3ae62af07")
 			(effects
 				(font
@@ -15283,6 +15318,7 @@
 		(property "Reference" "C55"
 			(at 0 -1.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "9689f231-7e13-444a-b05e-d8d29204b035")
 			(effects
 				(font
@@ -15466,6 +15502,7 @@
 		(property "Reference" "C40"
 			(at -1.7 0 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "54e91e34-ecea-47a1-ad34-b643a1866408")
 			(effects
 				(font
@@ -15649,6 +15686,7 @@
 		(property "Reference" "C7"
 			(at 1.971 -0.035 135)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f9b19f05-e07d-43d6-b5b1-a26756c86149")
 			(effects
 				(font
@@ -15830,8 +15868,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C44"
-			(at -2.325 1.725 0)
+			(at 0.95 3.25 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6c2060c5-e6b4-450c-9e77-f765b2288173")
 			(effects
 				(font
@@ -16015,6 +16054,7 @@
 		(property "Reference" "C49"
 			(at 0 -3.625 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "090970c7-f094-4ac0-af5e-d6b0cd8758a3")
 			(effects
 				(font
@@ -16198,6 +16238,7 @@
 		(property "Reference" "C20"
 			(at 0 -1.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "2f07d247-b240-4735-a5e9-69bef93a2546")
 			(effects
 				(font
@@ -16381,6 +16422,7 @@
 		(property "Reference" "C34"
 			(at -1.53 -1.03 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "78806151-ef4f-46e4-a17f-7cea159176ab")
 			(effects
 				(font
@@ -17380,6 +17422,7 @@
 		(property "Reference" "C61"
 			(at 0.035 -1.971 315)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "63693d5c-a1f4-47ef-a82a-2c83810b0277")
 			(effects
 				(font
@@ -17563,6 +17606,7 @@
 		(property "Reference" "C51"
 			(at -1.94 1.34 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "57bd535d-fad7-4fd7-ae58-8d7dc5c282e3")
 			(effects
 				(font
@@ -18543,6 +18587,7 @@
 		(property "Reference" "C62"
 			(at -1.971 0.035 135)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6e8c7064-7292-499e-b608-66db5c828794")
 			(effects
 				(font
@@ -19026,6 +19071,7 @@
 		(property "Reference" "R4"
 			(at -1.003 -1.003 225)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "de0a503d-964b-4ee8-80f3-9b73effdecf5")
 			(effects
 				(font
@@ -19209,6 +19255,7 @@
 		(property "Reference" "R21"
 			(at 0 -1.2 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ab5b9631-c8d3-486a-8e47-1665d0dd4bc2")
 			(effects
 				(font
@@ -19778,6 +19825,7 @@
 		(property "Reference" "C25"
 			(at 0 -2.1 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "3b34836e-a823-40fb-9582-411d28f29362")
 			(effects
 				(font
@@ -20698,6 +20746,7 @@
 		(property "Reference" "C22"
 			(at -1.53 -1.03 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "90ab5c04-745d-4d5c-b5b5-844af9384754")
 			(effects
 				(font
@@ -20881,6 +20930,7 @@
 		(property "Reference" "C43"
 			(at 1.58 0.98 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "50fab1f2-a7a3-4d7c-95b4-d3ceb2eed5bb")
 			(effects
 				(font
@@ -23565,6 +23615,7 @@
 		(property "Reference" "C36"
 			(at -1.7 0 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "de60d7c8-339e-48e3-b6a6-b593ec88d9e0")
 			(effects
 				(font
@@ -23748,6 +23799,7 @@
 		(property "Reference" "C35"
 			(at 1.89 1.39 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "2cdb6c80-e0a2-4ad4-94bd-02143035c0b8")
 			(effects
 				(font
@@ -24504,6 +24556,7 @@
 		(property "Reference" "R3"
 			(at 1.003 -1.003 135)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e5bbea3d-c176-4bf0-97ea-8433e9b2572d")
 			(effects
 				(font
@@ -26044,6 +26097,7 @@
 		(property "Reference" "C39"
 			(at 0 -3.625 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "35824b2b-8c03-4d94-b5b2-e39bb7441a50")
 			(effects
 				(font
@@ -26487,8 +26541,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C58"
-			(at -0.035 3.046 45)
+			(at 0.696937 3.777937 45)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d87e4ce4-a800-4c70-b30e-b9a989d3670a")
 			(effects
 				(font
@@ -26670,8 +26725,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C81"
-			(at 1.53 1.03 270)
+			(at 2.148349 -0.126525 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "03ee5463-360c-4421-a4b8-fc84b28205ef")
 			(effects
 				(font
@@ -26855,6 +26911,7 @@
 		(property "Reference" "C33"
 			(at 0 -1.15 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "c0d03de6-6e58-4cd2-97da-b2cbdeb17c20")
 			(effects
 				(font
@@ -27242,6 +27299,7 @@
 		(property "Reference" "R5"
 			(at 0 -1.2 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "68c7b3df-ad1b-42ca-a4a3-5629a2504170")
 			(effects
 				(font
@@ -27747,7 +27805,7 @@
 			(at 0 -1.75 0)
 			(layer "F.SilkS")
 			(hide yes)
-			(uuid "1cc78b68-7126-4314-96af-8b2d51095017")
+			(uuid "ac6a1261-a494-4b18-96a6-9231ce82a2ac")
 			(effects
 				(font
 					(size 1 1)
@@ -27758,7 +27816,7 @@
 		(property "Value" "10uF"
 			(at 0 2 0)
 			(layer "F.Fab")
-			(uuid "98e76d24-9e1a-4a2d-9dc6-fb3f340fb2ee")
+			(uuid "a4b153f7-eb7a-4ed5-874b-d0168c0d2247")
 			(effects
 				(font
 					(size 1 1)
@@ -27770,7 +27828,7 @@
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "6d09546e-6aec-4e0e-8680-35bfc24c80ed")
+			(uuid "85116678-a8f7-4083-b306-2154f01ebe8a")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -27781,7 +27839,7 @@
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "3ccaaadd-7453-48ac-8628-5c9c856a0b04")
+			(uuid "8b8df942-bd81-444a-8cd6-e5bef1363372")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -29036,6 +29094,7 @@
 		(property "Reference" "R13"
 			(at 0 1.55 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "203e1afd-ffa8-4ba9-b24e-a58235f11c3f")
 			(effects
 				(font
@@ -30211,6 +30270,7 @@
 		(property "Reference" "C16"
 			(at 0 -1.15 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "84b51d51-fb9c-4e36-8ef1-3e32d813fc54")
 			(effects
 				(font
@@ -30392,8 +30452,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C54"
-			(at 3.425 2.825 90)
+			(at 2.75 2.5 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "5c02865c-24c1-4836-bf17-7593a5e0b287")
 			(effects
 				(font
@@ -30575,6 +30636,7 @@
 		(property "Reference" "RN1"
 			(at 0 4.585 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "3584faea-df54-44f6-89cc-38ced53a1fd3")
 			(effects
 				(font
@@ -31182,6 +31244,7 @@
 		(property "Reference" "C68"
 			(at 1.53 1.03 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "aa4a382c-5e3c-4f34-9883-3a5055d60488")
 			(effects
 				(font
@@ -31365,6 +31428,7 @@
 		(property "Reference" "R8"
 			(at 1.65 0 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f8e525cc-c8b2-41ea-b458-1ba5cadb6243")
 			(effects
 				(font
@@ -32248,6 +32312,7 @@
 		(property "Reference" "C31"
 			(at 0 -1.270001 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "a39f315d-98f0-41fd-8c3c-d65dae78a891")
 			(effects
 				(font
@@ -32431,6 +32496,7 @@
 		(property "Reference" "R10"
 			(at -1.38 -1.03 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "23dba36e-c853-48ad-bc8e-4b638f6ffb94")
 			(effects
 				(font
@@ -32838,6 +32904,7 @@
 		(property "Reference" "C30"
 			(at 0 1.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8eec0cac-3b27-44b0-b7f8-a62db75099ac")
 			(effects
 				(font
@@ -33815,6 +33882,7 @@
 		(property "Reference" "C41"
 			(at -1.53 -1.03 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8c24cfa9-e077-48b2-8c91-7a8c1e3805fc")
 			(effects
 				(font
@@ -34201,6 +34269,7 @@
 		(property "Reference" "C67"
 			(at -1.7 0 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8d6438be-a95c-4aad-90ab-ded70e5cec1f")
 			(effects
 				(font
@@ -34382,8 +34451,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C73"
-			(at 0 1.15 180)
+			(at -0.75 1.15 180)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "e27365e7-7414-49fd-abfa-44e72960790d")
 			(effects
 				(font
@@ -34896,6 +34966,7 @@
 		(property "Reference" "R12"
 			(at 1.65 0 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f37c34a7-5b01-404d-be83-a08da6101934")
 			(effects
 				(font
@@ -35465,6 +35536,7 @@
 		(property "Reference" "C28"
 			(at 0 1.65 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8f0d0234-8f9e-4f8e-ab77-b55c934e25d7")
 			(effects
 				(font
@@ -36225,6 +36297,7 @@
 		(property "Reference" "RN2"
 			(at 4.105 -3.785 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "27c5e7e4-1a24-4080-9392-5af4a6578d46")
 			(effects
 				(font
@@ -36734,8 +36807,9 @@
 		(descr "Resistor SMD 0402, reflow soldering, Vishay (see dcrcw.pdf)")
 		(tags "resistor 0402")
 		(property "Reference" "R24"
-			(at 1.65 0 270)
+			(at 1.9 0 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "d9a23b7d-f9d2-4163-bbeb-5729227d4aac")
 			(effects
 				(font
@@ -36917,8 +36991,9 @@
 		(descr "Resistor SMD 0402, reflow soldering, Vishay (see dcrcw.pdf)")
 		(tags "resistor 0402")
 		(property "Reference" "R19"
-			(at -2.24 1.69 0)
+			(at 1.75 1.75 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f720e1fc-8b4b-4cb5-aec3-7af6a776a322")
 			(effects
 				(font
@@ -37722,6 +37797,7 @@
 		(property "Reference" "C57"
 			(at 0.035 -3.046 315)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "84680725-4d9c-431e-8e44-552847f8ba5a")
 			(effects
 				(font
@@ -39259,6 +39335,7 @@
 		(property "Reference" "C56"
 			(at -3.425 2.825 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "18957b0d-b54e-4c97-a7b2-fb3d937c8743")
 			(effects
 				(font
@@ -39440,8 +39517,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C72"
-			(at -1.58 0.98 0)
+			(at -1.58 2 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "54b3ba2d-1bd4-4729-bee7-34205c58380f")
 			(effects
 				(font
@@ -39623,8 +39701,9 @@
 		(descr "Resistor SMD 0402, reflow soldering, Vishay (see dcrcw.pdf)")
 		(tags "resistor 0402")
 		(property "Reference" "R25"
-			(at 1.48 0.93 270)
+			(at 2.3 0.15 270)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "7d5a598b-457e-4a0b-ad6c-0ff956dcc487")
 			(effects
 				(font
@@ -40317,6 +40396,7 @@
 		(property "Reference" "C108"
 			(at 2.7 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "fe86de7c-793d-4d09-8206-50f2b233a66c")
 			(effects
 				(font
@@ -40504,6 +40584,7 @@
 		(property "Reference" "C18"
 			(at 1.625 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "b9f705c5-73f1-4bd2-802d-38dfed903824")
 			(effects
 				(font
@@ -40901,6 +40982,7 @@
 		(property "Reference" "R29"
 			(at 0 1.2 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "b6571637-9410-4ffe-be7f-8295db37e424")
 			(effects
 				(font
@@ -41088,6 +41170,7 @@
 		(property "Reference" "C126"
 			(at 0 -1.6 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "202385a3-914a-4b0e-a138-6f27b58156fd")
 			(effects
 				(font
@@ -41276,6 +41359,7 @@
 		(property "Reference" "C109"
 			(at 0 1.6 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "1d3e2f6a-f4ba-4631-b11a-b0871adc0977")
 			(effects
 				(font
@@ -41464,6 +41548,7 @@
 		(property "Reference" "C84"
 			(at 0 -1.6 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "30c7a0da-032a-40fa-8f32-76e99c899e3d")
 			(effects
 				(font
@@ -42217,6 +42302,7 @@
 		(property "Reference" "C117"
 			(at 0 -3.625 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "48d72ac5-1c0f-4a1f-a300-72e49a9099e9")
 			(effects
 				(font
@@ -42823,6 +42909,7 @@
 		(property "Reference" "C14"
 			(at 0 1.6 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "037bc5df-baf1-4e0c-a0ff-d294516efb06")
 			(effects
 				(font
@@ -43367,6 +43454,7 @@
 		(property "Reference" "C105"
 			(at 0 1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "aa79c196-bc46-466b-a06b-7e66b6e603c6")
 			(effects
 				(font
@@ -43972,6 +44060,7 @@
 		(property "Reference" "C13"
 			(at 0 -1.6 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "7c25b356-1d94-4254-b8a2-58f7ff7def5b")
 			(effects
 				(font
@@ -44158,8 +44247,9 @@
 		(descr "Capacitor SMD 0402, reflow soldering, AVX (see smccp.pdf)")
 		(tags "capacitor 0402")
 		(property "Reference" "C63"
-			(at -1.442 -1.442 0)
+			(at -1.414214 -0.353553 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "a4163c62-422a-461d-9d85-b2cb07aa4779")
 			(effects
 				(font
@@ -44348,6 +44438,7 @@
 		(property "Reference" "R30"
 			(at 0 1.2 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "50ca167b-a971-499f-bc28-60ec042539a2")
 			(effects
 				(font
@@ -44535,6 +44626,7 @@
 		(property "Reference" "C3"
 			(at 1.7 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "20763ffd-e7e8-476f-a34e-c605d729310b")
 			(effects
 				(font
@@ -44932,6 +45024,7 @@
 		(property "Reference" "R14"
 			(at 1.625 -1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "315cbcda-8e1a-447c-8a29-db679563668e")
 			(effects
 				(font
@@ -46158,6 +46251,7 @@
 		(property "Reference" "C83"
 			(at 2.2 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "abfa4fec-872e-4856-9699-c874bd1fc623")
 			(effects
 				(font
@@ -46701,6 +46795,7 @@
 		(property "Reference" "R27"
 			(at 0 1.2 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "0c64988e-a4af-4ea4-9b78-f1feec1d1c73")
 			(effects
 				(font
@@ -47077,6 +47172,7 @@
 		(property "Reference" "C102"
 			(at 0 -1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "eb919216-933a-4132-833f-99d92588285f")
 			(effects
 				(font
@@ -47265,6 +47361,7 @@
 		(property "Reference" "C104"
 			(at 0 -1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "42fb2f1e-4ddc-44f8-9f6e-bcbdc79b7a19")
 			(effects
 				(font
@@ -47453,6 +47550,7 @@
 		(property "Reference" "C125"
 			(at 0 1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "44821bd7-3f00-48cf-aaba-682ff793064d")
 			(effects
 				(font
@@ -47641,6 +47739,7 @@
 		(property "Reference" "C5"
 			(at 1.7 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "417b36b4-a814-42fb-a340-69120849532a")
 			(effects
 				(font
@@ -47829,6 +47928,7 @@
 		(property "Reference" "C90"
 			(at -1.625 1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "741b7cb1-0ac8-4138-b5b7-c5507ec5f13d")
 			(effects
 				(font
@@ -48017,6 +48117,7 @@
 		(property "Reference" "C122"
 			(at 0 1.6 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "7f3ce6dc-786e-4a56-871a-1f9ee134eb7e")
 			(effects
 				(font
@@ -48205,6 +48306,7 @@
 		(property "Reference" "C64"
 			(at -1.442 1.442 90)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "9ecfa314-d27f-4286-9f23-cba805262a34")
 			(effects
 				(font
@@ -48393,6 +48495,7 @@
 		(property "Reference" "C17"
 			(at 0 -1.6 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "ff5c2f45-0827-4378-8844-3f8b69dc83da")
 			(effects
 				(font
@@ -48790,6 +48893,7 @@
 		(property "Reference" "C99"
 			(at 0 -1.65 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "42b6be81-23ba-44a5-b0fa-8113f22cc7f2")
 			(effects
 				(font
@@ -49334,6 +49438,7 @@
 		(property "Reference" "C116"
 			(at 2.7 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "a9eae82e-e65d-414b-918c-b3943a286b98")
 			(effects
 				(font
@@ -49541,6 +49646,7 @@
 		(property "Reference" "C89"
 			(at -2.825 2.225 90)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "cd1afee7-acfe-4814-8f37-ce59377df477")
 			(effects
 				(font
@@ -49729,6 +49835,7 @@
 		(property "Reference" "C107"
 			(at 0 -1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "67bc43b7-5c3c-4e2a-abe8-20c8f90a3ba9")
 			(effects
 				(font
@@ -49917,6 +50024,7 @@
 		(property "Reference" "C119"
 			(at -2.825 -2.225 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "727a63a5-6927-49e7-8943-6348eeaf6c53")
 			(effects
 				(font
@@ -50105,6 +50213,7 @@
 		(property "Reference" "C106"
 			(at 1.625 -1.025 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "5d0893a2-5c30-4748-a18e-e5dc5c536d36")
 			(effects
 				(font
@@ -50649,6 +50758,7 @@
 		(property "Reference" "C91"
 			(at -1.94 -1.34 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "bb55b0c4-3aa9-4cac-9b25-2e199a9c8aff")
 			(effects
 				(font
@@ -50837,6 +50947,7 @@
 		(property "Reference" "R28"
 			(at 0 1.2 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "a9265b03-9ac0-43c7-b132-cdc5f00a4cf4")
 			(effects
 				(font
@@ -51233,6 +51344,7 @@
 		(property "Reference" "C120"
 			(at 0 1.6 90)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "8a47c9ac-e611-4fbb-8aef-0a9fdbb751d6")
 			(effects
 				(font
@@ -51421,6 +51533,7 @@
 		(property "Reference" "C131"
 			(at 0 1.270001 90)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "775b13fc-9b06-49e5-b481-9d28f020ba0f")
 			(effects
 				(font
@@ -51608,6 +51721,7 @@
 		(property "Reference" "C103"
 			(at 3.425 2.825 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "7764cfad-a92c-442b-bcb8-5429f86a4bd0")
 			(effects
 				(font
@@ -51796,6 +51910,7 @@
 		(property "Reference" "C123"
 			(at 3.425 2.825 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "453dc494-5abb-4eaf-927e-7c80ff6fab55")
 			(effects
 				(font
@@ -52340,6 +52455,7 @@
 		(property "Reference" "C93"
 			(at 0 3.625 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "e5f24389-d221-41c8-9e50-bb9cefa0ccf3")
 			(effects
 				(font
@@ -52528,6 +52644,7 @@
 		(property "Reference" "C4"
 			(at 1.7 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "37c84ace-3977-4a71-ad83-2214dc4f8582")
 			(effects
 				(font
@@ -52716,6 +52833,7 @@
 		(property "Reference" "C121"
 			(at 0 1.65 90)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "46aebe36-e963-4db9-ac79-11c4ee5bb0b1")
 			(effects
 				(font
@@ -53260,6 +53378,7 @@
 		(property "Reference" "C110"
 			(at -2.29 1.79 90)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "28e876bc-a87b-4b6f-8322-52c6e6e9e3fa")
 			(effects
 				(font
@@ -53448,6 +53567,7 @@
 		(property "Reference" "C115"
 			(at 2.7 0 0)
 			(layer "B.SilkS")
+			(hide yes)
 			(uuid "32033068-460e-4a67-8552-d26e48fdc22d")
 			(effects
 				(font
@@ -73515,67 +73635,6 @@
 		)
 	)
 	(zone
-		(net "GND")
-		(layer "B.Cu")
-		(hatch none 0.1)
-		(priority 30001)
-		(attr
-			(teardrop
-				(type track_end)
-			)
-		)
-		(connect_pads yes
-			(clearance 0)
-		)
-		(min_thickness 0.0254)
-		(fill yes
-			(island_removal_mode 1)
-		)
-		(polygon
-			(pts
-				(xy 104.203422 121.5) (xy 104.203422 122) (xy 104.94779 122.146578) (xy 105.004422 121.75) (xy 104.94779 121.353422)
-			)
-		)
-		(filled_polygon
-			(layer "B.Cu")
-			(pts
-				(xy 105.004422 121.75) (xy 104.94779 122.146578) (xy 104.203422 122) (xy 104.203422 121.5) (xy 104.94779 121.353422)
-			)
-		)
-	)
-	(zone
-		(net "+3.3VA")
-		(layer "B.Cu")
-		(hatch none 0.1)
-		(priority 30004)
-		(attr
-			(teardrop
-				(type track_end)
-			)
-		)
-		(connect_pads yes
-			(clearance 0)
-		)
-		(min_thickness 0.0254)
-		(fill yes
-			(island_removal_mode 1)
-		)
-		(polygon
-			(pts
-				(xy 112.75 126.703422) (xy 112.25 126.703422) (xy 112.103422 127.44779) (xy 112.5 127.504422) (xy 112.896578 127.44779)
-			)
-		)
-		(filled_polygon
-			(layer "B.Cu")
-			(pts
-				(xy 112.748652 126.706849) (xy 112.751859 126.712862) (xy 112.894195 127.435691) (xy 112.892431 127.44447)
-				(xy 112.884975 127.449431) (xy 112.884388 127.44953) (xy 112.501653 127.504186) (xy 112.498347 127.504186)
-				(xy 112.115628 127.449533) (xy 112.107924 127.444972) (xy 112.105701 127.436297) (xy 112.105804 127.435691)
-				(xy 112.248141 126.71286) (xy 112.253102 126.705406) (xy 112.259621 126.703422) (xy 112.740379 126.703422)
-			)
-		)
-	)
-	(zone
 		(net "+3.3VA")
 		(layer "B.Cu")
 		(hatch none 0.1)
@@ -75404,37 +75463,6 @@
 		)
 	)
 	(zone
-		(net "GND")
-		(layer "B.Cu")
-		(hatch none 0.1)
-		(priority 30006)
-		(attr
-			(teardrop
-				(type track_end)
-			)
-		)
-		(connect_pads yes
-			(clearance 0)
-		)
-		(min_thickness 0.0254)
-		(fill yes
-			(island_removal_mode 1)
-		)
-		(polygon
-			(pts
-				(xy 105.260354 122.189959) (xy 105.439959 122.010354) (xy 105.207867 121.611107) (xy 104.995896 121.745896)
-				(xy 104.861107 121.957867)
-			)
-		)
-		(filled_polygon
-			(layer "B.Cu")
-			(pts
-				(xy 105.439959 122.010354) (xy 105.260354 122.189959) (xy 104.861107 121.957867) (xy 104.995896 121.745896)
-				(xy 105.207867 121.611107)
-			)
-		)
-	)
-	(zone
 		(net "+5V")
 		(layer "B.Cu")
 		(uuid "656d4d31-d5d8-41ce-b193-9b337bdda471")
@@ -75577,6 +75605,69 @@
 		)
 	)
 	(zone
+		(net "GND")
+		(layer "B.Cu")
+		(hatch none 0.1)
+		(priority 30005)
+		(attr
+			(teardrop
+				(type track_end)
+			)
+		)
+		(connect_pads yes
+			(clearance 0)
+		)
+		(min_thickness 0.0254)
+		(fill yes
+			(island_removal_mode 1)
+		)
+		(polygon
+			(pts
+				(xy 105.473463 122.403068) (xy 105.653068 122.223463) (xy 105.369552 121.596927) (xy 104.996873 121.746873)
+				(xy 104.846927 122.119552)
+			)
+		)
+		(filled_polygon
+			(layer "B.Cu")
+			(pts
+				(xy 105.653068 122.223463) (xy 105.473463 122.403068) (xy 104.846927 122.119552) (xy 104.996873 121.746873)
+				(xy 105.369552 121.596927)
+			)
+		)
+	)
+	(zone
+		(net "+3.3VA")
+		(layer "B.Cu")
+		(hatch none 0.1)
+		(priority 30004)
+		(attr
+			(teardrop
+				(type track_end)
+			)
+		)
+		(connect_pads yes
+			(clearance 0)
+		)
+		(min_thickness 0.0254)
+		(fill yes
+			(island_removal_mode 1)
+		)
+		(polygon
+			(pts
+				(xy 112.75 126.703422) (xy 112.25 126.703422) (xy 112.103422 127.44779) (xy 112.5 127.504422) (xy 112.896578 127.44779)
+			)
+		)
+		(filled_polygon
+			(layer "B.Cu")
+			(pts
+				(xy 112.748652 126.706849) (xy 112.751859 126.712862) (xy 112.894195 127.435691) (xy 112.892431 127.44447)
+				(xy 112.884975 127.449431) (xy 112.884388 127.44953) (xy 112.501653 127.504186) (xy 112.498347 127.504186)
+				(xy 112.115628 127.449533) (xy 112.107924 127.444972) (xy 112.105701 127.436297) (xy 112.105804 127.435691)
+				(xy 112.248141 126.71286) (xy 112.253102 126.705406) (xy 112.259621 126.703422) (xy 112.740379 126.703422)
+			)
+		)
+	)
+	(zone
 		(net "+5VA")
 		(layer "B.Cu")
 		(uuid "79fb2b53-9931-4daa-923c-96cc79072280")
@@ -75614,7 +75705,7 @@
 		(net "GND")
 		(layer "B.Cu")
 		(hatch none 0.1)
-		(priority 30005)
+		(priority 30006)
 		(attr
 			(teardrop
 				(type track_end)
@@ -75629,15 +75720,15 @@
 		)
 		(polygon
 			(pts
-				(xy 105.473463 122.403068) (xy 105.653068 122.223463) (xy 105.369552 121.596927) (xy 104.996873 121.746873)
-				(xy 104.846927 122.119552)
+				(xy 105.260354 122.189959) (xy 105.439959 122.010354) (xy 105.207867 121.611107) (xy 104.995896 121.745896)
+				(xy 104.861107 121.957867)
 			)
 		)
 		(filled_polygon
 			(layer "B.Cu")
 			(pts
-				(xy 105.653068 122.223463) (xy 105.473463 122.403068) (xy 104.846927 122.119552) (xy 104.996873 121.746873)
-				(xy 105.369552 121.596927)
+				(xy 105.439959 122.010354) (xy 105.260354 122.189959) (xy 104.861107 121.957867) (xy 104.995896 121.745896)
+				(xy 105.207867 121.611107)
 			)
 		)
 	)
@@ -75742,38 +75833,6 @@
 		)
 	)
 	(zone
-		(net "+3.3VA")
-		(layer "B.Cu")
-		(hatch none 0.1)
-		(priority 30003)
-		(attr
-			(teardrop
-				(type track_end)
-			)
-		)
-		(connect_pads yes
-			(clearance 0)
-		)
-		(min_thickness 0.0254)
-		(fill yes
-			(island_removal_mode 1)
-		)
-		(polygon
-			(pts
-				(xy 134.003422 126.75) (xy 134.003422 127.25) (xy 134.74779 127.396578) (xy 134.804422 127) (xy 134.74779 126.603422)
-			)
-		)
-		(filled_polygon
-			(layer "B.Cu")
-			(pts
-				(xy 134.74447 126.607568) (xy 134.749431 126.615023) (xy 134.749529 126.615604) (xy 134.804186 126.998346)
-				(xy 134.804186 127.001652) (xy 134.749533 127.38437) (xy 134.744972 127.392075) (xy 134.736297 127.394298)
-				(xy 134.73569 127.394195) (xy 134.012861 127.251858) (xy 134.005406 127.246897) (xy 134.003422 127.240378)
-				(xy 134.003422 126.759621) (xy 134.006849 126.751348) (xy 134.01286 126.748141) (xy 134.735691 126.605804)
-			)
-		)
-	)
-	(zone
 		(net "+5VA")
 		(layer "B.Cu")
 		(uuid "ddcb36cb-b605-4bc6-99d0-7806ad5930ef")
@@ -75813,6 +75872,38 @@
 		)
 	)
 	(zone
+		(net "+3.3VA")
+		(layer "B.Cu")
+		(hatch none 0.1)
+		(priority 30003)
+		(attr
+			(teardrop
+				(type track_end)
+			)
+		)
+		(connect_pads yes
+			(clearance 0)
+		)
+		(min_thickness 0.0254)
+		(fill yes
+			(island_removal_mode 1)
+		)
+		(polygon
+			(pts
+				(xy 134.003422 126.75) (xy 134.003422 127.25) (xy 134.74779 127.396578) (xy 134.804422 127) (xy 134.74779 126.603422)
+			)
+		)
+		(filled_polygon
+			(layer "B.Cu")
+			(pts
+				(xy 134.74447 126.607568) (xy 134.749431 126.615023) (xy 134.749529 126.615604) (xy 134.804186 126.998346)
+				(xy 134.804186 127.001652) (xy 134.749533 127.38437) (xy 134.744972 127.392075) (xy 134.736297 127.394298)
+				(xy 134.73569 127.394195) (xy 134.012861 127.251858) (xy 134.005406 127.246897) (xy 134.003422 127.240378)
+				(xy 134.003422 126.759621) (xy 134.006849 126.751348) (xy 134.01286 126.748141) (xy 134.735691 126.605804)
+			)
+		)
+	)
+	(zone
 		(net "+5VA")
 		(layer "B.Cu")
 		(uuid "ef177fb8-7b3f-470c-9257-aebadbc0d186")
@@ -75842,6 +75933,35 @@
 				(xy 99.541966 117.498264) (xy 99.535392 117.449702) (xy 99.608183 116.31997) (xy 99.632136 116.254338)
 				(xy 99.639097 116.245733) (xy 101.148949 114.541659) (xy 101.208138 114.504538) (xy 101.241517 114.499894)
 				(xy 102.017929 114.498423)
+			)
+		)
+	)
+	(zone
+		(net "GND")
+		(layer "B.Cu")
+		(hatch none 0.1)
+		(priority 30001)
+		(attr
+			(teardrop
+				(type track_end)
+			)
+		)
+		(connect_pads yes
+			(clearance 0)
+		)
+		(min_thickness 0.0254)
+		(fill yes
+			(island_removal_mode 1)
+		)
+		(polygon
+			(pts
+				(xy 104.203422 121.5) (xy 104.203422 122) (xy 104.94779 122.146578) (xy 105.004422 121.75) (xy 104.94779 121.353422)
+			)
+		)
+		(filled_polygon
+			(layer "B.Cu")
+			(pts
+				(xy 105.004422 121.75) (xy 104.94779 122.146578) (xy 104.203422 122) (xy 104.203422 121.5) (xy 104.94779 121.353422)
 			)
 		)
 	)
