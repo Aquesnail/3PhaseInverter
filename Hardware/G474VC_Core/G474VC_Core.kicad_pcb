@@ -11570,16 +11570,7 @@
 			(layer "F.SilkS")
 			(uuid "919af0b6-3c14-41ab-abdd-11c7e91fd616")
 		)
-		(fp_line
-			(start 0.349999 0.6)
-			(end -0.349999 0.6)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "b61cc5b2-1dd4-4225-8bcf-b5bcb2c03f74")
-		)
+		
 		(fp_line
 			(start -0.349999 -0.6)
 			(end 0.349999 -0.6)
@@ -11590,16 +11581,7 @@
 			(layer "F.SilkS")
 			(uuid "273f1e6e-5301-4439-98b2-d5bdb3aa58ad")
 		)
-		(fp_line
-			(start -0.349999 -0.6)
-			(end 0.349999 -0.6)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "950c5f1b-347d-4ff6-bb30-da5a14149678")
-		)
+		
 		(fp_line
 			(start -1.4 -0.65)
 			(end -1.4 0.65)
@@ -15124,6 +15106,16 @@
 				(xyz 0 0 0)
 			)
 		)
+		(fp_line
+			(start 2.15 -2.15)
+			(end 2.15 2.15)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "2b3b244d-b846-4ddd-b50e-dcad0354a814")
+		)
 	)
 	(footprint "Resistors_SMD.pretty-master:R_0402_NoSilk"
 		(layer "F.Cu")
@@ -17208,6 +17200,16 @@
 				(xyz 0 0 0)
 			)
 		)
+		(fp_line
+			(start 0.5 -0.61)
+			(end 0.5 0.61)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "7dc6421a-b310-4b6a-b6d8-a1c930afe675")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0603"
 		(layer "F.Cu")
@@ -19060,6 +19062,16 @@
 			(rotate
 				(xyz 0 0 0)
 			)
+		)
+		(fp_line
+			(start 0.5 -0.61)
+			(end 0.5 0.61)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "48b44541-8650-4502-8bce-c902fc0dc510")
 		)
 	)
 	(footprint "Resistors_SMD.pretty-master:R_0402_NoSilk"
@@ -24270,6 +24282,16 @@
 		(layer "F.SilkS")
 		(uuid "6d1b6119-15f5-43c5-abdd-99fa4b594f42")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "14e46946-31f1-4329-a69f-1ef66db7b3a9")
+		)
 	)
 	(footprint "Inductor_SMD:L_Changjiang_FXL0420"
 		(layer "F.Cu")
@@ -27746,6 +27768,16 @@
 		(layer "F.SilkS")
 		(uuid "f19bedb7-1d10-4331-84c3-ac18560b12e7")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "5aebc97f-70a7-4aa9-98ad-0e20dfe6033b")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_1206"
 		(layer "F.Cu")
@@ -29520,6 +29552,16 @@
 				(xyz 0 0 0)
 			)
 		)
+		(fp_line
+			(start 0.5 -0.61)
+			(end 0.5 0.61)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "861d1d8c-a65f-42df-a9db-ba77a39403b5")
+		)
 	)
 	(footprint "Connector_JST:JST_PH_B8B-PH-K_1x08_P2.00mm_Vertical"
 		(layer "F.Cu")
@@ -31186,6 +31228,16 @@
 				(xyz 0 0 0)
 			)
 		)
+		(fp_line
+			(start 0.5 -0.61)
+			(end 0.5 0.61)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "31c02109-52aa-4265-a16d-9d1c8ccbd15a")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "F.Cu")
@@ -31665,7 +31717,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "B.SilkS")
+			(layer "F.SilkS")
 			(uuid "4eedac46-a724-4dbd-beae-71e32486d32d")
 		)
 		(fp_line
@@ -31675,7 +31727,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "B.SilkS")
+			(layer "F.SilkS")
 			(uuid "e60edfc6-48d4-4b3f-ac3c-2fe15bd97ec1")
 		)
 		(fp_line
@@ -35962,6 +36014,16 @@
 				(xyz 0 0 0)
 			)
 		)
+		(fp_line
+			(start 0.5 -0.61)
+			(end 0.5 0.61)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "9f160593-a4af-48e1-a45d-521690886699")
+		)
 	)
 	(footprint "lcsc_footprints:C2894792_MMCX-TH_DL-MMCX-KE-180"
 		(layer "F.Cu")
@@ -37607,7 +37669,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "B.SilkS")
+			(layer "F.SilkS")
 			(uuid "8b0fc5e8-ccdd-47e2-91ed-0378626c478e")
 		)
 		(fp_line
@@ -37617,7 +37679,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "B.SilkS")
+			(layer "F.SilkS")
 			(uuid "8437965d-de26-4cfa-889e-56deaf0a3115")
 		)
 		(fp_line
@@ -40129,6 +40191,16 @@
 				(xyz 0 0 0)
 			)
 		)
+		(fp_line
+			(start 0.5 -0.61)
+			(end 0.5 0.61)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "d5b759f3-165f-401d-8376-42945107a342")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0603"
 		(layer "B.Cu")
@@ -42170,7 +42242,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "ffb37640-8ccf-4e91-8443-0dca15b41e4e")
 	)
 		(fp_line
@@ -42180,7 +42252,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "f6dec005-fb70-49a9-9242-71c87917e49b")
 	)
 		(fp_line
@@ -42190,9 +42262,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "973f1f38-673b-47a8-aeea-24512d8f490c")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "164f2ec3-558d-4083-9237-f95af8c59bd9")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "B.Cu")
@@ -43271,7 +43353,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "78f6c3ea-ce09-496f-9ef3-da2e1a3f95d9")
 	)
 		(fp_line
@@ -43281,7 +43363,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "a7a24de5-aed2-42c3-a8fa-826b673d80c9")
 	)
 		(fp_line
@@ -43291,9 +43373,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "1613e9f7-2b50-46c1-a0cf-a350621b3f9e")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "260a286d-41fa-4f66-8d2d-c209cba8a3cf")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "B.Cu")
@@ -45335,7 +45427,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "3725362c-f97e-4ae5-b4d3-f74131d23880")
 	)
 		(fp_line
@@ -45345,7 +45437,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "9ed6f210-17f4-439c-92b9-45b8fda95ead")
 	)
 		(fp_line
@@ -45355,9 +45447,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "010abf33-2ea0-4486-8305-19fa0d59cd81")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "52a68bb7-46e2-46d8-8d80-469e749b77e9")
+		)
 	)
 	(footprint "Diode_SMD:D_SOD-123F"
 		(layer "B.Cu")
@@ -45637,7 +45739,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "24dce0cc-783d-4b24-8dfb-48231fb8d8d2")
 	)
 		(fp_line
@@ -45647,7 +45749,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "5198e5c0-543b-433e-886a-78dd3c395ff5")
 	)
 		(fp_line
@@ -45657,9 +45759,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "cab4bae8-cacb-4584-9000-5f9311004f68")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "dc63a9a9-8044-4edd-b597-f614838d721e")
+		)
 	)
 	(footprint "Diode_SMD:D_SOD-123F"
 		(layer "B.Cu")
@@ -45942,7 +46054,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "f2fbc209-9d02-4d4d-9e4e-d6154ca3eec4")
 	)
 		(fp_line
@@ -45952,7 +46064,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "a7fc3501-2f44-4586-8060-778cbebca500")
 	)
 		(fp_line
@@ -45962,9 +46074,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "f6de37fb-f454-4241-a0d2-c2ee73b7ee33")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "440f4d37-7159-4f06-be86-2ef13912968e")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "B.Cu")
@@ -46435,7 +46557,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "415cf4f2-0c4a-48cb-a260-ed0cd718505e")
 	)
 		(fp_line
@@ -46445,7 +46567,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "4175dd4b-aa97-41fa-b894-b0a599572390")
 	)
 		(fp_line
@@ -46455,9 +46577,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "49110d3c-84af-43ea-afae-b9bb7852dc4d")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "3b882a9c-de33-4b57-abe8-c26da609a9d6")
+		)
 	)
 	(footprint "Resistors_SMD.pretty-master:R_0402_NoSilk"
 		(layer "B.Cu")
@@ -49027,7 +49159,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "6f8d4a1a-b576-4736-a891-00cb1681da9e")
 	)
 		(fp_line
@@ -49037,7 +49169,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "22e2c851-e6f3-46c7-ad51-6d4deef2ee73")
 	)
 		(fp_line
@@ -49047,9 +49179,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "15d439e6-05a8-4af7-8bde-04f9d3a1cf8a")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "951b3845-d28e-4a2b-9568-72baed34cc7a")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "B.Cu")
@@ -49125,7 +49267,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "3dd37419-1d0e-460d-ac74-71c080284032")
 		)
 		(fp_line
@@ -49135,7 +49277,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "d6175b29-ae73-4af4-a658-b6c8a36da967")
 		)
 		(fp_line
@@ -50296,7 +50438,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "0f4f398f-50fc-4201-8bf1-df397d82f92f")
 	)
 		(fp_line
@@ -50306,7 +50448,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "7305c5bd-ed29-47df-866f-1f367dd498f2")
 	)
 		(fp_line
@@ -50316,9 +50458,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "03f7a2e5-aaef-4b03-8749-1afc342724ca")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "f49a2c9c-3f7b-45d1-a2da-8c24150be46c")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "B.Cu")
@@ -51942,7 +52094,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "d77421c8-b284-4ca3-bd10-982d7cc3b998")
 	)
 		(fp_line
@@ -51952,7 +52104,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "5035709f-2e94-43b3-a78e-a8db5fbc8605")
 	)
 		(fp_line
@@ -51962,9 +52114,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "bf4dd36f-89f8-4117-a176-d8d957670dd1")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "a547ae15-8dee-4cf7-b2f7-8c12b1ccb928")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "B.Cu")
@@ -52814,7 +52976,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "edc3fdfc-d23a-4728-b86c-77d64bf9708a")
 	)
 		(fp_line
@@ -52824,7 +52986,7 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "5ea55d92-0bd7-4497-bf2c-be852b489d17")
 	)
 		(fp_line
@@ -52834,9 +52996,19 @@
 			(width 0.12)
 			(type solid)
 		)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(uuid "fd473a68-33be-4df2-a284-f218f845023f")
 	)
+		(fp_line
+			(start 1.65 -1)
+			(end 1.65 1)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "B.SilkS")
+			(uuid "5a82d239-24ab-49ed-ba44-2bb2d00e9cc0")
+		)
 	)
 	(footprint "Capacitors_SMD.pretty-master:C_0402_NoSilk"
 		(layer "B.Cu")
@@ -53101,7 +53273,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "2bcdfbe3-1c4b-46f8-b482-3d97a10ebbca")
 		)
 		(fp_line
@@ -53111,7 +53283,7 @@
 				(width 0.12)
 				(type solid)
 			)
-			(layer "F.SilkS")
+			(layer "B.SilkS")
 			(uuid "855b4c55-9fd3-4e8a-bf70-4017ca78ce84")
 		)
 		(fp_line
