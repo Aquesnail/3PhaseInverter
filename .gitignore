@@ -39,3 +39,11 @@ _bak_before_*/\n
 
 Hardware/G474VC_Core/_bak_before_*/
 Hardware/G474VC_Core/_restore_backup_*/
+
+# Gerber / 钻孔 / 制造输出（不入库，放本地或发布附件）
+*.gbr
+*.gbrjob
+*.drl
+*.nc
+*.rar
+
