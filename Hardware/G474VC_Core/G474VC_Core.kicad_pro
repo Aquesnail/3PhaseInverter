@@ -60,13 +60,13 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.25,
+          "min_clearance": 0.0,
           "min_island_area": 10.0,
-          "min_thickness": 0.25,
+          "min_thickness": 1.0,
           "pad_connection": 1,
           "remove_islands": 0,
           "thermal_relief_gap": 0.5,
-          "thermal_relief_spoke_width": 0.5
+          "thermal_relief_spoke_width": 1.0
         }
       },
       "diff_pair_dimensions": [
@@ -125,7 +125,7 @@
         "silk_overlap": "ignore",
         "skew_out_of_range": "error",
         "solder_mask_bridge": "error",
-        "starved_thermal": "error",
+        "starved_thermal": "warning",
         "text_height": "warning",
         "text_on_edge_cuts": "error",
         "text_thickness": "warning",
@@ -133,12 +133,12 @@
         "too_many_vias": "error",
         "track_angle": "error",
         "track_dangling": "warning",
-        "track_not_centered_on_via": "ignore",
+        "track_not_centered_on_via": "warning",
         "track_on_post_machined_layer": "error",
         "track_segment_length": "error",
         "track_width": "error",
         "tracks_crossing": "error",
-        "tuning_profile_track_geometries": "ignore",
+        "tuning_profile_track_geometries": "warning",
         "unconnected_items": "error",
         "unresolved_variable": "error",
         "via_dangling": "warning",
@@ -167,11 +167,11 @@
       },
       "teardrop_options": [
         {
-          "td_onpthpad": true,
+          "td_onpthpad": false,
           "td_onroundshapesonly": false,
-          "td_onsmdpad": true,
-          "td_ontrackend": false,
-          "td_onvia": true
+          "td_onsmdpad": false,
+          "td_ontrackend": true,
+          "td_onvia": false
         }
       ],
       "teardrop_parameters": [
@@ -202,7 +202,7 @@
         {
           "td_allow_use_two_tracks": true,
           "td_curve_segcount": 0,
-          "td_enabled": false,
+          "td_enabled": true,
           "td_height_ratio": 1.0,
           "td_length_ratio": 0.5,
           "td_maxheight": 2.0,
@@ -769,7 +769,7 @@
         "uuid": "3ec4fab6-e47e-43dc-9048-966accbcf8f8"
       }
     ],
-    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-107,#PWR115,C1-63,C65-73,C83-131,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
+    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-108,#PWR115,C1-63,C65-73,C83-131,CN1,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
     "variants": []
   },
   "sheets": [

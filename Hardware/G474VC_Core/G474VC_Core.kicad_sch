@@ -11829,7 +11829,7 @@
 		(dnp no)
 		(uuid "a1ea1160-3e7c-460c-a44d-d236ffdc00f3")
 		(property "Reference" "J2"
-			(at 203.2 78.7401 0)
+			(at 202.946 85.852 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11840,7 +11840,7 @@
 			)
 		)
 		(property "Value" "PH2.0x8"
-			(at 203.2 76.2001 0)
+			(at 203.2 83.058 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12806,7 +12806,7 @@
 		(dnp no)
 		(uuid "c4d08c4c-5f60-453d-86bd-5921558565c5")
 		(property "Reference" "J4"
-			(at 218.44 70.104 0)
+			(at 223.52 70.104 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
