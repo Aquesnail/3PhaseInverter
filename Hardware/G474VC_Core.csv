@@ -1,0 +1,56 @@
+Reference,Qty,Value,DNP,Exclude from BOM,Exclude from Board,Exclude from Simulation,Exclude from Position Files,Footprint,Datasheet
+"C1,C6,C12,C101",4,100nF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0603,
+"C2,C15,C19,C47,C48,C86,C127",7,1uF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0603,
+"C3,C4,C5,C13,C14,C17,C84,C89,C90,C91,C93,C99,C102,C103,C104,C105,C106,C107,C109,C110,C117,C119,C120,C121,C122,C123,C125,C126",28,10nF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+C7,1,560pf,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+"C8,C9,C10,C11,C87,C96,C97,C100",8,4.7uF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0603,
+"C16,C18,C81",3,100nF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+"C20,C21,C22,C23,C24,C33,C45,C92",8,1uF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+"C25,C26,C27,C28,C29,C30,C31,C32,C34,C35,C36,C37,C38,C39,C40,C41,C42,C43,C46,C49,C50,C51,C52,C53,C54,C55,C56,C57,C58,C59,C60,C61,C62,C65,C66,C67,C68,C69,C70,C71,C72,C73,C83,C108,C115,C116",46,24nF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+C44,1,4.7nF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+"C63,C64",2,20pF,10pF,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,~
+C74,1,2.2uF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+"C75,C76,C77,C78,C79",5,22uF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_1206,
+C80,1,220pF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+"C82,C85,C88,C94",4,10uF,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_1206,
+"C130,C131",2,100nf,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+D1,1,ESDCAN24-2BLY_C5158050,,,,,${EXCLUDE_FROM_POS_FILES},lcsc_footprints:C5158050_SOT-23-3_L2_9-W1_3-P1_90-LS2_4-BR,https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2311091742_UMW-Youtai-Semiconductor-Co---Ltd--ESDCAN24-2BLY_C5158050.pdf
+D2,1,12V TVS,,,,,${EXCLUDE_FROM_POS_FILES},Diode_SMD:D_SMB,https://www.st.com/resource/en/datasheet/sm6t.pdf
+"D3,D4,D5,D6,D7,D8",6,PESD3V3S1UL,,,,,${EXCLUDE_FROM_POS_FILES},Diode_SMD:D_SOD-882,https://assets.nexperia.com/documents/data-sheet/PESD3V3S1UL.pdf
+D10,1,Zener 12V,,,,,${EXCLUDE_FROM_POS_FILES},Diode_SMD:D_SOD-123F,
+"D14,D15,D16,D17,D18,D22,D24,D25,D26,D28",10,5V TVS,,,,,${EXCLUDE_FROM_POS_FILES},Diode_SMD:D_SOD-123F,https://www.st.com/resource/en/datasheet/sm6t.pdf
+D23,1,D_Schottky,,,,,${EXCLUDE_FROM_POS_FILES},Diode_SMD:D_SOD-123F,
+J1,1,GH1.25x4,,,,,${EXCLUDE_FROM_POS_FILES},Connector_JST:JST_GH_BM04B-GHS-TBT_1x04-1MP_P1.25mm_Vertical,
+J2,1,PH2.0x8,,,,,${EXCLUDE_FROM_POS_FILES},Connector_JST:JST_PH_B8B-PH-K_1x08_P2.00mm_Vertical,
+"J3,J7,J8,J9",4,Conn_01x04,,,,,${EXCLUDE_FROM_POS_FILES},Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical,
+"J4,J13,J14,J15,J16",5,PH2.0x2,,,,,${EXCLUDE_FROM_POS_FILES},Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,
+J5,1,GH1.25x2,,,,,${EXCLUDE_FROM_POS_FILES},Connector_JST:JST_GH_BM02B-GHS-TBT_1x02-1MP_P1.25mm_Vertical,
+J6,1,GH1.25x6,,,,,${EXCLUDE_FROM_POS_FILES},Connector_JST:JST_GH_BM06B-GHS-TBT_1x06-1MP_P1.25mm_Vertical,
+"J10,J11,J12,J19,J21,J27",6,Conn_01x10,,,,,${EXCLUDE_FROM_POS_FILES},Connector_JST:JST_PH_B10B-PH-K_1x10_P2.00mm_Vertical,
+L1,1,3.3uH,,,,,${EXCLUDE_FROM_POS_FILES},Inductor_SMD:L_APV_APH0420,~
+L12,1,600R 100Mhz,,,,,${EXCLUDE_FROM_POS_FILES},Inductor_SMD:L_0805_2012Metric,
+L15,1,4.7uH,,,,,${EXCLUDE_FROM_POS_FILES},Inductor_SMD:L_Changjiang_FXL0420,
+Q2,1,PMOS,,,,,${EXCLUDE_FROM_POS_FILES},lcsc_footprints:C2927416_DFN-8_L5_9-W5_2-P1_27-LS6_2-BL,https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2112021830_Vishay-Intertech-SI7155DP-T1-GE3_C2927416.pdf
+"R1,R2,R9,R15",4,50R,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0603,
+"R3,R4",2,R,TPS74801·´À¡µç×è,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+"R5,R6,R12,R13",4,22R,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+"R7,R8,R16,R17,R18,R19,R22,R26",8,10K,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+"R10,R11",2,62R,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+R14,1,50R,,,,,${EXCLUDE_FROM_POS_FILES},Capacitors_SMD.pretty-master:C_0402_NoSilk,
+R20,1,10K,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0603,
+R21,1,140K,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+R23,1,100K,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+R24,1,13.7K,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+R25,1,1K,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+"R27,R28,R29,R30",4,50R,,,,,${EXCLUDE_FROM_POS_FILES},Resistors_SMD.pretty-master:R_0402_NoSilk,
+"RF2,RF3,RF4,RF5",4,DL-MMCX-KE-180,,,,,${EXCLUDE_FROM_POS_FILES},lcsc_footprints:C2894792_MMCX-TH_DL-MMCX-KE-180,https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2109081930_DreamLNK-DL-MMCX-KE-180_C2894792.pdf
+RN1,1,0402x4,,,,,${EXCLUDE_FROM_POS_FILES},lcsc_footprints:C2002_RES-ARRAY-SMD_0402-8P-L2_0-W1_0-BL,https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_FH--Guangdong-Fenghua-Advanced-Tech-RC-MT08W3R0JT_C2002.pdf
+RN2,1,0402x4 22R,,,,,${EXCLUDE_FROM_POS_FILES},lcsc_footprints:C2002_RES-ARRAY-SMD_0402-8P-L2_0-W1_0-BL,https://www.lcsc.com/datasheet/lcsc_datasheet_2304140030_FH--Guangdong-Fenghua-Advanced-Tech-RC-MT08W3R0JT_C2002.pdf
+"SW2,SW3,SW4,SW5,SW6",5,SW_Push,,,,,${EXCLUDE_FROM_POS_FILES},Button_Switch_SMD:SW_SPST_PTS810,
+U1,1,SY8368QNC,,,,,${EXCLUDE_FROM_POS_FILES},lcsc_footprints:C125897_QFN-10_L3_0-W3_0-P0_45-TL_SILERGY,https://www.lcsc.com/datasheet/lcsc_datasheet_1808011441_Silergy-Corp-SY8368QNC_C125897.pdf
+U2,1,STM32G474VCTx_Software,,,,,${EXCLUDE_FROM_POS_FILES},Package_QFP:LQFP-100_14x14mm_P0.5mm,https://www.st.com/resource/en/datasheet/stm32g474vc.pdf
+U3,1,LP5907MFX-3.3,,,,,${EXCLUDE_FROM_POS_FILES},Package_TO_SOT_SMD:SOT-23-5,http://www.ti.com/lit/ds/symlink/lp5907.pdf
+U4,1,TPS74801DRC,,,,,${EXCLUDE_FROM_POS_FILES},Package_SON:VSON-10-1EP_3x3mm_P0.5mm_EP1.65x2.4mm_ThermalVias,https://www.ti.com/lit/ds/symlink/tps74801.pdf
+U9,1,LM66100DCK,,,,,${EXCLUDE_FROM_POS_FILES},Package_TO_SOT_SMD:SOT-363_SC-70-6,https://www.ti.com/lit/ds/symlink/lm66100.pdf
+U10,1,TCAN1044AVDRBRQ1,,,,,${EXCLUDE_FROM_POS_FILES},lcsc_footprints:C3234119_TDFN-8_L3_0-W3_0-P0_65-BL-EP,https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2302282130_Texas-Instruments-TCAN1044AVDRBRQ1_C3234119.pdf
+Y1,1,24Mhz,,,,,${EXCLUDE_FROM_POS_FILES},Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,

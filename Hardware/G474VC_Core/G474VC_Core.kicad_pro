@@ -645,7 +645,7 @@
       "method": 0,
       "sort_order": 0
     },
-    "bom_export_filename": "${PROJECTNAME}.csv",
+    "bom_export_filename": "..\\G474VC_Core.csv",
     "bom_fmt_presets": [],
     "bom_fmt_settings": {
       "field_delimiter": ",",
@@ -719,12 +719,78 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "CubeMX_Options",
+          "name": "CubeMX_Options",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "CubeMX_Project",
+          "name": "CubeMX_Project",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "CubeMX_Source",
+          "name": "CubeMX_Source",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "CubeMX_Version",
+          "name": "CubeMX_Version",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC",
+          "name": "LCSC",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Manufacturer",
+          "name": "Manufacturer",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "CubeMX_File",
+          "name": "CubeMX_File",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "描述",
+          "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "CubeMX_Device",
+          "name": "CubeMX_Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "CubeMX_Config",
+          "name": "CubeMX_Config",
+          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
-      "name": "Default Editing",
+      "name": "",
       "sort_asc": true,
       "sort_field": "Reference"
     },
