@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "exported_at": "2026-11-22T11:50:53.999Z",
+  "application": "LCL 控制实验室",
+  "circuit": {
+    "L1_uH": 200,
+    "L2_uH": 50,
+    "C_uF": 8.4,
+    "R1_mOhm": 30,
+    "R2_mOhm": 15
+  },
+  "current_controller": {
+    "Kpi_Ohm": 3.72,
+    "Kd_Ohm": 0,
+    "voltage_feedforward_alpha": 1,
+    "PWM_gain_V_per_V": 1.01
+  },
+  "digital_model": {
+    "PWM_frequency_kHz": 50,
+    "sampling_frequency_kHz": 50,
+    "delay_enabled": true,
+    "delay_us": 20,
+    "pade_order": 2,
+    "frequency_response_delay": "exact",
+    "time_and_pole_delay": "pade"
+  },
+  "voltage_controller": {
+    "type": "QPR",
+    "Kpv_A_per_V": 0.006198677748228989,
+    "Krv_A_per_V": 0.26059915128360783,
+    "half_bandwidth_Hz": 0.3,
+    "omega_cv_rad_per_s": 1.8849555921538759,
+    "fixed_center_frequency_Hz": 50,
+    "reference_frequency_Hz": 50,
+    "adaptive_center_enabled": false,
+    "effective_center_frequency_Hz": 50
+  },
+  "voltage_model": {
+    "kind": "cascade",
+    "selected_boundary": "load",
+    "effective_boundary": "ideal_capacitor_cascade"
+  },
+  "time_experiment": {
+    "mode": "ac",
+    "voltage_RMS_V": 30,
+    "initial_load_peak_A": 1,
+    "final_load_peak_A": 4,
+    "load_phase_deg": 0,
+    "change_time_s": 0.04,
+    "duration_s": 0.12,
+    "voltage_step_V": 1
+  },
+  "display": {
+    "active_lab": "voltage",
+    "current_bode": "loop",
+    "current_root": "locus",
+    "current_step_window_ms": 6,
+    "voltage_response": "L"
+  }
+}
