@@ -21,7 +21,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "droop_control.h"
+#include "fast_math.h"
+#include "stimulus.h"
+#include "stats_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,6 +45,8 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
+CORDIC_HandleTypeDef hcordic;
+
 HRTIM_HandleTypeDef hhrtim1;
 
 TIM_HandleTypeDef htim3;
@@ -59,17 +64,61 @@ static void MX_TIM3_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_HRTIM1_Init(void);
+static void MX_CORDIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/* ================= 算力测量用 50 kHz 控制中断 =================
+ * PA8：计算开始拉高、计算结束拉低（已配成 GPIO 输出），用逻辑分析仪量脉宽。
+ * 合成激励在 PA8 窗口之外生成，脉宽只包含控制算法本身。
+ * 中断源：ADC1 EOC，由 HRTIM_TRG1（Master CMP1，50 kHz）触发。
+ */
+volatile uint32_t g_isr_count   = 0u;
+volatile uint32_t g_isr_cyc_min = 0xFFFFFFFFu;  /* 最小执行周期数 */
+volatile uint32_t g_isr_cyc_max = 0u;           /* 最大执行周期数 */
+volatile uint64_t g_isr_cyc_sum = 0u;           /* 累计周期数（求平均） */
+static   float    g_duty[3]     = {0.0f, 0.0f, 0.0f};
+
 void ADC1_2_IRQHandler(void){
   if (__HAL_ADC_GET_FLAG(&hadc1, ADC_FLAG_EOC))
     {
         __HAL_ADC_CLEAR_FLAG(&hadc1, ADC_FLAG_EOC);
-        
+
+        /* 1) 【关键】立刻重新武装 ADC，让下一次 HRTIM 触发不会因为计算耗时被丢掉。
+         *    必须放在计算之前，否则 ISR 期间的触发全部丢失 -> 实际中断率只有一半。 */
+        SET_BIT(ADC1->CR, ADC_CR_ADSTART);
+
+        /* 1b) DWT 周期计数器自愈：调试器连接/复位可能把 CYCCNT 关掉，
+         *     否则所有耗时统计都会读到 0。每个 tick 检查一次（~4 周期）。 */
+        if ((DWT->CTRL & DWT_CTRL_CYCCNTENA_Msk) == 0u)
+        {
+          CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+          DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+        }
+
+        /* 2) 合成三相正弦激励（不计入 PA8 / DWT 窗口） */
+        STIM_Next();
+
+        /* 3) 计算窗口：PA8 = 1 -> 完整控制链 -> PA8 = 0（内部同时用 DWT 计数） */
+        GPIOA->BSRR = GPIO_PIN_8;                       /* PA8 high */
+        uint32_t t0 = DWT->CYCCNT;
+        DroopCtl_Step(&g_droop, g_stim_vcap_line, g_stim_i1, g_stim_i2,
+                      g_stim_vgrid_line, g_duty);
+        uint32_t dt = DWT->CYCCNT - t0;
+        GPIOA->BSRR = (uint32_t)GPIO_PIN_8 << 16u;      /* PA8 low  */
+
+        if (dt < g_isr_cyc_min) { g_isr_cyc_min = dt; }
+        if (dt > g_isr_cyc_max) { g_isr_cyc_max = dt; }
+        g_isr_cyc_sum += dt;
+        g_isr_count++;
+
+#if STATS_PRINT_IN_ISR
+        /* 主循环被中断饿死时，用这个从 ISR 打印（每 STATS_WINDOW_ISR 次才真正发送） */
+        Stats_TaskISR();
+#endif
     }
 }
 /* USER CODE END 0 */
@@ -107,24 +156,50 @@ int main(void)
   MX_USART1_UART_Init();
   MX_ADC1_Init();
   MX_HRTIM1_Init();
+  MX_CORDIC_Init();
   /* USER CODE BEGIN 2 */
-  /* ---- HRTIM start : 全部沿用 CubeMX 生成的初始化参数，未做任何改动 ----
-   * f_HRTIM = 170 MHz (PLLR), PrescalerRatio = MUL16 -> f_HRCK = 2.72 GHz (368 ps)
-   * Period = 54400 -> f_SW = 50.0 kHz
-   * Timer C (up-count, continuous):
-   *   CMP1 = 13600 (25.00%) -> TC1 SET      CMP2 = 27200 (50.00%) -> TC1 RESET
-   *   CMP3 = 30000 (55.15%) -> TC1 SET      CMP4 = 40000 (73.53%) -> TC1 RESET
-   *   => PB12 / HRTIM1_CHC1 : 每周期两个脉冲, 高电平总占比 43.38%
-   *   => PB13 / HRTIM1_CHC2 : 未配置 SET/RESET 源, 保持非激活(低电平)
-   * ADC trigger 1 = Master CMP1 (26200 = 48.16%), update source = Timer C
-   *   (ADC1 已配 ExternalTrigConv = HRTIM_TRG1, 需另外 HAL_ADC_Start_xxx)
-   */
   if (HAL_HRTIM_WaveformCountStart(&hhrtim1,
                                    HRTIM_TIMERID_MASTER | HRTIM_TIMERID_TIMER_C) != HAL_OK)
   {
     Error_Handler();
   }
   if (HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TC1 | HRTIM_OUTPUT_TC2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /* ================= ADC 触发链路修复（关键） =================
+   * 现象：ADC 武装完成却永不转换 -> ADC1_2_IRQHandler 一次都不进。
+   * 实测根因：
+   *   1) CubeMX 生成的 ADC 触发源是 AD1MC1（主定时器 CMP1）；
+   *   2) HRTIM_ADC1R 是双缓冲寄存器，只在"所选定时器的更新事件"时锁存生效；
+   *   3) 本工程主定时器上该更新/比较事件始终不产生（MISR 只有 MREP/MUPD，
+   *      MCMP1 从未置位），触发配置永远没被锁存，ADC 就一直等不到触发。
+   * 修复：触发源改成主定时器 period（同样每个周期一次），并强制一次软件更新完成锁存。
+   * 说明：纯代码改动，不改 .ioc / 时钟 / 外设初始化。
+   */
+
+  /* ---- 控制算法初始化：CORDIC 标定 + 合成激励表 + 状态 ---- */
+  FastMath_Init();
+  STIM_Init();
+  DroopCtl_Init(&g_droop);
+
+  /* ---- DWT 周期计数器（ISR 内计算耗时测量用）---- */
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+  DWT->CYCCNT = 0u;
+  DWT->CTRL  |= DWT_CTRL_CYCCNTENA_Msk;
+
+  /* ---- ADC1 启动（补上此前缺的一步）
+   *  1) 校准
+   *  2) HAL_ADC_Start_IT：使能 ADC + 使能 EOC 中断；
+   *     单次转换 + HRTIM_TRG1 上升沿触发 -> 每 20 us（50 kHz）进一次 ADC1_2_IRQHandler
+   *  3) NVIC 的 ADC1_2_IRQn 已由 CubeMX 在 HAL_ADC_MspInit 里使能（优先级 0）
+   */
+  if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_ADC_Start_IT(&hadc1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -137,6 +212,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    /* 分环节耗时统计：每 STATS_WINDOW_ISR 次中断经 USART1(115200-8N1) 打印一次。
+     * 若一直没有输出，说明 CPU 已被中断占满，把 stats_uart.h 里的
+     * STATS_PRINT_IN_ISR 改成 1（改从 ISR 打印）。 */
+#if (STATS_PRINT_IN_ISR == 0)
+    Stats_Task();
+#endif
   }
   /* USER CODE END 3 */
 }
@@ -161,7 +242,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV6;
+  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV3;
   RCC_OscInitStruct.PLL.PLLN = 85;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
@@ -259,6 +340,32 @@ static void MX_ADC1_Init(void)
 }
 
 /**
+  * @brief CORDIC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_CORDIC_Init(void)
+{
+
+  /* USER CODE BEGIN CORDIC_Init 0 */
+
+  /* USER CODE END CORDIC_Init 0 */
+
+  /* USER CODE BEGIN CORDIC_Init 1 */
+
+  /* USER CODE END CORDIC_Init 1 */
+  hcordic.Instance = CORDIC;
+  if (HAL_CORDIC_Init(&hcordic) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN CORDIC_Init 2 */
+
+  /* USER CODE END CORDIC_Init 2 */
+
+}
+
+/**
   * @brief HRTIM1 Initialization Function
   * @param None
   * @retval None
@@ -295,7 +402,7 @@ static void MX_HRTIM1_Init(void)
   {
     Error_Handler();
   }
-  pADCTriggerCfg.UpdateSource = HRTIM_ADCTRIGGERUPDATE_TIMER_C;
+  pADCTriggerCfg.UpdateSource = HRTIM_ADCTRIGGERUPDATE_MASTER;
   pADCTriggerCfg.Trigger = HRTIM_ADCTRIGGEREVENT13_MASTER_CMP1;
   if (HAL_HRTIM_ADCTriggerConfig(&hhrtim1, HRTIM_ADCTRIGGER_1, &pADCTriggerCfg) != HAL_OK)
   {
@@ -326,7 +433,7 @@ static void MX_HRTIM1_Init(void)
   pTimerCfg.PreloadEnable = HRTIM_PRELOAD_ENABLED;
   pTimerCfg.UpdateGating = HRTIM_UPDATEGATING_INDEPENDENT;
   pTimerCfg.BurstMode = HRTIM_TIMERBURSTMODE_MAINTAINCLOCK;
-  pTimerCfg.RepetitionUpdate = HRTIM_UPDATEONREPETITION_DISABLED;
+  pTimerCfg.RepetitionUpdate = HRTIM_UPDATEONREPETITION_ENABLED;
   pTimerCfg.ReSyncUpdate = HRTIM_TIMERESYNC_UPDATE_UNCONDITIONAL;
   if (HAL_HRTIM_WaveformTimerConfig(&hhrtim1, HRTIM_TIMERINDEX_MASTER, &pTimerCfg) != HAL_OK)
   {
@@ -353,7 +460,6 @@ static void MX_HRTIM1_Init(void)
   }
   pTimerCfg.InterruptRequests = HRTIM_TIM_IT_NONE;
   pTimerCfg.DMARequests = HRTIM_TIM_DMA_NONE;
-  pTimerCfg.PreloadEnable = HRTIM_PRELOAD_DISABLED;
   pTimerCfg.PushPull = HRTIM_TIMPUSHPULLMODE_DISABLED;
   pTimerCfg.FaultEnable = HRTIM_TIMFAULTENABLE_NONE;
   pTimerCfg.FaultLock = HRTIM_TIMFAULTLOCK_READWRITE;
@@ -529,6 +635,7 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
 
   /* USER CODE END MX_GPIO_Init_1 */
@@ -537,6 +644,24 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
+                          |GPIO_PIN_8, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PA4 PA5 PA6 PA7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

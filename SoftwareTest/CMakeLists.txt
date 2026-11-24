@@ -45,6 +45,10 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
+    Core/Src/droop_control.c      # DroopControl.slx 控制链移植（float32）
+    Core/Src/fast_math.c          # CORDIC atan2 / sin-cos 封装 + 自动标定
+    Core/Src/stimulus.c           # 无硬件时的合成三相正弦激励
+    Core/Src/stats_uart.c         # 分环节耗时统计 -> USART1 打印（主循环）
 )
 
 # Add include paths
@@ -65,6 +69,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
     # Add user defined libraries
+    m                             # libm: sinf/cosf/atan2f（CORDIC 关闭或标定时使用）
 )
 
 # -----------------------------------------------------------------------------
