@@ -71,15 +71,16 @@ static void MX_CORDIC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* ================= 算力测量用 50 kHz 控制中断 =================
- * PA8：计算开始拉高、计算结束拉低（已配成 GPIO 输出），用逻辑分析仪量脉宽。
- * 合成激励在 PA8 窗口之外生成，脉宽只包含控制算法本身。
- * 中断源：ADC1 EOC，由 HRTIM_TRG1（Master CMP1，50 kHz）触发。
+/* ============ 50 kHz control ISR (compute-load measurement build) ============
+ * PA8 : high during the control-chain execution, low after -> measure with LA
+ * DWT : per-stage cycle counters are accumulated in g_cyc[] (see droop_control.c)
+ * IRQ : ADC1 EOC, triggered by HRTIM ADC trigger 1
+ * NOTE: keep this section ASCII-only, CubeMX mangles non-ASCII user code.
  */
 volatile uint32_t g_isr_count   = 0u;
-volatile uint32_t g_isr_cyc_min = 0xFFFFFFFFu;  /* 最小执行周期数 */
-volatile uint32_t g_isr_cyc_max = 0u;           /* 最大执行周期数 */
-volatile uint64_t g_isr_cyc_sum = 0u;           /* 累计周期数（求平均） */
+volatile uint32_t g_isr_cyc_min = 0xFFFFFFFFu;
+volatile uint32_t g_isr_cyc_max = 0u;
+volatile uint64_t g_isr_cyc_sum = 0u;
 static   float    g_duty[3]     = {0.0f, 0.0f, 0.0f};
 
 void ADC1_2_IRQHandler(void){
@@ -87,28 +88,26 @@ void ADC1_2_IRQHandler(void){
     {
         __HAL_ADC_CLEAR_FLAG(&hadc1, ADC_FLAG_EOC);
 
-        /* 1) 【关键】立刻重新武装 ADC，让下一次 HRTIM 触发不会因为计算耗时被丢掉。
-         *    必须放在计算之前，否则 ISR 期间的触发全部丢失 -> 实际中断率只有一半。 */
+        /* re-arm ADC first: a trigger arriving during the computation must not be lost */
         SET_BIT(ADC1->CR, ADC_CR_ADSTART);
 
-        /* 1b) DWT 周期计数器自愈：调试器连接/复位可能把 CYCCNT 关掉，
-         *     否则所有耗时统计都会读到 0。每个 tick 检查一次（~4 周期）。 */
+        /* DWT CYCCNT self-heal (debug probe / reset may disable it) */
         if ((DWT->CTRL & DWT_CTRL_CYCCNTENA_Msk) == 0u)
         {
           CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
           DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
         }
 
-        /* 2) 合成三相正弦激励（不计入 PA8 / DWT 窗口） */
+        /* synthetic 3-phase stimulus (outside the PA8 window) */
         STIM_Next();
 
-        /* 3) 计算窗口：PA8 = 1 -> 完整控制链 -> PA8 = 0（内部同时用 DWT 计数） */
-        GPIOA->BSRR = GPIO_PIN_8;                       /* PA8 high */
+        /* compute window : PA8 high -> control chain -> PA8 low */
+        GPIOA->BSRR = GPIO_PIN_8;
         uint32_t t0 = DWT->CYCCNT;
         DroopCtl_Step(&g_droop, g_stim_vcap_line, g_stim_i1, g_stim_i2,
                       g_stim_vgrid_line, g_duty);
         uint32_t dt = DWT->CYCCNT - t0;
-        GPIOA->BSRR = (uint32_t)GPIO_PIN_8 << 16u;      /* PA8 low  */
+        GPIOA->BSRR = (uint32_t)GPIO_PIN_8 << 16u;
 
         if (dt < g_isr_cyc_min) { g_isr_cyc_min = dt; }
         if (dt > g_isr_cyc_max) { g_isr_cyc_max = dt; }
@@ -116,7 +115,6 @@ void ADC1_2_IRQHandler(void){
         g_isr_count++;
 
 #if STATS_PRINT_IN_ISR
-        /* 主循环被中断饿死时，用这个从 ISR 打印（每 STATS_WINDOW_ISR 次才真正发送） */
         Stats_TaskISR();
 #endif
     }
@@ -158,6 +156,7 @@ int main(void)
   MX_HRTIM1_Init();
   MX_CORDIC_Init();
   /* USER CODE BEGIN 2 */
+  /* ---- HRTIM start (CubeMX-generated settings, unchanged) ---- */
   if (HAL_HRTIM_WaveformCountStart(&hhrtim1,
                                    HRTIM_TIMERID_MASTER | HRTIM_TIMERID_TIMER_C) != HAL_OK)
   {
@@ -168,33 +167,17 @@ int main(void)
     Error_Handler();
   }
 
-  /* ================= ADC 触发链路修复（关键） =================
-   * 现象：ADC 武装完成却永不转换 -> ADC1_2_IRQHandler 一次都不进。
-   * 实测根因：
-   *   1) CubeMX 生成的 ADC 触发源是 AD1MC1（主定时器 CMP1）；
-   *   2) HRTIM_ADC1R 是双缓冲寄存器，只在"所选定时器的更新事件"时锁存生效；
-   *   3) 本工程主定时器上该更新/比较事件始终不产生（MISR 只有 MREP/MUPD，
-   *      MCMP1 从未置位），触发配置永远没被锁存，ADC 就一直等不到触发。
-   * 修复：触发源改成主定时器 period（同样每个周期一次），并强制一次软件更新完成锁存。
-   * 说明：纯代码改动，不改 .ioc / 时钟 / 外设初始化。
-   */
-
-  /* ---- 控制算法初始化：CORDIC 标定 + 合成激励表 + 状态 ---- */
+  /* ---- control algorithm / CORDIC / synthetic stimulus init ---- */
   FastMath_Init();
   STIM_Init();
   DroopCtl_Init(&g_droop);
 
-  /* ---- DWT 周期计数器（ISR 内计算耗时测量用）---- */
+  /* ---- DWT cycle counter for compute-time measurement ---- */
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CYCCNT = 0u;
   DWT->CTRL  |= DWT_CTRL_CYCCNTENA_Msk;
 
-  /* ---- ADC1 启动（补上此前缺的一步）
-   *  1) 校准
-   *  2) HAL_ADC_Start_IT：使能 ADC + 使能 EOC 中断；
-   *     单次转换 + HRTIM_TRG1 上升沿触发 -> 每 20 us（50 kHz）进一次 ADC1_2_IRQHandler
-   *  3) NVIC 的 ADC1_2_IRQn 已由 CubeMX 在 HAL_ADC_MspInit 里使能（优先级 0）
-   */
+  /* ---- ADC1 start: calibration + EOC interrupt, 1 conversion per HRTIM trigger ---- */
   if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK)
   {
     Error_Handler();
@@ -211,12 +194,9 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-    /* 分环节耗时统计：每 STATS_WINDOW_ISR 次中断经 USART1(115200-8N1) 打印一次。
-     * 若一直没有输出，说明 CPU 已被中断占满，把 stats_uart.h 里的
-     * STATS_PRINT_IN_ISR 改成 1（改从 ISR 打印）。 */
+        /* USER CODE BEGIN 3 */
 #if (STATS_PRINT_IN_ISR == 0)
-    Stats_Task();
+    Stats_Task();   /* per-stage timing -> USART1, once per STATS_WINDOW_ISR */
 #endif
   }
   /* USER CODE END 3 */
