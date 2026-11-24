@@ -1,0 +1,11 @@
+/.vscode
+/.cache
+/cmake/stm32cubemx/
+/Drivers
+/build
+.mxproject
+CMakeUserPresets.json
+*.elf
+*.bin
+*.hex
+*.map
