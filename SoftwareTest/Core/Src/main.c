@@ -106,12 +106,49 @@ volatile uint16_t g_adc4_raw   = 0u;
 volatile uint32_t g_isr_count  = 0u;   /* 50 kHz fast steps (DMA callbacks) */
 volatile uint32_t g_slow_count = 0u;   /* 1 kHz slow steps (TIM1)           */
 volatile uint32_t g_main_loops = 0u;   /* main-loop iterations (probe)      */
+volatile uint32_t g_adc4_cnt   = 0u;   /* DMA1_Ch2 completion polls         */
 static   float    g_duty[3]    = {0.0f, 0.0f, 0.0f};
+
+/* ADC4's DMA mode as configured in CubeMX:
+ *   0 = DMA_NORMAL   -> the channel stops after 2 samples, so re-arm it here
+ *   1 = DMA_CIRCULAR -> nothing to do, just clear the flags
+ * Change this to 1 once ADC4's DMA is set to Circular in CubeMX. */
+#ifndef ADC4_DMA_IS_CIRCULAR
+#define ADC4_DMA_IS_CIRCULAR 0
+#endif
 
 /* CubeMX does not emit this handler (the "generate IRQ handler" flag is off
  * for DMA1_Channel1), so it is provided here. */
 void DMA1_Channel1_IRQHandler(void)
 {
+  /* ---- ADC4 uses DMA1_Channel2 with NO interrupt of its own, so its transfer
+   * completion is polled here (its NVIC line must be disabled in CubeMX,
+   * otherwise the HAL handler would clear the flags before we see them). ---- */
+  uint32_t ch2_flags = DMA1->ISR & (DMA_ISR_TCIF2 | DMA_ISR_TEIF2);
+  if (ch2_flags != 0u)
+  {
+    /* clear transfer-complete and transfer-error for channel 2 */
+    DMA1->IFCR = DMA_IFCR_CTCIF2 | DMA_IFCR_CTEIF2;
+    g_adc4_cnt++;
+  }
+
+#if (ADC4_DMA_IS_CIRCULAR == 0)
+  /* DMA_NORMAL: keep the channel armed. Re-arm whenever the counter ran out,
+   * no matter whether a TC/TE flag was observed (a transfer error can leave
+   * the channel stopped without a pending completion). */
+  if (hdma_adc4.Instance->CNDTR == 0u)
+  {
+    if ((ADC4->ISR & ADC_ISR_OVR) != 0u)
+    {
+      ADC4->ISR = ADC_ISR_OVR;                     /* drop stale overrun */
+    }
+    __HAL_DMA_DISABLE(&hdma_adc4);
+    hdma_adc4.Instance->CNDTR = 2u;
+    __HAL_DMA_ENABLE(&hdma_adc4);
+  }
+#endif
+
+  /* ADC1 + ADC2 dual stream: half-complete / complete -> Fast_Step() */
   HAL_DMA_IRQHandler(&hdma_adc1);
 }
 
@@ -160,12 +197,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
   if (hadc->Instance == ADC1)
   {
     Fast_Step(s_adc12[1], s_adc4[1]);
-  }
-  else if (hadc->Instance == ADC4)
-  {
-    /* ADC4 DMA is DMA_NORMAL in CubeMX, so it stops after 2 transfers.
-     * Restart it to keep sampling. (Suggested CubeMX fix: set it Circular.) */
-    (void)HAL_ADC_Start_DMA(&hadc4, (uint32_t *)s_adc4, 2u);
   }
 }
 /* USER CODE END 0 */
