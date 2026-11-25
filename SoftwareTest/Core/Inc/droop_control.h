@@ -29,15 +29,14 @@
 #define EN_PWM      1
 
 /* ==================== 环节分频（1=每 tick 跑，N=每 N 个 tick 跑一次） ========= */
+/* 注意：SOGI 与 DROOP 已改由 TIM1 的 1 kHz 中断驱动，不再用分频。 */
 #define DIV_PRE     1
-#define DIV_SOGI    1
-#define DIV_DROOP   5      /* 对齐模型 Ts_ctrl = 10 kHz（50k/5） */
 #define DIV_QPR     1
 #define DIV_CURR    1
 #define DIV_PWM     1
 
 /* ==================== 每环节耗时统计（DWT，主循环经串口打印） ============= */
-#define MEASURE_PER_STAGE  1
+#define MEASURE_PER_STAGE  0   /* DWT 统计关闭：改用 PA8/PA4 + 逻辑分析仪 */
 
 typedef enum
 {
@@ -56,7 +55,8 @@ extern volatile uint32_t g_cyc[ST_NUM][3];
 #endif
 
 /* ==================== 参数（模型 InitFcn 原值） ==================== */
-#define DROOP_TS            2.0e-5f      /* 50 kHz；仅用于离散化系数，不随分频变化 */
+#define DROOP_TS            2.0e-5f      /* 50 kHz 快环步长：PRE/QPR/CURR/PWM */
+#define DROOP_TS_SLOW       1.0e-3f      /* 1 kHz 慢环步长：SOGI-FLL / DROOP (TIM1) */
 #define DROOP_W0            314.159265f  /* 2*pi*50 */
 #define DROOP_WC            1.884955592f /* 2*pi*0.3 */
 #define DROOP_UC_KP         0.010579843f
@@ -81,7 +81,8 @@ extern volatile uint32_t g_cyc[ST_NUM][3];
 
 typedef struct
 {
-  float Ts;
+  float Ts;        /* 50 kHz 快环步长 */
+  float Ts_slow;   /* 1 kHz 慢环步长（SOGI / DROOP） */
 
   /* QPR 系数与状态 */
   float qpr_a1, qpr_a2, qpr_b0;
@@ -121,12 +122,15 @@ void DroopCtl_Init(DroopCtl_t *s);
 void DroopCtl_SOGI_FLL(DroopCtl_t *s, const float uabc[3],
                        float *theta, float *omega, uint8_t *locked);
 
-/** @brief 一个 tick（内部按各环节分频/开关调度） */
+/** @brief 一个快环 tick（50 kHz，ADC 中断里调用）：PRE -> QPR -> CURR -> PWM */
 void DroopCtl_Step(DroopCtl_t *s,
                    const float vcap_line[3],
                    const float i1_abc[3],
                    const float i2_abc[3],
                    const float vgrid_line[3],
                    float duty[3]);
+
+/** @brief 一个慢环 tick（1 kHz，TIM1 更新中断里调用）：SOGI-FLL -> DROOP */
+void DroopCtl_StepSlow(DroopCtl_t *s);
 
 #endif /* __DROOP_CONTROL_H */

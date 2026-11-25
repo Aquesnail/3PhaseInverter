@@ -22,10 +22,14 @@ DroopCtl_t g_droop;
 volatile uint32_t g_cyc[ST_NUM][3];
 
 /* 统计宏：只在统计段内读 DWT，开销 ~6 周期/环节 */
+/* 注意：stage 函数会被 -O3 内联，必须用 "memory" 屏障把计时点和计算体隔开，
+ * 否则编译器会把两次 CYCCNT 读调度到一起 -> dt 恒为 0。 */
 #define STAGE_TIMED(id, ...)                    \
   do {                                          \
     uint32_t _t0 = DWT->CYCCNT;                 \
+    __asm volatile ("" ::: "memory");           \
     __VA_ARGS__;                                \
+    __asm volatile ("" ::: "memory");           \
     uint32_t _d = DWT->CYCCNT - _t0;            \
     g_cyc[id][0] += _d;                         \
     if (_d > g_cyc[id][1]) { g_cyc[id][1] = _d; } \
@@ -80,6 +84,7 @@ void DroopCtl_Init(DroopCtl_t *s)
   s->qpr_a2 = (4.0f - 2.0f * xi * Ts + w0Ts2) / den;
   s->qpr_b0 = 4.0f * DROOP_UC_KR_CODE * xi * Ts / den;
   s->Ts = Ts;
+  s->Ts_slow = DROOP_TS_SLOW;
 
   s->ur1a = s->ur2a = s->e1a = s->e2a = 0.0f;
   s->ur1b = s->ur2b = s->e1b = s->e2b = 0.0f;
@@ -108,8 +113,6 @@ void DroopCtl_Init(DroopCtl_t *s)
 
   /* 分频计数器初值 */
   s_cnt[ST_PRE]   = DIV_PRE;
-  s_cnt[ST_SOGI]  = DIV_SOGI;
-  s_cnt[ST_DROOP] = DIV_DROOP;
   s_cnt[ST_QPR]   = DIV_QPR;
   s_cnt[ST_CURR]  = DIV_CURR;
   s_cnt[ST_PWM]   = DIV_PWM;
@@ -158,7 +161,7 @@ void DroopCtl_SOGI_FLL(DroopCtl_t *s, const float uabc[3],
   const float k        = SQRT2;
   const float Gamma    = 100.0f;
   const float eps_lock = 5.0f;
-  const uint32_t lock_hold = (uint32_t)(0.02f / s->Ts + 0.5f);
+  const uint32_t lock_hold = (uint32_t)(0.02f / s->Ts_slow + 0.5f);
 
   float Ua = uabc[0], Ub = uabc[1], Uc = uabc[2];
   float ualpha = (2.0f / 3.0f) * (Ua - 0.5f * Ub - 0.5f * Uc);
@@ -169,12 +172,12 @@ void DroopCtl_SOGI_FLL(DroopCtl_t *s, const float uabc[3],
   if (om < TWO_PI * 45.0f) { om = TWO_PI * 45.0f; }
 
   float err_a = ualpha - s->x1a;
-  s->x1a = s->x1a + s->Ts * (k * err_a - s->x2a) * om;
-  s->x2a = s->x2a + s->Ts * (s->x1a * om);
+  s->x1a = s->x1a + s->Ts_slow * (k * err_a - s->x2a) * om;
+  s->x2a = s->x2a + s->Ts_slow * (s->x1a * om);
 
   float err_b = ubeta - s->x1b;
-  s->x1b = s->x1b + s->Ts * (k * err_b - s->x2b) * om;
-  s->x2b = s->x2b + s->Ts * (s->x1b * om);
+  s->x1b = s->x1b + s->Ts_slow * (k * err_b - s->x2b) * om;
+  s->x2b = s->x2b + s->Ts_slow * (s->x1b * om);
 
   float va_pos = 0.5f * (s->x1a - s->x2b);
   float vb_pos = 0.5f * (s->x1b + s->x2a);
@@ -182,14 +185,14 @@ void DroopCtl_SOGI_FLL(DroopCtl_t *s, const float uabc[3],
   float eps_f = va_pos * (s->x1b - ubeta) - vb_pos * (s->x1a - ualpha);
   float norm  = va_pos * va_pos + vb_pos * vb_pos;
   if (norm > 1e-6f) { eps_f = eps_f / norm; }
-  om = om - Gamma * eps_f * s->Ts;
+  om = om - Gamma * eps_f * s->Ts_slow;
   s->sogi_omega = om;
 
   float th;
 #if (DROOP_ANGLE_MODE_CORDIC == 1)
   th = FM_Atan2(vb_pos, va_pos);
 #else
-  s->theta_pll = wrap_2pi(s->theta_pll + om * s->Ts);
+  s->theta_pll = wrap_2pi(s->theta_pll + om * s->Ts_slow);
   th = s->theta_pll;
 #endif
   s->theta_pll = th;
@@ -220,7 +223,7 @@ static void stage_sogi(DroopCtl_t *s)
 #else
 static void stage_sogi(DroopCtl_t *s)
 {
-  s->theta_pll = wrap_2pi(s->theta_pll + DROOP_W0 * s->Ts);
+  s->theta_pll = wrap_2pi(s->theta_pll + DROOP_W0 * s->Ts_slow);
   s->omega_pll = DROOP_W0;
 }
 #endif
@@ -235,7 +238,7 @@ static void stage_droop(DroopCtl_t *s)
   s->P_inst = p_inst;
   s->Q_inst = q_inst;
 
-  float alpha_lpf = (DROOP_GRID_WC * s->Ts) / (1.0f + DROOP_GRID_WC * s->Ts);
+  float alpha_lpf = (DROOP_GRID_WC * s->Ts_slow) / (1.0f + DROOP_GRID_WC * s->Ts_slow);
   s->P_filt = (1.0f - alpha_lpf) * s->P_filt + alpha_lpf * p_inst;
   s->Q_filt = (1.0f - alpha_lpf) * s->Q_filt + alpha_lpf * q_inst;
 
@@ -245,7 +248,7 @@ static void stage_droop(DroopCtl_t *s)
   else if (E > 1.2f * DROOP_E0) { E = 1.2f * DROOP_E0; }
   s->E_out = E;
 
-  s->theta = wrap_2pi(s->theta + s->w_out * s->Ts);
+  s->theta = wrap_2pi(s->theta + s->w_out * s->Ts_slow);
 
   float sn, cs;
   FM_SinCos(s->theta, &sn, &cs);
@@ -357,6 +360,22 @@ static void stage_pwm(DroopCtl_t *s)
 
 /* ---------------- 调度器：一个 tick ---------------- */
 
+/* ---------------- 慢环调度：1 kHz（TIM1 更新中断） ---------------- */
+
+void DroopCtl_StepSlow(DroopCtl_t *s)
+{
+#if EN_SOGI
+  STAGE_TIMED(ST_SOGI, stage_sogi(s));
+#else
+  stage_sogi(s);
+#endif
+
+#if EN_DROOP
+  STAGE_TIMED(ST_DROOP, stage_droop(s));
+#else
+  stage_droop(s);
+#endif
+}
 void DroopCtl_Step(DroopCtl_t *s,
                    const float vcap_line[3],
                    const float i1_abc[3],
@@ -375,27 +394,6 @@ void DroopCtl_Step(DroopCtl_t *s,
   stage_pre(s, vcap_line, i1_abc, i2_abc, vgrid_line);
 #endif
 
-  /* 1 SOGI */
-#if EN_SOGI
-  if (--s_cnt[ST_SOGI] == 0u)
-  {
-    s_cnt[ST_SOGI] = DIV_SOGI;
-    STAGE_TIMED(ST_SOGI, stage_sogi(s));
-  }
-#else
-  stage_sogi(s);
-#endif
-
-  /* 2 DROOP */
-#if EN_DROOP
-  if (--s_cnt[ST_DROOP] == 0u)
-  {
-    s_cnt[ST_DROOP] = DIV_DROOP;
-    STAGE_TIMED(ST_DROOP, stage_droop(s));
-  }
-#else
-  stage_droop(s);
-#endif
 
   /* 3 QPR */
 #if EN_QPR

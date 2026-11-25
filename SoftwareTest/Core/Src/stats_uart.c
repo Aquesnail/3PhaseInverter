@@ -9,10 +9,19 @@
  *       此时把 STATS_PRINT_IN_ISR 改成 1（从 ISR 打印）即可拿到数据。
  */
 #include "stats_uart.h"
+
+#if MEASURE_PER_STAGE
+#define STATS_UART_ACTIVE 1
+#else
+#define STATS_UART_ACTIVE 0
+#endif
 #include "droop_control.h"
 #include "main.h"
 
+#if STATS_UART_ACTIVE
 extern volatile uint32_t g_isr_count;
+extern volatile uint32_t g_slow_count;
+extern volatile uint32_t g_slow_cyc_max;
 
 #define LINE_MAX 96
 
@@ -109,6 +118,17 @@ static void stats_print_window(uint32_t win, const uint32_t snap[ST_NUM][3])
     sum_max += snap[i][1];
   }
 
+  /* 1 kHz slow loop (TIM1): SOGI-FLL + DROOP */
+  s_len = 0u;
+  app_str("SLOW  mx=");
+  app_u32_pad(g_slow_cyc_max, 6);
+  app_str(" -> ");
+  app_u32_pad(g_slow_cyc_max / 170u, 3);
+  app_str(" us  n=");
+  app_u32(g_slow_count);
+  app_str("  (TIM1 1kHz)\r\n");
+  flush_line();
+
   s_len = 0u;
   app_str("SUM   mx=");
   app_u32_pad(sum_max, 6);
@@ -163,3 +183,8 @@ void Stats_TaskISR(void)
 
   stats_print_window(win, snap);
 }
+
+#else
+void Stats_Task(void)    { }
+void Stats_TaskISR(void) { }
+#endif

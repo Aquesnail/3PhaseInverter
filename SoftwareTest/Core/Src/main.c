@@ -73,52 +73,61 @@ static void MX_TIM1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* ============ 50 kHz control ISR (compute-load measurement build) ============
- * PA8 : high during the control-chain execution, low after -> measure with LA
- * DWT : per-stage cycle counters are accumulated in g_cyc[] (see droop_control.c)
- * IRQ : ADC1 EOC, triggered by HRTIM ADC trigger 1
+/* ======================= measurement GPIO =======================
+ * PA8 : high while the 50 kHz fast chain runs (PRE -> QPR -> CURR -> PWM)
+ * PA4 : high while the 1 kHz slow chain runs (SOGI-FLL + DROOP, TIM1 update IRQ)
+ * Attach both to a logic analyzer; pulse width == execution time of that part.
+ * DWT statistics and UART statistics are disabled.
  * NOTE: keep this section ASCII-only, CubeMX mangles non-ASCII user code.
  */
-volatile uint32_t g_isr_count   = 0u;
-volatile uint32_t g_isr_cyc_min = 0xFFFFFFFFu;
-volatile uint32_t g_isr_cyc_max = 0u;
-volatile uint64_t g_isr_cyc_sum = 0u;
-static   float    g_duty[3]     = {0.0f, 0.0f, 0.0f};
+volatile uint32_t g_isr_count  = 0u;   /* 50 kHz fast ISR counter      */
+volatile uint32_t g_slow_count = 0u;   /* 1 kHz slow ISR counter       */
+volatile uint32_t g_main_loops = 0u;   /* main-loop iterations (probe) */
+static   float    g_duty[3]    = {0.0f, 0.0f, 0.0f};
 
+void TIM1_UP_TIM16_IRQHandler(void)
+{
+  HAL_TIM_IRQHandler(&htim1);
+}
+
+/* TIM1 update IRQ (1 kHz): SOGI-FLL + DROOP */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim->Instance == TIM1)
+  {
+    GPIOA->BSRR = GPIO_PIN_4;
+    DroopCtl_StepSlow(&g_droop);
+    GPIOA->BSRR = (uint32_t)GPIO_PIN_4 << 16u;
+    g_slow_count++;
+  }
+}
+
+/* 50 kHz fast chain: PRE -> QPR -> CURR -> PWM */
 void ADC1_2_IRQHandler(void){
+  /* The ADC overrun flag MUST be cleared here: with OVRIE enabled cube settings
+   * the OVR interrupt re-fires continuously (~2.4 MHz observed) and eats all CPU.
+   * (OVRIE is also disabled in USER CODE 2 as the primary fix.) */
+  if ((ADC1->ISR & ADC_ISR_OVR) != 0u)
+  {
+    ADC1->ISR = ADC_ISR_OVR;          /* write 1 to clear */
+  }
+
   if (__HAL_ADC_GET_FLAG(&hadc1, ADC_FLAG_EOC))
     {
         __HAL_ADC_CLEAR_FLAG(&hadc1, ADC_FLAG_EOC);
 
-        /* re-arm ADC first: a trigger arriving during the computation must not be lost */
+        /* re-arm ADC first so a trigger arriving during the computation is not lost */
         SET_BIT(ADC1->CR, ADC_CR_ADSTART);
-
-        /* DWT CYCCNT self-heal (debug probe / reset may disable it) */
-        if ((DWT->CTRL & DWT_CTRL_CYCCNTENA_Msk) == 0u)
-        {
-          CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-          DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-        }
 
         /* synthetic 3-phase stimulus (outside the PA8 window) */
         STIM_Next();
 
-        /* compute window : PA8 high -> control chain -> PA8 low */
         GPIOA->BSRR = GPIO_PIN_8;
-        uint32_t t0 = DWT->CYCCNT;
         DroopCtl_Step(&g_droop, g_stim_vcap_line, g_stim_i1, g_stim_i2,
                       g_stim_vgrid_line, g_duty);
-        uint32_t dt = DWT->CYCCNT - t0;
         GPIOA->BSRR = (uint32_t)GPIO_PIN_8 << 16u;
 
-        if (dt < g_isr_cyc_min) { g_isr_cyc_min = dt; }
-        if (dt > g_isr_cyc_max) { g_isr_cyc_max = dt; }
-        g_isr_cyc_sum += dt;
         g_isr_count++;
-
-#if STATS_PRINT_IN_ISR
-        Stats_TaskISR();
-#endif
     }
 }
 /* USER CODE END 0 */
@@ -159,16 +168,6 @@ int main(void)
   MX_CORDIC_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  void TIM1_UP_TIM16_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM1_UP_TIM16_IRQn 0 */
-
-  /* USER CODE END TIM1_UP_TIM16_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim1);
-  /* USER CODE BEGIN TIM1_UP_TIM16_IRQn 1 */
-
-  /* USER CODE END TIM1_UP_TIM16_IRQn 1 */
-}
   /* ---- HRTIM start (CubeMX-generated settings, unchanged) ---- */
   if (HAL_HRTIM_WaveformCountStart(&hhrtim1,
                                    HRTIM_TIMERID_MASTER | HRTIM_TIMERID_TIMER_C) != HAL_OK)
@@ -184,11 +183,11 @@ int main(void)
   FastMath_Init();
   STIM_Init();
   DroopCtl_Init(&g_droop);
-
-  /* ---- DWT cycle counter for compute-time measurement ---- */
-  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-  DWT->CYCCNT = 0u;
-  DWT->CTRL  |= DWT_CTRL_CYCCNTENA_Msk;
+  /* ---- TIM1 1 kHz slow loop (SOGI-FLL + DROOP) ---- */
+  if (HAL_TIM_Base_Start_IT(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
   /* ---- ADC1 start: calibration + EOC interrupt, 1 conversion per HRTIM trigger ---- */
   if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK)
@@ -199,6 +198,11 @@ int main(void)
   {
     Error_Handler();
   }
+
+  /* Disable the ADC overrun interrupt: we re-arm ADSTART ourselves every ISR.
+   * Leaving OVRIE enabled causes an interrupt storm as soon as OVR latches. */
+  CLEAR_BIT(ADC1->IER, ADC_IER_OVRIE);
+  ADC1->ISR = ADC_ISR_OVR;            /* clear any pending OVR */
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -208,9 +212,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-#if (STATS_PRINT_IN_ISR == 0)
-    Stats_Task();   /* per-stage timing -> USART1, once per STATS_WINDOW_ISR */
-#endif
+    g_main_loops++;   /* liveness probe: proves the main loop still gets CPU time */
   }
   /* USER CODE END 3 */
 }
