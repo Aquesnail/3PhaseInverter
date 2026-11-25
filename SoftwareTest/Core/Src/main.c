@@ -47,6 +47,7 @@ ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 ADC_HandleTypeDef hadc4;
 DMA_HandleTypeDef hdma_adc1;
+DMA_HandleTypeDef hdma_adc4;
 
 CORDIC_HandleTypeDef hcordic;
 
@@ -79,36 +80,36 @@ static void MX_ADC4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* ======================= ADC + DMA 50 kHz fast loop =======================
- * ADC1 (master) + ADC2 (slave, dual regular simultaneous) are started together
- * by HAL_ADCEx_MultiModeStart_DMA(); the DMA reads 32-bit words from
- * ADC12_COMMON->CDR : [15:0] = ADC1, [31:16] = ADC2.
- * ADC4 is triggered by the same HRTIM_TRG1 and has its own DMA channel
- * (DMA1_Channel2, DMAMUX request ADC4) into a 2-entry buffer.
+/* ============ 50 kHz fast control loop, driven by the ADC DMA streams ============
+ * All peripheral configuration comes from CubeMX (do not touch it here):
+ *   DMA1_Channel1 : ADC1, WORD/WORD, CIRCULAR,  req ADC1  -> ADC1+ADC2 dual
+ *   DMA1_Channel2 : ADC4, HALFWORD/HALFWORD, req ADC4
+ *   NVIC: DMA1_Channel1_IRQn and DMA1_Channel2_IRQn enabled by MX_DMA_Init()
  *
- * Both streams are circular with 2 entries, so half-complete / complete fire
- * once per trigger  ->  the fast control chain runs from the DMA interrupt at
- * 50 kHz (no ADC EOC interrupt any more).
+ * ADC1 (master) + ADC2 (slave, dual regular simultaneous) are started with
+ * HAL_ADCEx_MultiModeStart_DMA(); the DMA moves 32-bit words from
+ * ADC12_COMMON->CDR:  [15:0] = ADC1 raw, [31:16] = ADC2 raw.
+ * ADC4 has its own trigger (same HRTIM_TRG1) and its own DMA channel.
  *
- * PA8 : high during the fast chain (control computation)
- * PA4 : high during the slow chain (TIM1 1 kHz, SOGI-FLL + DROOP)
+ * Both buffers hold 2 entries, so half-complete + complete fire once per
+ * trigger => the fast chain runs at 50 kHz from the DMA interrupt.
+ *
+ * PA8 : high during the fast chain      PA4 : high during the slow chain (TIM1)
  * NOTE: keep this section ASCII-only, CubeMX mangles non-ASCII user code.
  */
-extern DMA_HandleTypeDef hdma_adc1;
-DMA_HandleTypeDef hdma_adc4;
+static uint32_t s_adc12[2];   /* [15:0] = ADC1 raw, [31:16] = ADC2 raw */
+static uint16_t s_adc4[2];    /* ADC4 raw                            */
 
-static uint32_t s_adc12[2];    /* [15:0] = ADC1 raw, [31:16] = ADC2 raw */
-static uint16_t s_adc4[2];     /* ADC4 raw */
-
-volatile uint16_t g_adc1_raw  = 0u;
-volatile uint16_t g_adc2_raw  = 0u;
-volatile uint16_t g_adc4_raw  = 0u;
+volatile uint16_t g_adc1_raw   = 0u;
+volatile uint16_t g_adc2_raw   = 0u;
+volatile uint16_t g_adc4_raw   = 0u;
 volatile uint32_t g_isr_count  = 0u;   /* 50 kHz fast steps (DMA callbacks) */
 volatile uint32_t g_slow_count = 0u;   /* 1 kHz slow steps (TIM1)           */
 volatile uint32_t g_main_loops = 0u;   /* main-loop iterations (probe)      */
 static   float    g_duty[3]    = {0.0f, 0.0f, 0.0f};
 
-/* DMA1_Channel1 = ADC1(dual) stream -> one fast control step */
+/* CubeMX does not emit this handler (the "generate IRQ handler" flag is off
+ * for DMA1_Channel1), so it is provided here. */
 void DMA1_Channel1_IRQHandler(void)
 {
   HAL_DMA_IRQHandler(&hdma_adc1);
@@ -131,17 +132,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   }
 }
 
-/* One 50 kHz fast step: ADC values -> control chain */
+/* One 50 kHz fast step: ADC data -> control chain */
 static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word)
 {
   g_adc1_raw = (uint16_t)(adc12_word & 0xFFFFu);
   g_adc2_raw = (uint16_t)(adc12_word >> 16);
   g_adc4_raw = adc4_word;
 
-  /* defensive: ADC4 overrun should not happen (DMA drains its DR) */
-  if ((ADC4->ISR & ADC_ISR_OVR) != 0u) { ADC4->ISR = ADC_ISR_OVR; }
-
-  /* synthetic 3-phase stimulus feeds the control chain (no real hardware yet) */
+  /* synthetic 3-phase stimulus feeds the chain (no real hardware yet) */
   STIM_Next();
 
   GPIOA->BSRR = GPIO_PIN_8;
@@ -159,7 +157,16 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc)
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-  if (hadc->Instance == ADC1) { Fast_Step(s_adc12[1], s_adc4[1]); }
+  if (hadc->Instance == ADC1)
+  {
+    Fast_Step(s_adc12[1], s_adc4[1]);
+  }
+  else if (hadc->Instance == ADC4)
+  {
+    /* ADC4 DMA is DMA_NORMAL in CubeMX, so it stops after 2 transfers.
+     * Restart it to keep sampling. (Suggested CubeMX fix: set it Circular.) */
+    (void)HAL_ADC_Start_DMA(&hadc4, (uint32_t *)s_adc4, 2u);
+  }
 }
 /* USER CODE END 0 */
 
@@ -217,78 +224,30 @@ int main(void)
   FastMath_Init();
   STIM_Init();
   DroopCtl_Init(&g_droop);
+
   /* ---- TIM1 1 kHz slow loop (SOGI-FLL + DROOP) ---- */
   if (HAL_TIM_Base_Start_IT(&htim1) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /* ================= ADC + DMA 50 kHz sampling =================
-   * ADC1 (master) + ADC2 (slave, dual regular simultaneous) -> one DMA stream
-   *   from ADC12_COMMON->CDR, 32-bit: [15:0]=ADC1, [31:16]=ADC2
-   * ADC4 -> its own DMA channel (DMA1_Channel2, DMAMUX request ADC4)
-   * Both circular with 2 entries -> one callback per HRTIM trigger (50 kHz).
-   * The CubeMX-generated DMA config for ADC1 is HALFWORD/NORMAL: it must be
-   * 32-bit WORD + CIRCULAR to match the CDR source.
-   */
-  (void)HAL_DMA_DeInit(&hdma_adc1);
-  hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-  hdma_adc1.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
-  hdma_adc1.Init.Mode                = DMA_CIRCULAR;
-  hdma_adc1.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
-  if (HAL_DMA_Init(&hdma_adc1) != HAL_OK)
+  /* ---- start the ADC sampling chains (peripheral config is from CubeMX) ---- */
+  if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_DIFFERENTIAL_ENDED) != HAL_OK)
   {
     Error_Handler();
   }
-
-  /* ADC4: dedicated DMA channel */
-  hdma_adc4.Instance                 = DMA1_Channel2;
-  hdma_adc4.Init.Request             = DMA_REQUEST_ADC4;
-  hdma_adc4.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-  hdma_adc4.Init.PeriphInc           = DMA_PINC_DISABLE;
-  hdma_adc4.Init.MemInc              = DMA_MINC_ENABLE;
-  hdma_adc4.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-  hdma_adc4.Init.MemDataAlignment    = DMA_MDATAALIGN_HALFWORD;
-  hdma_adc4.Init.Mode                = DMA_CIRCULAR;
-  hdma_adc4.Init.Priority            = DMA_PRIORITY_HIGH;
-  if (HAL_DMA_Init(&hdma_adc4) != HAL_OK)
+  if (HAL_ADCEx_Calibration_Start(&hadc4, ADC_DIFFERENTIAL_ENDED) != HAL_OK)
   {
     Error_Handler();
   }
-  __HAL_LINKDMA(&hadc4, DMA_Handle, hdma_adc4);
-
-  /* DMA transfer-complete IRQ = 50 kHz fast loop tick */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-
-  /* ADC4 keeps requesting DMA without restart (circular) */
-  ADC4->CFGR |= ADC_CFGR_DMACFG;
-
-  /* ---- calibration then start both sampling chains ---- */
-  if (HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED) != HAL_OK)
+  if (HAL_ADCEx_MultiModeStart_DMA(&hadc1, s_adc12, 2u) != HAL_OK)   /* ADC1 + ADC2 */
   {
     Error_Handler();
   }
-  if (HAL_ADCEx_Calibration_Start(&hadc4, ADC_SINGLE_ENDED) != HAL_OK)
+  if (HAL_ADC_Start_DMA(&hadc4, (uint32_t *)s_adc4, 2u) != HAL_OK)  /* ADC4        */
   {
     Error_Handler();
   }
-
-  if (HAL_ADCEx_MultiModeStart_DMA(&hadc1, s_adc12, 2u) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_ADC_Start_DMA(&hadc4, (uint32_t *)s_adc4, 2u) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /* OVR interrupt must stay OFF: it re-fires continuously (~2.4 MHz observed)
-   * and starves the CPU. The DMA drains the data registers anyway. */
-  CLEAR_BIT(ADC1->IER, ADC_IER_OVRIE);
-  CLEAR_BIT(ADC4->IER, ADC_IER_OVRIE);
-  ADC1->ISR = ADC_ISR_OVR;
-  ADC4->ISR = ADC_ISR_OVR;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -512,7 +471,7 @@ static void MX_ADC4_Init(void)
   hadc4.Init.DiscontinuousConvMode = DISABLE;
   hadc4.Init.ExternalTrigConv = ADC_EXTERNALTRIG_HRTIM_TRG1;
   hadc4.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
-  hadc4.Init.DMAContinuousRequests = DISABLE;
+  hadc4.Init.DMAContinuousRequests = ENABLE;
   hadc4.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc4.Init.OversamplingMode = ENABLE;
   hadc4.Init.Oversampling.Ratio = ADC_OVERSAMPLING_RATIO_4;
@@ -926,6 +885,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* DMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
 
 }
 
