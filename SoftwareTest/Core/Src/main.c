@@ -114,7 +114,7 @@ static   float    g_duty[3]    = {0.0f, 0.0f, 0.0f};
  *   1 = DMA_CIRCULAR -> nothing to do, just clear the flags
  * Change this to 1 once ADC4's DMA is set to Circular in CubeMX. */
 #ifndef ADC4_DMA_IS_CIRCULAR
-#define ADC4_DMA_IS_CIRCULAR 0
+#define ADC4_DMA_IS_CIRCULAR 1   /* CubeMX: Dma.ADC4.1.Mode = DMA_CIRCULAR */
 #endif
 
 /* CubeMX does not emit this handler (the "generate IRQ handler" flag is off
@@ -916,9 +916,6 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-  /* DMA1_Channel2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
 
 }
 
