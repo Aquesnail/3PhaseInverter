@@ -32,7 +32,7 @@ PANEL_OFF  = 0.05      # 屏体与 FPC 的胶层
 SLOT_Y     = 8.50      # 焊盘中心到板上开槽中心的距离(取 U5 封装内 Edge.Cuts 槽: y 8..9)
 SLOT_W     = 9.00      # 开槽宽度(U5 fp_poly x -4.5..4.5)
 SLOT_TAB_W = 8.60      # 穿孔处 FPC 收窄后的宽度(要 < SLOT_W)
-PANEL_Y0   = 4.50      # 屏体近端距焊盘中心（屏中心=10mm，正好盖住 y8~9 的开孔）
+PANEL_Y0   = -5.50      # 屏体近端(局部Y)：屏中心与焊盘中心对齐 => -5.5..+5.5
 OUTDIR     = r"D:\3phase_inverter\Hardware\G474VC_Core\libs\lcsc\3dmodels"
 
 def box_pts(x0,x1,y0,y1,z0,z1):
@@ -127,22 +127,31 @@ def build(variant="wrap", edge_y=EDGE_Y, board_t=BOARD_T):
     # --- 接触区补强 + FPC 主体 ---
     m.box(-x_half,x_half, -FING_L/2, FING_L/2, 0.02, 0.02+FPC_T+STIFF_T, C_STF)
     if variant=="slot":
-        # --- 穿过 U5 封装里的板开槽 (Edge.Cuts: x -4.5..4.5, y 8..9) ---
-        tab_y0=SLOT_Y-0.5; tab_y1=SLOT_Y+0.5      # 槽在 Y 方向 1mm
-        hw_tab=SLOT_TAB_W/2
-        z0=0.02                                    # 焊盘面 FPC 底面
-        # 焊盘侧：全宽走到槽前方
-        m.box(-x_half,x_half, FING_L/2, tab_y0-1.2, z0, z0+FPC_T, C_FPC)
-        # 收窄过渡
-        m.box(-hw_tab,hw_tab, tab_y0-1.2, tab_y0, z0, z0+FPC_T, C_FPC)
-        # 穿孔段（穿过整块板）
-        m.box(-hw_tab,hw_tab, tab_y0, tab_y1, -(board_t+0.02), z0+FPC_T, C_FPC)
-        # 另一面：收窄→全宽→屏体
-        m.box(-hw_tab,hw_tab, tab_y1, tab_y1+1.2, -(board_t+0.02)-FPC_T, -(board_t+0.02), C_FPC)
-        m.box(-x_half,x_half, tab_y1+1.2, PANEL_Y0+PANEL_L, -(board_t+0.02)-FPC_T, -(board_t+0.02), C_FPC)
-        # 屏体（贴在 FPC 外侧，可视面朝外）
-        z_gl=-(board_t+0.02)-FPC_T-PANEL_OFF-PANEL_T
+        # 装配：屏在板正面(正对焊盘)，FPC 从屏背面 -> 走到开孔 -> 穿孔 -> 板背面 180° 折回焊盘
+        tab_x=SLOT_TAB_W/2
+        tab_y0=SLOT_Y-0.5; tab_y1=SLOT_Y+0.5        # 开孔 Y 向 1mm
+        zb0=0.0                                      # 板背面(焊盘面)=0
+        z_fpc_b0=0.0; z_fpc_b1=FPC_T                 # 板背面 FPC
+        z_board_far=-board_t                         # 板正面
+        z_fpc_f0=-board_t-FPC_T-0.02                 # 板正面 FPC(下表面)
+        z_fpc_f1=-board_t-0.02                       # 板正面 FPC(贴板面)
+        # (a) 金手指：压焊盘
+        for k in range(NPIN):
+            cx=(-(NPIN-1)/2 + k)*PITCH
+            m.box(cx-FING_W/2, cx+FING_W/2, -FING_L/2, FING_L/2, zb0, zb0+0.02, C_PAD)
+        # (b) 补强 + 板背面 FPC：焊盘 -> 开孔
+        m.box(-x_half,x_half, -FING_L/2, FING_L/2, 0.02, 0.02+FPC_T+STIFF_T, C_STF)
+        m.box(-x_half,x_half, FING_L/2, tab_y0-1.2, 0.02, 0.02+FPC_T, C_FPC)
+        m.box(-tab_x,tab_x, tab_y0-1.2, tab_y0, 0.02, 0.02+FPC_T, C_FPC)
+        # (c) 穿孔段（穿过整板）
+        m.box(-tab_x,tab_x, tab_y0, tab_y1, z_board_far, 0.02+FPC_T, C_FPC)
+        # (d) 板正面：从开孔折回屏体（180° 折返）
+        m.box(-tab_x,tab_x, tab_y1, tab_y1+0.8, z_fpc_f0, z_fpc_f1, C_FPC)
+        m.box(-x_half,x_half, PANEL_Y0+0.8, tab_y1+0.8, z_fpc_f0, z_fpc_f1, C_FPC)
+        # (e) 屏体：正对焊盘，贴在板正面
+        z_gl=z_fpc_f0-PANEL_OFF-PANEL_T
         m.box(-PANEL_W/2, PANEL_W/2, PANEL_Y0, PANEL_Y0+PANEL_L, z_gl, z_gl+PANEL_T, C_GLASS)
+        # 可视面示意(朝外)
         m.box(-PANEL_W/2+0.95, PANEL_W/2-0.95, PANEL_Y0+1.0, PANEL_Y0+PANEL_L-1.0, z_gl-0.05, z_gl, C_POL)
         return m
     if variant=="flat":
