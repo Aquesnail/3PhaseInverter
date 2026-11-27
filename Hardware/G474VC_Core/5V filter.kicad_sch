@@ -446,7 +446,7 @@
 				)
 			)
 		)
-		(property "Description" "600W unidirectional Transil Transient Voltage Suppressor, 7.5Vrwm, DO-214AA"
+		(property "Description" "5V unidirectional TVS in SOD-123F (project local symbol)"
 			(at 129.54 92.71 0)
 			(hide yes)
 			(show_name no)

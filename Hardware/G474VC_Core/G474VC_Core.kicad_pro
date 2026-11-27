@@ -60,9 +60,9 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.0,
+          "min_clearance": 0.25,
           "min_island_area": 10.0,
-          "min_thickness": 1.0,
+          "min_thickness": 0.25,
           "pad_connection": 1,
           "remove_islands": 0,
           "thermal_relief_gap": 0.5,
@@ -835,7 +835,7 @@
         "uuid": "3ec4fab6-e47e-43dc-9048-966accbcf8f8"
       }
     ],
-    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-108,#PWR115,#SYM1,C1-63,C65-73,C83-131,CN1,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-30,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
+    "used_designators": "#PWR1-41,#PWR43-72,#PWR77-89,#PWR92-113,#PWR115-125,#SYM1,C1-63,C65-73,C83-131,CN1,CURRENT2,D1-28,J1-23,J26-27,L1-15,Q1-2,R1-20,R26-37,RF1-5,RN1-2,SW1-6,U1-5,U9-10,VOLTAGE2-4,Y1",
     "variants": []
   },
   "sheets": [
@@ -918,6 +918,10 @@
     [
       "f64eebe5-a688-4d40-b096-70cb9d8d6805",
       "RF_Connector3"
+    ],
+    [
+      "e0be1651-4c3d-4d30-81ab-a83aa33c07aa",
+      "OLED"
     ]
   ],
   "text_variables": {},

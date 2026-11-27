@@ -1515,7 +1515,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Special symbol for telling ERC where power comes from"
 			(at 127 91.44 0)
 			(show_name no)
 			(do_not_autoplace no)
