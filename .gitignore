@@ -1,9 +1,9 @@
-﻿# ===================== KiCad =====================
-# KiCad 10 鐨?鏈湴鍘嗗彶"鏈韩灏辨槸涓€涓?git 浠撳簱锛屽繀椤诲拷鐣ワ紝鍚﹀垯浼氳褰撴垚宓屽叆浠撳簱
+# ===================== KiCad =====================
+# KiCad 10 的本地历史本身就是一个 git 仓库，必须忽略
 Hardware/**/.history/
 _restore_backup_*/
 
-# 鍚勭鑷姩澶囦唤 / 涓存椂鏂囦欢
+# 各种自动备份 / 临时文件
 *.bak
 *.bak-*
 *.kicad_pcb-bak
@@ -12,8 +12,8 @@ _restore_backup_*/
 *.kicad_prl
 fp-info-cache
 
-# ===================== Software =====================
-# CubeMX / 缂栬瘧涓棿浜х墿
+# ===================== Software (STM32 / CubeMX / CMake) =====================
+# 构建中间产物
 Software/**/build/
 Software/**/Debug/
 Software/**/Release/
@@ -22,21 +22,53 @@ Software/**/*.d
 Software/**/*.elf
 Software/**/*.map
 Software/**/*.lst
+Software/*.map
 
-# ioc2kicad.py 鐢熸垚鐨勫彲鍐嶇敓鎴愮殑鍥撅紙闇€瑕佺暀妗ｅ氨鍒犳帀杩欎袱琛岋級
+# CubeMX 工程缓存 / 旧的 MDK 工程（现在用 CMake）
+Software/.mxproject
+Software/MDK-ARM/
+
+# CubeMX 生成的 HAL/CMSIS 驱动库（体积大，可由 .ioc 重新生成）
+Software/Drivers/
+
+# CubeMX 生成的外设初始化 / 中断文件：改它们没有意义（重新生成会被覆盖），
+# 但它们可以被 .ioc 重新生成，所以不入库。
+# 注意：main.c / main.h 必须入库 —— USER CODE 段里放的是我们自己的代码。
+Software/Core/Src/adc.c
+Software/Core/Src/dma.c
+Software/Core/Src/fdcan.c
+Software/Core/Src/gpio.c
+Software/Core/Src/hrtim.c
+Software/Core/Src/tim.c
+Software/Core/Src/usart.c
+Software/Core/Src/stm32g4xx_hal_msp.c
+Software/Core/Src/stm32g4xx_it.c
+Software/Core/Src/syscalls.c
+Software/Core/Src/sysmem.c
+Software/Core/Src/system_stm32g4xx.c
+Software/Core/Inc/adc.h
+Software/Core/Inc/dma.h
+Software/Core/Inc/fdcan.h
+Software/Core/Inc/gpio.h
+Software/Core/Inc/hrtim.h
+Software/Core/Inc/tim.h
+Software/Core/Inc/usart.h
+Software/Core/Inc/stm32g4xx_hal_conf.h
+Software/Core/Inc/stm32g4xx_it.h
+
+# ioc2kicad.py 生成的可再生成的图（需要留档就删掉这两行）
 Software/kicad/*.svg
 Software/kicad/*_preview.png
 
-# ===================== 绯荤粺 =====================
+# ===================== 系统 =====================
 Thumbs.db
 desktop.ini
 .DS_Store
 
-# 用户手工备份目录（各含一份完整 PCB）
+# 用户手工备份目录
 _backup_before_*/
+_bak_before_*/
 *.kicad_pcb.bak*
-_bak_before_*/\n
-
 Hardware/G474VC_Core/_bak_before_*/
 Hardware/G474VC_Core/_restore_backup_*/
 
@@ -46,6 +78,3 @@ Hardware/G474VC_Core/_restore_backup_*/
 *.drl
 *.nc
 *.rar
-
-
-
