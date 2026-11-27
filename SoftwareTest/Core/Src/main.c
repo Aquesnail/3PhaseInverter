@@ -117,25 +117,32 @@ static   float    g_duty[3]    = {0.0f, 0.0f, 0.0f};
 #define ADC4_DMA_IS_CIRCULAR 1   /* CubeMX: Dma.ADC4.1.Mode = DMA_CIRCULAR */
 #endif
 
-/* CubeMX does not emit this handler (the "generate IRQ handler" flag is off
- * for DMA1_Channel1), so it is provided here. */
-void DMA1_Channel1_IRQHandler(void)
+/* DMA channel interrupt routing (set in CubeMX):
+ *   ADC1 + ADC2 dual stream  -> DMA1_Channel1  (no NVIC line)
+ *   ADC4 stream              -> DMA1_Channel2  (NVIC line ENABLED)
+ * So the only DMA interrupt we get is channel 2; the ADC1/ADC2 stream is
+ * polled from inside it (2 flags per channel-2 event -> 50 kHz fast steps). */
+static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word);
+
+void DMA1_Channel2_IRQHandler(void)
 {
-  /* ---- ADC4 uses DMA1_Channel2 with NO interrupt of its own, so its transfer
-   * completion is polled here (its NVIC line must be disabled in CubeMX,
-   * otherwise the HAL handler would clear the flags before we see them). ---- */
-  uint32_t ch2_flags = DMA1->ISR & (DMA_ISR_TCIF2 | DMA_ISR_TEIF2);
+  /* ---- ADC4 stream (DMA1_Channel2, CIRCULAR) ----
+   * Clear ALL four channel-2 flags: TC alone is not enough, a pending HT flag
+   * keeps the (level driven) interrupt asserted and the ISR would re-enter
+   * forever, starving the main loop and the TIM1 slow loop. */
+  uint32_t ch2_flags = DMA1->ISR & (DMA_ISR_GIF2 | DMA_ISR_TCIF2 |
+                                    DMA_ISR_HTIF2 | DMA_ISR_TEIF2);
   if (ch2_flags != 0u)
   {
-    /* clear transfer-complete and transfer-error for channel 2 */
-    DMA1->IFCR = DMA_IFCR_CTCIF2 | DMA_IFCR_CTEIF2;
-    g_adc4_cnt++;
+    DMA1->IFCR = ch2_flags;                        /* clear Ch2 flags */
+    if ((ch2_flags & DMA_ISR_TCIF2) != 0u)
+    {
+      g_adc4_cnt++;
+    }
   }
 
 #if (ADC4_DMA_IS_CIRCULAR == 0)
-  /* DMA_NORMAL: keep the channel armed. Re-arm whenever the counter ran out,
-   * no matter whether a TC/TE flag was observed (a transfer error can leave
-   * the channel stopped without a pending completion). */
+  /* DMA_NORMAL: keep the channel armed whenever its counter ran out. */
   if (hdma_adc4.Instance->CNDTR == 0u)
   {
     if ((ADC4->ISR & ADC_ISR_OVR) != 0u)
@@ -148,8 +155,25 @@ void DMA1_Channel1_IRQHandler(void)
   }
 #endif
 
-  /* ADC1 + ADC2 dual stream: half-complete / complete -> Fast_Step() */
-  HAL_DMA_IRQHandler(&hdma_adc1);
+  /* ---- ADC1 + ADC2 dual stream (DMA1_Channel1): polled here because that
+   * channel has no NVIC line. One channel-2 event carries both half-complete
+   * and complete flags -> two fast steps, i.e. the chain still runs at 50 kHz.
+   * The HAL handler is not used for these flags: the data is read directly from
+   * the circular buffer (s_adc12[]). ---- */
+  uint32_t f1 = DMA1->ISR & (DMA_ISR_GIF1 | DMA_ISR_HTIF1 |
+                             DMA_ISR_TCIF1 | DMA_ISR_TEIF1);
+  if (f1 != 0u)
+  {
+    DMA1->IFCR = f1;                               /* clear Ch1 flags */
+    if ((f1 & DMA_ISR_HTIF1) != 0u)
+    {
+      Fast_Step(s_adc12[0], s_adc4[0]);            /* first half ready */
+    }
+    if ((f1 & DMA_ISR_TCIF1) != 0u)
+    {
+      Fast_Step(s_adc12[1], s_adc4[1]);            /* second half ready */
+    }
+  }
 }
 
 void TIM1_UP_TIM16_IRQHandler(void)
@@ -189,15 +213,14 @@ static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word)
 
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc)
 {
-  if (hadc->Instance == ADC1) { Fast_Step(s_adc12[0], s_adc4[0]); }
+  /* Not used: the ADC1/ADC2 stream has no NVIC line, its flags are polled in
+   * DMA1_Channel2_IRQHandler(). Kept empty on purpose. */
+  (void)hadc;
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-  if (hadc->Instance == ADC1)
-  {
-    Fast_Step(s_adc12[1], s_adc4[1]);
-  }
+  (void)hadc;
 }
 /* USER CODE END 0 */
 
@@ -917,9 +940,9 @@ static void MX_DMA_Init(void)
   __HAL_RCC_DMA1_CLK_ENABLE();
 
   /* DMA interrupt init */
-  /* DMA1_Channel1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* DMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
 
 }
 
