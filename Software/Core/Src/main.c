@@ -19,9 +19,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dac.h"
 #include "dma.h"
 #include "fdcan.h"
 #include "hrtim.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -208,6 +210,9 @@ int main(void)
   MX_ADC5_Init();
   MX_USART3_UART_Init();
   MX_TIM1_Init();
+  MX_DAC1_Init();
+  MX_TIM2_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   /* ---- HRTIM: start the counters (ADC trigger comes from MASTER CMP1).
    * The PWM outputs are started too, but with the current CubeMX settings they
