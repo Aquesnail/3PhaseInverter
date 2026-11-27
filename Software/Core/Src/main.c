@@ -93,7 +93,7 @@ static uint16_t s_buf3[2];             /* DMA target: 2 x 16-bit        */
  * in CubeMX, re-arm ADSTART once per tick (runtime workaround, no config change).
  * Set to 0 as soon as CubeMX enables DMAContinuousRequests. */
 #ifndef ADC_DMACFG_WORKAROUND
-#define ADC_DMACFG_WORKAROUND 1
+#define ADC_DMACFG_WORKAROUND 0   /* CubeMX: DMAContinuousRequests = ENABLE now */
 #endif
 /* USER CODE END PV */
 
