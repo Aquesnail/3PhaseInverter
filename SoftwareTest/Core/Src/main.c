@@ -97,8 +97,8 @@ static void MX_ADC4_Init(void);
  * PA8 : high during the fast chain      PA4 : high during the slow chain (TIM1)
  * NOTE: keep this section ASCII-only, CubeMX mangles non-ASCII user code.
  */
-static uint32_t s_adc12[2];   /* [15:0] = ADC1 raw, [31:16] = ADC2 raw */
-static uint16_t s_adc4[2];    /* ADC4 raw                            */
+static uint32_t s_adc12[1];   /* [15:0] = ADC1 raw, [31:16] = ADC2 raw */
+static uint16_t s_adc4[1];    /* ADC4 raw                             */
 
 volatile uint16_t g_adc1_raw   = 0u;
 volatile uint16_t g_adc2_raw   = 0u;
@@ -117,62 +117,91 @@ static   float    g_duty[3]    = {0.0f, 0.0f, 0.0f};
 #define ADC4_DMA_IS_CIRCULAR 1   /* CubeMX: Dma.ADC4.1.Mode = DMA_CIRCULAR */
 #endif
 
-/* DMA channel interrupt routing (set in CubeMX):
- *   ADC1 + ADC2 dual stream  -> DMA1_Channel1  (no NVIC line)
- *   ADC4 stream              -> DMA1_Channel2  (NVIC line ENABLED)
- * So the only DMA interrupt we get is channel 2; the ADC1/ADC2 stream is
- * polled from inside it (2 flags per channel-2 event -> 50 kHz fast steps). */
+/* ================== three-phase sample set -> ONE control step ==================
+ * One HRTIM trigger converts ALL THREE phases at the same instant:
+ *   ADC1(master) + ADC2(slave, dual regular simultaneous) -> DMA1_Channel1
+ *   ADC4                                                   -> DMA1_Channel2
+ * Both DMA streams use a SINGLE entry (buffer length 1, circular), so every
+ * transfer completion carries exactly one fresh sample of this trigger.
+ *
+ * The control step must see the three phases sampled at the SAME time
+ * ("three data, one processing"), so a step is executed only when BOTH streams
+ * have delivered their word for this trigger. The step itself runs once per
+ * trigger -> uniform 50 kHz, no sample is a cycle late.
+ *
+ * Interrupt routing (CubeMX): only DMA1_Channel2 has a NVIC line, so the step is
+ * issued there; DMA1_Channel1 is polled (bounded wait of a few cycles since both
+ * ADCs start on the same trigger). If channel 1's NVIC line is ever enabled,
+ * its handler below only marks the word as ready (no duplicate step).
+ * ---------------------------------------------------------------------------- */
 static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word);
+static volatile uint8_t s_adc12_ready;
+
+#define CH1_FLAGS  (DMA_ISR_GIF1 | DMA_ISR_TCIF1 | DMA_ISR_HTIF1 | DMA_ISR_TEIF1)
+#define CH2_FLAGS  (DMA_ISR_GIF2 | DMA_ISR_TCIF2 | DMA_ISR_HTIF2 | DMA_ISR_TEIF2)
+
+/* Only used if CubeMX enables DMA1_Channel1's NVIC line: mark data ready. */
+void DMA1_Channel1_IRQHandler(void)
+{
+  uint32_t f1 = DMA1->ISR & CH1_FLAGS;
+  if (f1 != 0u)
+  {
+    DMA1->IFCR = f1;                 /* clear ALL channel-1 flags (level IRQ) */
+    s_adc12_ready = 1u;
+  }
+}
 
 void DMA1_Channel2_IRQHandler(void)
 {
-  /* ---- ADC4 stream (DMA1_Channel2, CIRCULAR) ----
-   * Clear ALL four channel-2 flags: TC alone is not enough, a pending HT flag
-   * keeps the (level driven) interrupt asserted and the ISR would re-enter
-   * forever, starving the main loop and the TIM1 slow loop. */
-  uint32_t ch2_flags = DMA1->ISR & (DMA_ISR_GIF2 | DMA_ISR_TCIF2 |
-                                    DMA_ISR_HTIF2 | DMA_ISR_TEIF2);
-  if (ch2_flags != 0u)
+  /* ---- ADC4 word of this trigger ----
+   * Clear ALL four channel-2 flags: a pending HT flag would keep the level
+   * driven interrupt asserted and the ISR would re-enter forever. */
+  uint32_t f2 = DMA1->ISR & CH2_FLAGS;
+  if (f2 != 0u)
   {
-    DMA1->IFCR = ch2_flags;                        /* clear Ch2 flags */
-    if ((ch2_flags & DMA_ISR_TCIF2) != 0u)
-    {
-      g_adc4_cnt++;
-    }
+    DMA1->IFCR = f2;
+    g_adc4_cnt++;
   }
 
 #if (ADC4_DMA_IS_CIRCULAR == 0)
-  /* DMA_NORMAL: keep the channel armed whenever its counter ran out. */
-  if (hdma_adc4.Instance->CNDTR == 0u)
+  if (hdma_adc4.Instance->CNDTR == 0u)             /* DMA_NORMAL fallback */
   {
-    if ((ADC4->ISR & ADC_ISR_OVR) != 0u)
-    {
-      ADC4->ISR = ADC_ISR_OVR;                     /* drop stale overrun */
-    }
     __HAL_DMA_DISABLE(&hdma_adc4);
-    hdma_adc4.Instance->CNDTR = 2u;
+    hdma_adc4.Instance->CNDTR = 1u;
     __HAL_DMA_ENABLE(&hdma_adc4);
   }
 #endif
 
-  /* ---- ADC1 + ADC2 dual stream (DMA1_Channel1): polled here because that
-   * channel has no NVIC line. One channel-2 event carries both half-complete
-   * and complete flags -> two fast steps, i.e. the chain still runs at 50 kHz.
-   * The HAL handler is not used for these flags: the data is read directly from
-   * the circular buffer (s_adc12[]). ---- */
-  uint32_t f1 = DMA1->ISR & (DMA_ISR_GIF1 | DMA_ISR_HTIF1 |
-                             DMA_ISR_TCIF1 | DMA_ISR_TEIF1);
+  /* ---- ADC1+ADC2 word of the SAME trigger: poll it here (no NVIC line) ---- */
+  uint32_t f1 = DMA1->ISR & CH1_FLAGS;
   if (f1 != 0u)
   {
-    DMA1->IFCR = f1;                               /* clear Ch1 flags */
-    if ((f1 & DMA_ISR_HTIF1) != 0u)
+    DMA1->IFCR = f1;
+    s_adc12_ready = 1u;
+  }
+  else if (s_adc12_ready == 0u)
+  {
+    /* Both ADCs start on the same trigger, so this is only a cycle or two of
+     * skew: wait for it, but bounded, so a broken stream cannot hang the ISR. */
+    uint32_t guard = 0u;
+    do
     {
-      Fast_Step(s_adc12[0], s_adc4[0]);            /* first half ready */
-    }
-    if ((f1 & DMA_ISR_TCIF1) != 0u)
+      f1 = DMA1->ISR & CH1_FLAGS;
+      guard++;
+    } while ((f1 == 0u) && (guard < 64u));
+
+    if (f1 != 0u)
     {
-      Fast_Step(s_adc12[1], s_adc4[1]);            /* second half ready */
+      DMA1->IFCR = f1;
+      s_adc12_ready = 1u;
     }
+  }
+
+  /* ---- one control step per trigger, using the three phases of that instant ---- */
+  if (s_adc12_ready != 0u)
+  {
+    s_adc12_ready = 0u;
+    Fast_Step(s_adc12[0], s_adc4[0]);
   }
 }
 
@@ -294,11 +323,12 @@ int main(void)
   {
     Error_Handler();
   }
-  if (HAL_ADCEx_MultiModeStart_DMA(&hadc1, s_adc12, 2u) != HAL_OK)   /* ADC1 + ADC2 */
+  /* One DMA entry per trigger: every completion carries one fresh sample set */
+  if (HAL_ADCEx_MultiModeStart_DMA(&hadc1, s_adc12, 1u) != HAL_OK)   /* ADC1 + ADC2 */
   {
     Error_Handler();
   }
-  if (HAL_ADC_Start_DMA(&hadc4, (uint32_t *)s_adc4, 2u) != HAL_OK)  /* ADC4        */
+  if (HAL_ADC_Start_DMA(&hadc4, (uint32_t *)s_adc4, 1u) != HAL_OK)  /* ADC4        */
   {
     Error_Handler();
   }
