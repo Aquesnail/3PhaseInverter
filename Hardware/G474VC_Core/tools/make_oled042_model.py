@@ -51,6 +51,40 @@ class Model:
     def seg(self,p0,p1,width,thick,normal,color):
         self.segs.append((p0,p1,width,thick,normal,color))
 
+
+# ---------------- 带颜色的 STEP 导出（OCP/XCAF） ----------------
+def step_colored(parts, path, title="model"):
+    """parts: [(solid_or_compound, (r,g,b)), ...]  写出带颜色的 STEP"""
+    from OCP.TDocStd import TDocStd_Document
+    from OCP.XCAFApp import XCAFApp_Application
+    from OCP.XCAFDoc import XCAFDoc_DocumentTool, XCAFDoc_ColorSurf
+    from OCP.TCollection import TCollection_ExtendedString
+    from OCP.STEPCAFControl import STEPCAFControl_Writer
+    from OCP.STEPControl import STEPControl_StepModelType
+    from OCP.Quantity import Quantity_Color, Quantity_TOC_RGB
+    app = XCAFApp_Application.GetApplication_s()
+    doc = TDocStd_Document(TCollection_ExtendedString("doc"))
+    app.NewDocument(TCollection_ExtendedString("MDTV-XCAF"), doc)
+    st = XCAFDoc_DocumentTool.ShapeTool_s(doc.Main())
+    ct = XCAFDoc_DocumentTool.ColorTool_s(doc.Main())
+    st.SetAutoNaming_s(True)
+    for shape, col in parts:
+        lab = st.AddShape(getattr(shape, "wrapped", shape), False)   # 扁平：不加装配层，颜色才会写出
+        if lab.IsNull():
+            continue
+        # 传入的是 sRGB，OCC/STEP 用线性色 -> 做 gamma 2.2 转换
+        def _lin(v):
+            v = max(0.0, min(1.0, float(v)))
+            return v ** 2.2
+        c = Quantity_Color(_lin(col[0]), _lin(col[1]), _lin(col[2]), Quantity_TOC_RGB)
+        ct.SetColor(lab, c, XCAFDoc_ColorSurf)
+    w = STEPCAFControl_Writer()
+    w.SetColorMode(True)
+    w.SetNameMode(True)
+    w.Transfer(doc, STEPControl_StepModelType.STEPControl_AsIs)
+    w.Write(path)
+    return path
+
 def q_boxes(m):
     subs=[]
     for c,d,col in m.parts:
@@ -111,8 +145,9 @@ def write_wrl(m, path, title):
     open(path,"w",encoding="ascii",newline="\n").write("\n".join(out)+"\n")
 
 # ---------------- 模型 ----------------
-C_GLASS=(0.10,0.10,0.12)     # 屏玻璃（深色）
-C_POL  =(0.05,0.30,0.10)     # 偏振片/视角面（绿，示意可视区）
+C_GLASS=(0.13,0.13,0.14)     # 屏玻璃（深灰）
+C_POL  =(0.02,0.05,0.10)     # 偏振片/视角面（近黑蓝）
+C_VA   =(0.04,0.09,0.20)     # 可视区(OLED 熄屏偏深蓝)
 C_FPC  =(0.85,0.55,0.10)     # FPC（琥珀色）
 C_STF  =(0.55,0.35,0.10)     # 补强板
 C_PAD  =(0.80,0.80,0.30)     # 金手指
@@ -152,7 +187,10 @@ def build(variant="wrap", edge_y=EDGE_Y, board_t=BOARD_T):
         z_gl=z_fpc_f0-PANEL_OFF-PANEL_T
         m.box(-PANEL_W/2, PANEL_W/2, PANEL_Y0, PANEL_Y0+PANEL_L, z_gl, z_gl+PANEL_T, C_GLASS)
         # 可视面示意(朝外)
-        m.box(-PANEL_W/2+0.95, PANEL_W/2-0.95, PANEL_Y0+1.0, PANEL_Y0+PANEL_L-1.0, z_gl-0.05, z_gl, C_POL)
+        # 可视区 (V.A. 10.196 x 6.18)，居中于屏体
+        va_w, va_h = 10.196/2, 6.18/2
+        cy = PANEL_Y0 + PANEL_L/2
+        m.box(-va_w, va_w, cy-va_h, cy+va_h, z_gl-0.03, z_gl, C_VA)
         return m
     if variant=="flat":
         # FPC 平铺：从接触区沿 +Y 延伸，屏体在其末端
@@ -215,7 +253,12 @@ if __name__=="__main__":
         m=build(variant)
         sp=os.path.join(OUTDIR,"OLED042_FPC16_%s.step"%variant)
         wp=os.path.join(OUTDIR,"OLED042_FPC16_%s.wrl"%variant)
-        cq.exporters.export(q_boxes(m), sp)
+        # 按颜色分组导出（带颜色）
+        bycol = {}
+        for c_, d_, col in m.parts:
+            bycol.setdefault(tuple(col), []).append(cq.Workplane("XY").box(d_[0], d_[1], d_[2]).translate(c_).val())
+        grp = [(cq.Compound.makeCompound(v), k) for k, v in bycol.items()]
+        step_colored(grp, sp, title)
         write_wrl(m, wp, title)
         mp=m
         if variant=="slot":
