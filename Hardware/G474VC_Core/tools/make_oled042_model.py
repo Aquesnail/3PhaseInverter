@@ -32,7 +32,7 @@ PANEL_OFF  = 0.05      # 屏体与 FPC 的胶层
 SLOT_Y     = 8.50      # 焊盘中心到板上开槽中心的距离(取 U5 封装内 Edge.Cuts 槽: y 8..9)
 SLOT_W     = 9.00      # 开槽宽度(U5 fp_poly x -4.5..4.5)
 SLOT_TAB_W = 8.60      # 穿孔处 FPC 收窄后的宽度(要 < SLOT_W)
-PANEL_Y0   = 9.80      # 穿板后屏体近端距焊盘中心的距离
+PANEL_Y0   = 4.50      # 屏体近端距焊盘中心（屏中心=10mm，正好盖住 y8~9 的开孔）
 OUTDIR     = r"D:\3phase_inverter\Hardware\G474VC_Core\libs\lcsc\3dmodels"
 
 def box_pts(x0,x1,y0,y1,z0,z1):
@@ -208,6 +208,12 @@ if __name__=="__main__":
         wp=os.path.join(OUTDIR,"OLED042_FPC16_%s.wrl"%variant)
         cq.exporters.export(q_boxes(m), sp)
         write_wrl(m, wp, title)
-        preview(m, os.path.join(OUTDIR,"OLED042_preview_%s.png"%variant), title)
+        mp=m
+        if variant=="slot":
+            # 预览里把板上开孔画成红色，便于核对"屏体是否盖住开孔"
+            import copy as _copy
+            mp=_copy.deepcopy(m)
+            mp.parts.append(((0.0, SLOT_Y, -BOARD_T/2), (SLOT_W, 1.0, BOARD_T), (0.85,0.15,0.15)))
+        preview(mp, os.path.join(OUTDIR,"OLED042_preview_%s.png"%variant), title)
         print("%-6s -> %s (%d B), %s (%d B)"%(variant, os.path.basename(sp), os.path.getsize(sp),
                                              os.path.basename(wp), os.path.getsize(wp)))
