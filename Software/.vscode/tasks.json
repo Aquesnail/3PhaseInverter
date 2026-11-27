@@ -3,52 +3,31 @@
     "tasks": [
         {
             "label": "CMake: Configure (Debug)",
-            "type": "process",
-            "command": "cmake",
-            "args": [
-                "-B",
-                "build/Debug",
-                "-G",
-                "Ninja",
-                "-DCMAKE_BUILD_TYPE=Debug",
-                "-DCMAKE_TOOLCHAIN_FILE=cmake/gcc-arm-none-eabi.cmake"
-            ],
+            "type": "shell",
+            "command": "cmake -B build/Debug -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/gcc-arm-none-eabi.cmake",
             "options": {
                 "cwd": "${workspaceFolder}",
                 "env": {
-                    "PATH": "D:\\environment\\arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi\\bin;D:\\environment\\ninja-win;${env:PATH}"
+                    "PATH": "D:/environment/cmake/bin;D:/environment/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/bin;D:/environment/ninja-win;${env:PATH}"
                 }
             },
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
+            "group": { "kind": "build", "isDefault": false },
             "problemMatcher": []
         },
         {
             "label": "CMake: Build (Debug)",
-            "type": "process",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "build/Debug"
-            ],
+            "type": "shell",
+            "command": "cmake --build build/Debug",
             "options": {
                 "cwd": "${workspaceFolder}",
                 "env": {
-                    "PATH": "D:\\environment\\arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi\\bin;D:\\environment\\ninja-win;${env:PATH}"
+                    "PATH": "D:/environment/cmake/bin;D:/environment/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/bin;D:/environment/ninja-win;${env:PATH}"
                 }
             },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": { "kind": "build", "isDefault": true },
             "problemMatcher": {
                 "owner": "cpp",
-                "fileLocation": [
-                    "relative",
-                    "${workspaceFolder}"
-                ],
+                "fileLocation": ["relative", "${workspaceFolder}"],
                 "pattern": {
                     "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
                     "file": 1,
@@ -61,14 +40,8 @@
         },
         {
             "label": "Flash: J-Link (SWD)",
-            "type": "process",
-            "command": "D:\\environment\\JLink_V956\\JLink.exe",
-            "args": [
-                "-NoGui",
-                "1",
-                "-CommandFile",
-                ".vscode/flash.jlink"
-            ],
+            "type": "shell",
+            "command": "D:/environment/JLink_V956/JLink.exe -NoGui 1 -CommandFile .vscode/flash.jlink",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -78,39 +51,30 @@
         {
             "label": "CubeMX: Configure + Refresh clangd",
             "dependsOrder": "sequence",
-            "dependsOn": [
-                "CMake: Configure (Debug)",
-                "Clear clangd index"
-            ],
+            "dependsOn": ["CMake: Configure (Debug)", "Clear clangd index"],
             "problemMatcher": []
         },
         {
             "label": "Clear clangd index",
-            "type": "process",
-            "command": "cmake",
-            "args": ["-E", "rm", "-rf", ".cache/clangd"],
+            "type": "shell",
+            "command": "cmake -E rm -rf .cache/clangd",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PATH": "D:/environment/cmake/bin;${env:PATH}"
+                }
             },
-            "presentation": {
-                "reveal": "silent"
-            },
+            "presentation": { "reveal": "silent" },
             "problemMatcher": []
         },
         {
             "label": "CMake: Clean",
-            "type": "process",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "build/Debug",
-                "--target",
-                "clean"
-            ],
+            "type": "shell",
+            "command": "cmake --build build/Debug --target clean",
             "options": {
                 "cwd": "${workspaceFolder}",
                 "env": {
-                    "PATH": "D:\\environment\\arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi\\bin;D:\\environment\\ninja-win;${env:PATH}"
+                    "PATH": "D:/environment/cmake/bin;D:/environment/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/bin;D:/environment/ninja-win;${env:PATH}"
                 }
             },
             "problemMatcher": []
