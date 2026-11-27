@@ -59,18 +59,18 @@
  *
  * Two measurement windows for the logic analyzer (both pins are push-pull
  * outputs created by MX_GPIO_Init):
- *   PD7 : 50 kHz fast loop  (one pulse per HRTIM trigger)
- *   PB5 : slow loop         (one pulse per TIM1 update interrupt)
+ *   PB5 : 50 kHz fast loop  (one pulse per HRTIM trigger)   <- moved from PD7
+ *   PD7 : slow loop         (one pulse per TIM1 update interrupt)
  * The actual computation is replaced by a tunable busy-wait Dummy_Delay().
  * -------------------------------------------------------------------------- */
 #include "tim.h"                       /* htim1 */
 
 extern DMA_HandleTypeDef hdma_adc3;    /* defined in adc.c */
 
-#define FAST_PIN        GPIO_PIN_7     /* PD7: 50 kHz fast-loop window */
-#define FAST_PORT       GPIOD
-#define SLOW_PIN        GPIO_PIN_5     /* PB5: slow-loop window        */
-#define SLOW_PORT       GPIOB
+#define FAST_PIN        GPIO_PIN_5     /* PB5: 50 kHz fast-loop window (PD7 cold joint) */
+#define FAST_PORT       GPIOB
+#define SLOW_PIN        GPIO_PIN_7     /* PD7: slow-loop window (not measured now)      */
+#define SLOW_PORT       GPIOD
 
 /* dummy workload length, in loop iterations (~6 CPU cycles each at -O0).
  * Tune live from the debugger, no rebuild needed. */
@@ -132,11 +132,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if (htim->Instance == TIM1)
   {
-    SLOW_PORT->BSRR = SLOW_PIN;                     /* PB5 high */
+    SLOW_PORT->BSRR = SLOW_PIN;                     /* PD7 high */
 
     Dummy_Delay(g_slow_loops);
 
-    SLOW_PORT->BSRR = (uint32_t)SLOW_PIN << 16u;    /* PB5 low  */
+    SLOW_PORT->BSRR = (uint32_t)SLOW_PIN << 16u;    /* PD7 low  */
     g_slow_count++;
   }
 }
@@ -146,11 +146,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
   if (hadc->Instance == ADC3)
   {
-    FAST_PORT->BSRR = FAST_PIN;                     /* PD7 high */
+    FAST_PORT->BSRR = FAST_PIN;                     /* PB5 high */
 
     Dummy_Delay(g_fast_loops);
 
-    FAST_PORT->BSRR = (uint32_t)FAST_PIN << 16u;    /* PD7 low  */
+    FAST_PORT->BSRR = (uint32_t)FAST_PIN << 16u;    /* PB5 low  */
 
     g_adc12_raw[0] = s_buf12[0];
     g_adc12_raw[1] = s_buf12[1];
