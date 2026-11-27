@@ -1,0 +1,29 @@
+{
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "clangd.path": "D:\\environment\\clangd-windows-22.1.6\\clangd_22.1.6\\bin\\clangd.exe",
+    "clangd.arguments": [
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=never",
+        "--compile-commands-dir=build/Debug",
+        "--query-driver=D:\\environment\\arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi\\bin\\arm-none-eabi-*"
+    ],
+    "terminal.integrated.env.windows": {
+        "PATH": "D:\\environment\\arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi\\bin;D:\\environment\\ninja-win;${env:PATH}"
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "tasks.statusBar": {
+        "CubeMX: Configure + Refresh clangd": {
+            "label": "$(sync) Re-index",
+            "tooltip": "CMake Configure + Clear clangd cache (run after CubeMX code gen)"
+        },
+        "CMake: Build (Debug)": {
+            "label": "$(tools) Build",
+            "tooltip": "Build firmware (Debug)"
+        }
+    },
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c"
+    }
+}

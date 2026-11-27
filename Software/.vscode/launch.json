@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug (J-Link)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/Debug/G474_Software.elf",
+            "servertype": "jlink",
+            "serverpath": "D:\\environment\\JLink_V956\\JLinkGDBServerCL.exe",
+            "device": "STM32G474VE",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "svdFile": "${workspaceFolder}/STM32G474.svd",
+            "preLaunchTask": "CMake: Build (Debug)",
+            "armToolchainPath": "D:\\environment\\arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi\\bin",
+            "gdbPath": "D:\\environment\\arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi\\bin\\arm-none-eabi-gdb.exe",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            "rttConfig": {
+                "enabled": false
+            }
+        }
+    ]
+}

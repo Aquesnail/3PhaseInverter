@@ -1,0 +1,14 @@
+// J-Link download script for the G474VET6 core board (SWD)
+// Used by the VS Code task "Flash: J-Link (SWD)"
+// Manual use:
+//   D:\environment\JLink_V956\JLink.exe -NoGui 1 -CommandFile .vscode/flash.jlink
+device STM32G474VE
+si SWD
+speed 4000
+connect
+r
+h
+loadfile build/Debug/G474_Software.elf
+r
+g
+exit
