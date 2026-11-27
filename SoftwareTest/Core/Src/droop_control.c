@@ -121,7 +121,7 @@ void DroopCtl_Init(DroopCtl_t *s)
 /* ---------------- 环节 1：采样预处理 ---------------- */
 
 #if EN_PRE
-static void stage_pre(DroopCtl_t *s,
+DROOP_RAMFUNC static void stage_pre(DroopCtl_t *s,
                       const float vcap_line[3], const float i1_abc[3],
                       const float i2_abc[3], const float vgrid_line[3])
 {
@@ -141,7 +141,7 @@ static void stage_pre(DroopCtl_t *s,
   s->vg_abc[2] = vgrid_abc[2];
 }
 #else
-static void stage_pre(DroopCtl_t *s,
+DROOP_RAMFUNC static void stage_pre(DroopCtl_t *s,
                       const float vcap_line[3], const float i1_abc[3],
                       const float i2_abc[3], const float vgrid_line[3])
 {
@@ -278,7 +278,7 @@ static inline float qpr_step(float e,
 }
 
 #if EN_QPR
-static void stage_qpr(DroopCtl_t *s)
+DROOP_RAMFUNC static void stage_qpr(DroopCtl_t *s)
 {
   s->iref_a = qpr_step(s->vr_a - s->vc_a, &s->ur1a, &s->ur2a, &s->e1a, &s->e2a,
                        DROOP_UC_KP, s->qpr_a1, s->qpr_a2, s->qpr_b0);
@@ -286,7 +286,7 @@ static void stage_qpr(DroopCtl_t *s)
                        DROOP_UC_KP, s->qpr_a1, s->qpr_a2, s->qpr_b0);
 }
 #else
-static void stage_qpr(DroopCtl_t *s)
+DROOP_RAMFUNC static void stage_qpr(DroopCtl_t *s)
 {
   s->iref_a = 0.0f;
   s->iref_b = 0.0f;
@@ -296,13 +296,13 @@ static void stage_qpr(DroopCtl_t *s)
 /* ---------------- 环节 5：电流内环 ---------------- */
 
 #if EN_CURR
-static void stage_curr(DroopCtl_t *s)
+DROOP_RAMFUNC static void stage_curr(DroopCtl_t *s)
 {
   s->u_a = DROOP_I1_KPI * (s->iref_a - s->i1_a) + s->vc_a;
   s->u_b = DROOP_I1_KPI * (s->iref_b - s->i1_b) + s->vc_b;
 }
 #else
-static void stage_curr(DroopCtl_t *s)
+DROOP_RAMFUNC static void stage_curr(DroopCtl_t *s)
 {
   s->u_a = s->vc_a;
   s->u_b = s->vc_b;
@@ -312,7 +312,7 @@ static void stage_curr(DroopCtl_t *s)
 /* ---------------- 环节 6：SVPWM ---------------- */
 
 #if EN_PWM
-static void stage_pwm(DroopCtl_t *s)
+DROOP_RAMFUNC static void stage_pwm(DroopCtl_t *s)
 {
   float Udc = DROOP_UDC;
   if (Udc <= 1e-6f) { s->duty[0] = s->duty[1] = s->duty[2] = 0.0f; return; }
@@ -352,7 +352,7 @@ static void stage_pwm(DroopCtl_t *s)
   s->duty[2] = 2.0f * d2 - 1.0f;
 }
 #else
-static void stage_pwm(DroopCtl_t *s)
+DROOP_RAMFUNC static void stage_pwm(DroopCtl_t *s)
 {
   s->duty[0] = s->duty[1] = s->duty[2] = 0.0f;
 }
@@ -376,7 +376,7 @@ void DroopCtl_StepSlow(DroopCtl_t *s)
   stage_droop(s);
 #endif
 }
-void DroopCtl_Step(DroopCtl_t *s,
+DROOP_RAMFUNC void DroopCtl_Step(DroopCtl_t *s,
                    const float vcap_line[3],
                    const float i1_abc[3],
                    const float i2_abc[3],

@@ -55,6 +55,14 @@ extern volatile uint32_t g_cyc[ST_NUM][3];
 #endif
 
 /* ==================== 参数（模型 InitFcn 原值） ==================== */
+/* Functions tagged with this run from CCM SRAM (0 wait state, no flash cache
+ * dependency) - used for the 50 kHz fast chain so its timing is deterministic. */
+#if defined(__GNUC__)
+#define DROOP_RAMFUNC   __attribute__((section(".ccmram")))
+#else
+#define DROOP_RAMFUNC
+#endif
+
 #define DROOP_TS            2.0e-5f      /* 50 kHz 快环步长：PRE/QPR/CURR/PWM */
 #define DROOP_TS_SLOW       1.0e-3f      /* 1 kHz 慢环步长：SOGI-FLL / DROOP (TIM1) */
 #define DROOP_W0            314.159265f  /* 2*pi*50 */
@@ -123,7 +131,7 @@ void DroopCtl_SOGI_FLL(DroopCtl_t *s, const float uabc[3],
                        float *theta, float *omega, uint8_t *locked);
 
 /** @brief 一个快环 tick（50 kHz，ADC 中断里调用）：PRE -> QPR -> CURR -> PWM */
-void DroopCtl_Step(DroopCtl_t *s,
+DROOP_RAMFUNC void DroopCtl_Step(DroopCtl_t *s,
                    const float vcap_line[3],
                    const float i1_abc[3],
                    const float i2_abc[3],

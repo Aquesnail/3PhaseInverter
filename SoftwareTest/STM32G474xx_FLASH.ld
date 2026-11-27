@@ -56,6 +56,7 @@ ENTRY(Reset_Handler)
 MEMORY
 {
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K
+CCMRAM (xrw)   : ORIGIN = 0x10000000, LENGTH = 32K    /* core coupled RAM: 0 wait state, no DMA, no flash cache */
 FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 128K
 }
 
@@ -187,6 +188,21 @@ SECTIONS
   PROVIDE( __data_source = LOADADDR(.data) );
   PROVIDE( __data_source_end = __tdata_source_end );
   PROVIDE( __data_source_size = __data_source_end - __data_source );
+
+  /* ---- Code that must run from CCM SRAM (zero wait state, cache independent).
+   * Loaded from FLASH at boot, copied to CCM SRAM by Ccm_Copy() before the ISRs
+   * start. Functions are tagged with __attribute__((section(".ccmram"))). */
+  .ccmram :
+  {
+    . = ALIGN(4);
+    _sccmram = .;
+    *(.ccmram)
+    *(.ccmram*)
+    . = ALIGN(4);
+    _eccmram = .;
+  } >CCMRAM AT> FLASH
+  _siccmram = LOADADDR(.ccmram);
+
   /* Uninitialized data section */
   .tbss (NOLOAD) : ALIGN(4)
   {

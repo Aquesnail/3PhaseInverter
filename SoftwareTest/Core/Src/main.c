@@ -100,6 +100,23 @@ static void MX_ADC4_Init(void);
 static uint32_t s_adc12[1];   /* [15:0] = ADC1 raw, [31:16] = ADC2 raw */
 static uint16_t s_adc4[1];    /* ADC4 raw                             */
 
+/* ---- hot code is copied to CCM SRAM at boot (see Ccm_Copy) ---- */
+#define MAIN_RAMFUNC  __attribute__((section(".ccmram")))
+
+extern uint32_t _siccmram[];   /* load address (in FLASH)  */
+extern uint32_t _sccmram[];    /* run address  (in CCM)    */
+extern uint32_t _eccmram[];    /* end in CCM               */
+
+static void Ccm_Copy(void)
+{
+  uint32_t *src = _siccmram;
+  uint32_t *dst = _sccmram;
+  while (dst < _eccmram) { *dst++ = *src++; }
+  __DSB();
+  __ISB();
+}
+
+
 volatile uint16_t g_adc1_raw   = 0u;
 volatile uint16_t g_adc2_raw   = 0u;
 volatile uint16_t g_adc4_raw   = 0u;
@@ -134,14 +151,14 @@ static   float    g_duty[3]    = {0.0f, 0.0f, 0.0f};
  * ADCs start on the same trigger). If channel 1's NVIC line is ever enabled,
  * its handler below only marks the word as ready (no duplicate step).
  * ---------------------------------------------------------------------------- */
-static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word);
+MAIN_RAMFUNC static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word);
 static volatile uint8_t s_adc12_ready;
 
 #define CH1_FLAGS  (DMA_ISR_GIF1 | DMA_ISR_TCIF1 | DMA_ISR_HTIF1 | DMA_ISR_TEIF1)
 #define CH2_FLAGS  (DMA_ISR_GIF2 | DMA_ISR_TCIF2 | DMA_ISR_HTIF2 | DMA_ISR_TEIF2)
 
 /* Only used if CubeMX enables DMA1_Channel1's NVIC line: mark data ready. */
-void DMA1_Channel1_IRQHandler(void)
+MAIN_RAMFUNC void DMA1_Channel1_IRQHandler(void)
 {
   uint32_t f1 = DMA1->ISR & CH1_FLAGS;
   if (f1 != 0u)
@@ -151,7 +168,7 @@ void DMA1_Channel1_IRQHandler(void)
   }
 }
 
-void DMA1_Channel2_IRQHandler(void)
+MAIN_RAMFUNC void DMA1_Channel2_IRQHandler(void)
 {
   /* ---- ADC4 word of this trigger ----
    * Clear ALL four channel-2 flags: a pending HT flag would keep the level
@@ -223,7 +240,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 /* One 50 kHz fast step: ADC data -> control chain */
-static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word)
+MAIN_RAMFUNC static void Fast_Step(uint32_t adc12_word, uint16_t adc4_word)
 {
   g_adc1_raw = (uint16_t)(adc12_word & 0xFFFFu);
   g_adc2_raw = (uint16_t)(adc12_word >> 16);
@@ -323,6 +340,9 @@ int main(void)
   {
     Error_Handler();
   }
+  /* ---- copy the hot fast-chain code into CCM SRAM before the ISRs start ---- */
+  Ccm_Copy();
+
   /* One DMA entry per trigger: every completion carries one fresh sample set */
   if (HAL_ADCEx_MultiModeStart_DMA(&hadc1, s_adc12, 1u) != HAL_OK)   /* ADC1 + ADC2 */
   {
