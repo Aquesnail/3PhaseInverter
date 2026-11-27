@@ -29,6 +29,10 @@ PANEL_T    = 1.25      # 屏体厚度 (1.25±0.1)
 BOARD_T    = 1.60      # 你的板厚
 EDGE_Y     = 6.00      # 焊盘中心到板边距离（可按实际改）
 PANEL_OFF  = 0.05      # 屏体与 FPC 的胶层
+SLOT_Y     = 8.50      # 焊盘中心到板上开槽中心的距离(取 U5 封装内 Edge.Cuts 槽: y 8..9)
+SLOT_W     = 9.00      # 开槽宽度(U5 fp_poly x -4.5..4.5)
+SLOT_TAB_W = 8.60      # 穿孔处 FPC 收窄后的宽度(要 < SLOT_W)
+PANEL_Y0   = 9.80      # 穿板后屏体近端距焊盘中心的距离
 OUTDIR     = r"D:\3phase_inverter\Hardware\G474VC_Core\libs\lcsc\3dmodels"
 
 def box_pts(x0,x1,y0,y1,z0,z1):
@@ -122,6 +126,25 @@ def build(variant="wrap", edge_y=EDGE_Y, board_t=BOARD_T):
         m.box(cx-FING_W/2, cx+FING_W/2, -FING_L/2, FING_L/2, 0, 0.02, C_PAD)
     # --- 接触区补强 + FPC 主体 ---
     m.box(-x_half,x_half, -FING_L/2, FING_L/2, 0.02, 0.02+FPC_T+STIFF_T, C_STF)
+    if variant=="slot":
+        # --- 穿过 U5 封装里的板开槽 (Edge.Cuts: x -4.5..4.5, y 8..9) ---
+        tab_y0=SLOT_Y-0.5; tab_y1=SLOT_Y+0.5      # 槽在 Y 方向 1mm
+        hw_tab=SLOT_TAB_W/2
+        z0=0.02                                    # 焊盘面 FPC 底面
+        # 焊盘侧：全宽走到槽前方
+        m.box(-x_half,x_half, FING_L/2, tab_y0-1.2, z0, z0+FPC_T, C_FPC)
+        # 收窄过渡
+        m.box(-hw_tab,hw_tab, tab_y0-1.2, tab_y0, z0, z0+FPC_T, C_FPC)
+        # 穿孔段（穿过整块板）
+        m.box(-hw_tab,hw_tab, tab_y0, tab_y1, -(board_t+0.02), z0+FPC_T, C_FPC)
+        # 另一面：收窄→全宽→屏体
+        m.box(-hw_tab,hw_tab, tab_y1, tab_y1+1.2, -(board_t+0.02)-FPC_T, -(board_t+0.02), C_FPC)
+        m.box(-x_half,x_half, tab_y1+1.2, PANEL_Y0+PANEL_L, -(board_t+0.02)-FPC_T, -(board_t+0.02), C_FPC)
+        # 屏体（贴在 FPC 外侧，可视面朝外）
+        z_gl=-(board_t+0.02)-FPC_T-PANEL_OFF-PANEL_T
+        m.box(-PANEL_W/2, PANEL_W/2, PANEL_Y0, PANEL_Y0+PANEL_L, z_gl, z_gl+PANEL_T, C_GLASS)
+        m.box(-PANEL_W/2+0.95, PANEL_W/2-0.95, PANEL_Y0+1.0, PANEL_Y0+PANEL_L-1.0, z_gl-0.05, z_gl, C_POL)
+        return m
     if variant=="flat":
         # FPC 平铺：从接触区沿 +Y 延伸，屏体在其末端
         y0=FING_L/2
@@ -177,7 +200,9 @@ def preview(m, path, title):
 
 if __name__=="__main__":
     os.makedirs(OUTDIR,exist_ok=True)
-    for variant,title in (("wrap","0.42 OLED folded over board edge"),("flat","0.42 OLED FPC flat (unfolded)")):
+    for variant,title in (("slot","0.42 OLED through the PCB slot (U5 Edge.Cuts)"),
+                      ("wrap","0.42 OLED folded over board edge"),
+                      ("flat","0.42 OLED FPC flat (unfolded)")):
         m=build(variant)
         sp=os.path.join(OUTDIR,"OLED042_FPC16_%s.step"%variant)
         wp=os.path.join(OUTDIR,"OLED042_FPC16_%s.wrl"%variant)

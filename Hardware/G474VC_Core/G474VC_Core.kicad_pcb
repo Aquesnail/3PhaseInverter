@@ -58982,7 +58982,7 @@
 			(uuid "00bb93c1-ab94-4205-aa84-0c44915fc353")
 		)
 
-		(model "${KIPRJMOD}/libs/lcsc/3dmodels/OLED042_FPC16_wrap.step"
+		(model "${KIPRJMOD}/libs/lcsc/3dmodels/OLED042_FPC16_slot.step"
 			(offset
 				(xyz 0 0 0)
 			)
