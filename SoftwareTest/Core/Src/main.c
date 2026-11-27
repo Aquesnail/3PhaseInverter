@@ -198,14 +198,16 @@ MAIN_RAMFUNC void DMA1_Channel2_IRQHandler(void)
   }
   else if (s_adc12_ready == 0u)
   {
-    /* Both ADCs start on the same trigger, so this is only a cycle or two of
-     * skew: wait for it, but bounded, so a broken stream cannot hang the ISR. */
+    /* Safety net only: over 229k measured triggers channel 1 (ADC1+ADC2,
+     * DMA priority VERY_HIGH) was ALREADY complete 100% of the time when this
+     * channel-2 interrupt fired, so this loop never iterates in practice.
+     * Kept short so an unforeseen stall cannot block the ISR. */
     uint32_t guard = 0u;
     do
     {
       f1 = DMA1->ISR & CH1_FLAGS;
       guard++;
-    } while ((f1 == 0u) && (guard < 64u));
+    } while ((f1 == 0u) && (guard < 8u));
 
     if (f1 != 0u)
     {
