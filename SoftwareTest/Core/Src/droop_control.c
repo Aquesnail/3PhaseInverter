@@ -48,7 +48,7 @@ static uint16_t s_cnt[ST_NUM];
 
 /* ---------------- 基础变换 ---------------- */
 
-static inline void line2phase(const float u_line[3], float u_abc[3])
+static inline __attribute__((always_inline)) void line2phase(const float u_line[3], float u_abc[3])
 {
   float Uab = u_line[0], Ubc = u_line[1], Uac = u_line[2];
   u_abc[0] = ( Uab + Uac) * (1.0f / 3.0f);
@@ -56,14 +56,14 @@ static inline void line2phase(const float u_line[3], float u_abc[3])
   u_abc[2] = -(Ubc + Uac) * (1.0f / 3.0f);
 }
 
-static inline void clarke(const float abc[3], float *alpha, float *beta)
+static inline __attribute__((always_inline)) void clarke(const float abc[3], float *alpha, float *beta)
 {
   float a = abc[0], b = abc[1], c = abc[2];
   *alpha = (2.0f / 3.0f) * (a - 0.5f * b - 0.5f * c);
   *beta  = (2.0f / 3.0f) * ((SQRT3 * 0.5f) * (b - c));
 }
 
-static inline float wrap_2pi(float th)
+static inline __attribute__((always_inline)) float wrap_2pi(float th)
 {
   if (th >= TWO_PI)   { th -= TWO_PI; }
   else if (th < 0.0f) { th += TWO_PI; }
@@ -267,7 +267,7 @@ static void stage_droop(DroopCtl_t *s)
 
 /* ---------------- 环节 4：QPR 电压外环 ---------------- */
 
-static inline float qpr_step(float e,
+static inline __attribute__((always_inline)) float qpr_step(float e,
                              float *ur1, float *ur2, float *e1, float *e2,
                              float Kp, float a1, float a2, float b0)
 {
