@@ -232,20 +232,6 @@
 		(layer "F.CrtYd")
 		(uuid "384fcba7-1a2f-4105-a05e-c7d198565143")
 	)
-	(pad "0" smd rect
-		(at -4.875 0)
-		(size 0 0)
-		(layers "F.Cu" "F.Mask" "F.Paste")
-		(thermal_bridge_angle 45)
-		(uuid "ebe4506e-bd29-4cd6-be51-bfa040d36bf9")
-	)
-	(pad "0" smd rect
-		(at 4.875 0)
-		(size 0 0)
-		(layers "F.Cu" "F.Mask" "F.Paste")
-		(thermal_bridge_angle 45)
-		(uuid "6ca248d7-6865-47fc-a695-59be7a13fb0f")
-	)
 	(pad "1" smd rect
 		(at -4.875 0)
 		(size 0.35 3)
